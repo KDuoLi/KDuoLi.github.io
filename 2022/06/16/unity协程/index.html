@@ -263,7 +263,7 @@
 </ul>
 <ol>
 <li><code>StopCoroutine(&quot;FunctionName&quot;);</code> 使用传递字符串的方式停止协程,只能用于停止使用传递字符串的形式开启的协程</li>
-<li><code>StopAllCoroutines();</code>  停止该脚本中所有的协程</li>
+<li><code>StopAllCoroutines();</code>  停止该类中所有的协程</li>
 <li><code>gameObject.SetActive(false);</code>或 <code>Destroy(gameobject)</code>或<code>Destory(this);</code> 禁用&#x2F;销毁游戏对象,或者销毁脚本组件可以停止协程，当物体被再次激活时，协程不会继续执行。但是<code>this.enabled = false; </code>禁用脚本组件不能停止协程</li>
 <li>在协程内部添加<code>yield break;</code> 来停止协程</li>
 <li>获取返回值方式。不管使用哪种方式启动协程，都可以结束其返回值用以停止对应协程<figure class="highlight c#"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">private</span> Coroutine stopCor_1;        </span><br><span class="line"><span class="keyword">private</span> Coroutine stopCor_2;        </span><br><span class="line"></span><br><span class="line">stopCor_1 = StartCoroutine(<span class="string">&quot;Cor_1&quot;</span>);</span><br><span class="line">stopCor_2 = StartCoroutine(Cor_2());</span><br><span class="line"></span><br><span class="line"><span class="comment">//停止协程</span></span><br><span class="line">StopCoroutine(stopCor_1);</span><br><span class="line">StopCoroutine(stopCor_2); </span><br></pre></td></tr></table></figure></li>
