@@ -28,7 +28,7 @@
 <meta property="og:description" content="简述GUID、Local ID及资源管理">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-16T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-07-17T09:16:23.305Z">
+<meta property="article:modified_time" content="2022-07-17T09:27:06.757Z">
 <meta property="article:author" content="KDuoLi">
 <meta name="twitter:card" content="summary">
 
@@ -189,7 +189,7 @@
               <span class="post-meta-item-text">发表于</span>
               
 
-              <time title="创建时间：2022-07-17 00:00:00 / 修改时间：17:16:23" itemprop="dateCreated datePublished" datetime="2022-07-17T00:00:00+08:00">2022-07-17</time>
+              <time title="创建时间：2022-07-17 00:00:00 / 修改时间：17:27:06" itemprop="dateCreated datePublished" datetime="2022-07-17T00:00:00+08:00">2022-07-17</time>
             </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -219,12 +219,9 @@
 <li>资源（<code>Asset</code>）与对象（<code>Object</code>）是一种一对多的关系，即一个资源文件可能会包括多个<code>Object</code></li>
 </ul>
 <h1 id="GUID"><a href="#GUID" class="headerlink" title="GUID"></a>GUID</h1><ul>
-<li><code>GUID</code>（<code>Globally Unique Identifier</code>）：也称<code>File GUID</code>是资源的唯一标识符，用于记录资源之间的引用关系，</li>
+<li><code>GUID</code>（<code>Globally Unique Identifier</code>）：也称<code>File ID</code>是资源的唯一标识符，用于记录资源之间的引用关系，</li>
 <li><code>GUID</code>存储于<code>.meta</code>文件中。<code>Unity</code>会为每一个加入到<code>Assets</code>文件夹中的文件，创建一个<strong>同级同名</strong>的<code>.meta</code>文件，虽然文件类型的不同会影响这个<code>.meta</code>的具体内容，但它们都包含一个用来标记文件身份的<code>GUID</code></li>
-<li>一个名为<code>Cube</code>预制体的<code>.meta</code>文件（<code>Cube.prefab.meta</code>）的文本如下</li>
-</ul>
-<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fileFormatVersion: <span class="number">2</span></span><br><span class="line">guid: <span class="number">8</span>ce36e014f775544781668b6c3c3985f  <span class="comment">//存储了该文件的guid</span></span><br><span class="line">PrefabImporter:</span><br><span class="line">  externalObjects: &#123;&#125;</span><br><span class="line">  userData: </span><br><span class="line">  assetBundleName: </span><br><span class="line">  assetBundleVariant: </span><br></pre></td></tr></table></figure>
-<ul>
+<li>一个名为<code>Cube</code>预制体的<code>.meta</code>文件（<code>Cube.prefab.meta</code>）的文本如下<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fileFormatVersion: <span class="number">2</span></span><br><span class="line">guid: <span class="number">8</span>ce36e014f775544781668b6c3c3985f  <span class="comment">//存储了该文件的guid</span></span><br><span class="line">PrefabImporter:</span><br><span class="line">  externalObjects: &#123;&#125;</span><br><span class="line">  userData: </span><br><span class="line">  assetBundleName: </span><br><span class="line">  assetBundleVariant: </span><br></pre></td></tr></table></figure></li>
 <li>一个名为<code>CubeMaterial</code>材质的<code>.meta</code>文件（<code>CubeMaterial.mat.meta</code>）的文本如下<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fileFormatVersion: <span class="number">2</span></span><br><span class="line">guid: <span class="number">85b</span>fbb63af5ee124ab56fba18dea4918  <span class="comment">//存储了该文件的guid</span></span><br><span class="line">NativeFormatImporter:</span><br><span class="line">  externalObjects: &#123;&#125;</span><br><span class="line">  mainObjectFileID: <span class="number">2100000</span></span><br><span class="line">  userData: </span><br><span class="line">  assetBundleName: </span><br><span class="line">  assetBundleVariant: </span><br></pre></td></tr></table></figure></li>
 </ul>
 <h1 id="Local-ID"><a href="#Local-ID" class="headerlink" title="Local ID"></a>Local ID</h1><ul>
@@ -238,6 +235,9 @@
 <li><code>Instance ID</code>是资源的快捷访问<code>ID</code>，它只由数字组成，直接使用<code>Instance ID</code>去查找，减少查找开销。由<code>File GUID</code>和<code>Local ID</code>转换而成</li>
 <li><code>Unity</code>编辑器会在项目启动后，创建并一直维护一张“映射表”，这张映射表记录的就是<code>File GUID</code>、<code>Local ID</code>以及由它们转换而成的<code>Instance ID</code>之间的关系</li>
 </ul>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><ol>
+<li>对于非序列化的文件，由于不会更改源文件，所以<code>GUID</code>和子文件的<code>Local ID</code>都存储在<code>.meta</code>文件中，如<code>FBX</code>文件、图集、<code>Material</code>等；对于序列化文件，<code>.meta</code>文件中只有自身的<code>GUID</code>，如<code>AnimatorController</code>、<code>prefab</code>等</li>
+</ol>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0XFQt8LmqoTxxst_kKDMjw">程序丨入门必看：Unity资源加载及管理</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhaoqingqing/p/5823927.html">玩转Unity资源，对象和序列化(上) </a></li>
@@ -319,7 +319,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Asset%E3%80%81Object"><span class="nav-number">1.</span> <span class="nav-text">Asset、Object</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GUID"><span class="nav-number">2.</span> <span class="nav-text">GUID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Local-ID"><span class="nav-number">3.</span> <span class="nav-text">Local ID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Instance-ID"><span class="nav-number">4.</span> <span class="nav-text">Instance ID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Asset%E3%80%81Object"><span class="nav-number">1.</span> <span class="nav-text">Asset、Object</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GUID"><span class="nav-number">2.</span> <span class="nav-text">GUID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Local-ID"><span class="nav-number">3.</span> <span class="nav-text">Local ID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Instance-ID"><span class="nav-number">4.</span> <span class="nav-text">Instance ID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">5.</span> <span class="nav-text">补充</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
