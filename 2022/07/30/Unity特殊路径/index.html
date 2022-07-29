@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/mmyBlog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/mmyBlog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="简单介绍Unity资源路径">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity 资源路径">
+<meta property="og:url" content="http://example.com/2022/07/30/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/index.html">
+<meta property="og:site_name" content="KDuoLiのBlog">
+<meta property="og:description" content="简单介绍Unity资源路径">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/windows.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/Android.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/IOS.png?raw=true">
+<meta property="article:published_time" content="2022-07-29T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-07-29T16:37:53.177Z">
+<meta property="article:author" content="KDuoLi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/windows.png?raw=true">
+
+<link rel="canonical" href="http://example.com/2022/07/30/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Unity 资源路径 | KDuoLiのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KDuoLiのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/30/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mmyBlog.png">
+      <meta itemprop="name" content="KDuoLi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KDuoLiのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity 资源路径
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-07-30 00:00:00 / 修改时间：00:37:53" itemprop="dateCreated datePublished" datetime="2022-07-30T00:00:00+08:00">2022-07-30</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">简单介绍Unity资源路径</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h1><ul>
+<li><strong>只读</strong></li>
+<li>打包时会将里面所有的资源压缩处理</li>
+<li>加载方法是<code>Resources.Load&lt;T&gt;(文件名)</code>，文件名不包含拓展名</li>
+</ul>
+<h1 id="Application-dataPath（数据路径）"><a href="#Application-dataPath（数据路径）" class="headerlink" title="Application.dataPath（数据路径）"></a>Application.dataPath（数据路径）</h1><ul>
+<li>包含目标设备上的游戏数据文件夹路径（<strong>只读</strong>），例如在<code>Editor</code>中就是&#96;Assets</li>
+<li>在游戏运行时不可用</li>
+<li>相对路径，该值取决于运行时所基于的平台<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Unity Editor：&lt;path to project folder&gt;/Assets</span><br><span class="line"></span><br><span class="line">Android：通常直接指向APK。如果在运行拆分的二进制编译版本，则改为指向OBB</span><br><span class="line"></span><br><span class="line">Windows 应用商店应用程序：播放器数据文件夹的绝对路径（这是一个只读文件夹，使用 Application.persistentDataPath 来保存数据）</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="Application-streamingAssetsPath"><a href="#Application-streamingAssetsPath" class="headerlink" title="Application.streamingAssetsPath"></a>Application.streamingAssetsPath</h1><ul>
+<li>通过<code>Application.streamingAssetsPath</code>获取目录路径，该目录中的文件将会原封不动的被拷贝到不同的平台上，每个平台对应的目录不一致，即不会进行压缩，但是都可以通过上述方法获得。它会根据平台返回正确的路径，如下：<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Mac OS <span class="keyword">or</span> Windows：path = Application.dataPath + <span class="string">&quot;/StreamingAssets&quot;</span>;</span><br><span class="line"></span><br><span class="line">IOS：path = Application.dataPath + <span class="string">&quot;/Raw&quot;</span>;</span><br><span class="line"></span><br><span class="line">Android：path = <span class="string">&quot;jar:file://&quot;</span> + Application.dataPath + <span class="string">&quot;!/assets/&quot;</span>;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<ol>
+<li>一般用来存放视频等资源文件。<strong>游戏运行时只能读不能写</strong>。一般会把初始的<code>AssetBundle</code>资源放在该文件夹下，并且通过<code>UnityWebRequest</code>或<code>AssetBundle.LoadFromFile</code>加载使用</li>
+<li>无法访问 <code>WebGL</code> 和 <code>Android</code> 平台上的 S<code>treamingAssets</code> 文件夹。在 <code>WebGL</code> 上没有文件访问权。<code>Android</code> 使用压缩的 <code>.apk</code> 文件。这些平台返回 <code>URL</code>。请使用 <code>UnityWebRequest</code> 类来访问资源，<code>UnityWebRequest</code>带有解压功能</li>
+<li>位于 <code>StreamingAssets</code> 文件夹中的 <code>.dll</code> 和脚本文件不参与脚本编译</li>
+</ol>
+<h1 id="Application-persistentDataPath（沙盒目录）"><a href="#Application-persistentDataPath（沙盒目录）" class="headerlink" title="Application.persistentDataPath（沙盒目录）"></a>Application.persistentDataPath（沙盒目录）</h1><ul>
+<li>此目录中可以存储每次运行要保留的数据。在 <code>iOS</code> 和 <code>Android</code> 上发布时，<code>persistentDataPath</code> 指向设备上的公共目录。应用程序更新不会擦除此位置中的文件。用户仍然可以直接擦除这些文件。<strong>可读可写</strong>。应用程序安装运行后才会出现</li>
+</ul>
+<h1 id="Application-temporaryCachePath"><a href="#Application-temporaryCachePath" class="headerlink" title="Application.temporaryCachePath"></a>Application.temporaryCachePath</h1><ul>
+<li>返回一个临时数据缓存目录（<strong>只读</strong>）</li>
+<li>在<code>IOS</code>上不能被<code>iCloud</code>自动备份</li>
+</ul>
+<h1 id="资源路径在不同平台的位置"><a href="#资源路径在不同平台的位置" class="headerlink" title="资源路径在不同平台的位置"></a>资源路径在不同平台的位置</h1><ul>
+<li><p><code>Windows</code><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/windows.png?raw=true"></p>
+</li>
+<li><p><code>Android</code><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/Android.png?raw=true"></p>
+</li>
+<li><p><code>IOS</code><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/IOS.png?raw=true"></p>
+</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2021.3/ScriptReference/Application.html">Unity-手册 Application</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Fflyqaq/p/12915776.html#applicationdatapath">Unity—4个资源路径简单介绍</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/30/%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9B%B8%E5%85%B3/" rel="prev" title="坐标系、向量">
+      <i class="fa fa-chevron-left"></i> 坐标系、向量
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Resources"><span class="nav-number">1.</span> <span class="nav-text">Resources</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Application-dataPath%EF%BC%88%E6%95%B0%E6%8D%AE%E8%B7%AF%E5%BE%84%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">Application.dataPath（数据路径）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Application-streamingAssetsPath"><span class="nav-number">3.</span> <span class="nav-text">Application.streamingAssetsPath</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Application-persistentDataPath%EF%BC%88%E6%B2%99%E7%9B%92%E7%9B%AE%E5%BD%95%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">Application.persistentDataPath（沙盒目录）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Application-temporaryCachePath"><span class="nav-number">5.</span> <span class="nav-text">Application.temporaryCachePath</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84%E5%9C%A8%E4%B8%8D%E5%90%8C%E5%B9%B3%E5%8F%B0%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">资源路径在不同平台的位置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KDuoLi"
+      src="/images/mmyBlog.png">
+  <p class="site-author-name" itemprop="name">KDuoLi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">11</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KDuoLi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
