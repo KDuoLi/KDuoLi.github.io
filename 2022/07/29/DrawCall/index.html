@@ -29,9 +29,10 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/CPU%E4%B8%8EGPU.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E5%91%BD%E4%BB%A4%E7%BC%93%E5%86%B2%E5%8C%BA.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E6%80%BB%E7%BA%BF%E5%B8%A6%E5%AE%BD.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E9%9D%99%E6%80%81%E5%90%88%E6%89%B9%E5%8E%9F%E7%90%861.png?raw=true">
 <meta property="article:published_time" content="2022-07-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-07-29T10:03:18.471Z">
+<meta property="article:modified_time" content="2022-07-29T16:00:00.000Z">
 <meta property="article:author" content="KDuoLi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/CPU%E4%B8%8EGPU.png?raw=true">
@@ -191,10 +192,16 @@
                 <i class="far fa-calendar"></i>
               </span>
               <span class="post-meta-item-text">发表于</span>
-              
 
-              <time title="创建时间：2022-07-29 00:00:00 / 修改时间：18:03:18" itemprop="dateCreated datePublished" datetime="2022-07-29T00:00:00+08:00">2022-07-29</time>
+              <time title="创建时间：2022-07-29 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-29T00:00:00+08:00">2022-07-29</time>
             </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-07-30 00:00:00" itemprop="dateModified" datetime="2022-07-30T00:00:00+08:00">2022-07-30</time>
+              </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
                 <i class="far fa-folder"></i>
@@ -279,7 +286,7 @@
 <li><code>DrawCall</code>越小越好？</li>
 </ol>
 <ul>
-<li>不一定。影响渲染模块性能的除了<code>Draw Call</code>之外，还有用于传输渲染数据的显存带宽。当使用<code>Draw Call Batching</code>将同种材质的网格模型拼合在一起时，可能会造成同一时间需要传输的数据（<code>Texture</code>、<code>VB</code>&#x2F;<code>IB</code>等）大大增加，以至于造成带宽“堵塞”，在资源无法及时传输过去的情况下，<code>GPU</code>只能等待，从而反倒降低了游戏的运行帧率</li>
+<li>不一定。影响渲染模块性能的除了<code>Draw Call</code>之外，还有用于传输渲染数据的总线带宽。当使用<code>Draw Call Batching</code>将同种材质的网格模型拼合在一起时，可能会造成同一时间需要传输的数据（<code>Texture</code>、<code>VB</code>&#x2F;<code>IB</code>等）大大增加，以至于造成带宽“堵塞”，在资源无法及时传输过去的情况下，<code>GPU</code>只能等待，从而反倒降低了游戏的运行帧率<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E6%80%BB%E7%BA%BF%E5%B8%A6%E5%AE%BD.png?raw=true"></li>
 </ul>
 <h1 id="Batch（批次）"><a href="#Batch（批次）" class="headerlink" title="Batch（批次）"></a><code>Batch</code>（批次）</h1><ul>
 <li>定义：调用一次<code>API</code>的绘制接口向<code>GPU</code>提交相同渲染状态的一定数量的三角形的行为，此行为称为一个渲染批次。</li>
@@ -342,6 +349,12 @@
 <li>打包之后体积增大，应用运行时所占用的内存体积也会增大</li>
 <li>静态批处理可以包含的顶点数存在限制。每个静态批最多可以包含 <code>64000</code> 个顶点。如果有更多，<code>Unity</code> 会创建另一个批处理</li>
 <li>如果多个<code>GameObject</code>在静态批处理之前共享相同的几何体，则会在编辑器或运行时为每个<code>GameObject</code>创建几何体的副本，这会增大内存的开销</li>
+</ol>
+<ul>
+<li>补充</li>
+</ul>
+<ol>
+<li>静态合批需要设置对象为<code>Static</code>，在项目设置<code>ProJect Setting</code>中开启<code>Static Batching</code>，而且材质需要开启<code>GPU</code>实例化（<code>Enable GPU Instancing</code>），默认材质无法<code>GPU</code>实例化</li>
 </ol>
 <h2 id="动态合批"><a href="#动态合批" class="headerlink" title="动态合批"></a>动态合批</h2><ul>
 <li>要求</li>
