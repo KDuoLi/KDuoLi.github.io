@@ -356,12 +356,6 @@
 <li>静态批处理可以包含的顶点数存在限制。每个静态批最多可以包含 <code>64000</code> 个顶点。如果有更多，<code>Unity</code> 会创建另一个批处理</li>
 <li>如果多个<code>GameObject</code>在静态批处理之前共享相同的几何体，则会在编辑器或运行时为每个<code>GameObject</code>创建几何体的副本，这会增大内存的开销</li>
 </ol>
-<ul>
-<li>补充</li>
-</ul>
-<ol>
-<li>静态合批需要设置对象为<code>Static</code>，在项目设置<code>ProJect Setting</code>中开启<code>Static Batching</code>，而且材质需要开启<code>GPU</code>实例化（<code>Enable GPU Instancing</code>），默认材质无法<code>GPU</code>实例化</li>
-</ol>
 <h2 id="动态合批"><a href="#动态合批" class="headerlink" title="动态合批"></a>动态合批</h2><ul>
 <li>要求</li>
 </ul>
