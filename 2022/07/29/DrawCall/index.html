@@ -333,7 +333,7 @@
 </li>
 <li><p>不适合的使用场景：大量重复出现的物体，如树</p>
 </li>
-<li><p><strong>静态合批并不减少<code>Draw call</code>的数量</strong>，但是由于预先把所有的子模型的顶点变换到了世界空间下，并且这些子模型共享材质，所以在<strong>多次<code>Draw call</code>调用之间并没有渲染状态的切换</strong>，渲染<code>API</code>会缓存绘制命令，起到了渲染优化的目的</p>
+<li><p><strong>静态合批并不减少<code>Draw call</code>的数量</strong>，但是由于预先把所有的子模型的顶点变换到了世界空间下，并且这些子模型共享材质，所以在<strong>多次<code>Draw call</code>调用之间并没有渲染状态的切换</strong>，渲染<code>API</code>会缓存绘制命令，起到了渲染优化的目的。即将多个符合条件的<code>Draw Call</code>合批，减少<code>Batch</code>，但不会减少<code>Draw call</code>的数量</p>
 </li>
 <li><p>静态合批采用了以空间换时间的策略来提升渲染效率</p>
 </li>
@@ -485,12 +485,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/07/29/Unity%20-%20GC/" rel="prev" title="Unity GC">
-      <i class="fa fa-chevron-left"></i> Unity GC
+    <a href="/2022/07/29/%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9B%B8%E5%85%B3/" rel="prev" title="坐标系、向量">
+      <i class="fa fa-chevron-left"></i> 坐标系、向量
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/07/30/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/" rel="next" title="Unity 资源路径">
-      Unity 资源路径 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/07/29/Unity%20-%20GC/" rel="next" title="Unity GC">
+      Unity GC <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
