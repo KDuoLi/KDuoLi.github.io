@@ -313,7 +313,7 @@
 <li>定义：对某对象进行批量的处理</li>
 <li>静态合批的效率比动态合批的效率更高，因为静态合批不在<code>CPU</code>上变换顶点</li>
 </ul>
-<h2 id="静态合批"><a href="#静态合批" class="headerlink" title="静态合批"></a>静态合批</h2><ul>
+<h1 id="静态合批"><a href="#静态合批" class="headerlink" title="静态合批"></a>静态合批</h1><ul>
 <li>要求</li>
 </ul>
 <ol>
@@ -365,7 +365,7 @@
 <li>静态批处理可以包含的顶点数存在限制。每个静态批最多可以包含 <code>64000</code> 个顶点。如果有更多，<code>Unity</code> 会创建另一个批处理</li>
 <li>如果多个<code>GameObject</code>在静态批处理之前共享相同的几何体，则会在编辑器或运行时为每个<code>GameObject</code>创建几何体的副本，这会增大内存的开销</li>
 </ol>
-<h2 id="动态合批"><a href="#动态合批" class="headerlink" title="动态合批"></a>动态合批</h2><ul>
+<h1 id="动态合批"><a href="#动态合批" class="headerlink" title="动态合批"></a>动态合批</h1><ul>
 <li>要求</li>
 </ul>
 <ol>
@@ -540,7 +540,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DrawCall"><span class="nav-number">2.</span> <span class="nav-text">DrawCall</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Batch%EF%BC%88%E6%89%B9%E6%AC%A1%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Batch（批次）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%B9%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">批处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%90%88%E6%89%B9"><span class="nav-number">4.1.</span> <span class="nav-text">静态合批</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%90%88%E6%89%B9"><span class="nav-number">4.2.</span> <span class="nav-text">动态合批</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GPU-instancing"><span class="nav-number">5.</span> <span class="nav-text">GPU instancing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SRP-Batch%EF%BC%88%E4%BB%85Unity-SRP%E7%AE%A1%E7%BA%BF%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">SRP Batch（仅Unity SRP管线）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">7.</span> <span class="nav-text">补充</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DrawCall"><span class="nav-number">2.</span> <span class="nav-text">DrawCall</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Batch%EF%BC%88%E6%89%B9%E6%AC%A1%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Batch（批次）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%B9%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">批处理</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%90%88%E6%89%B9"><span class="nav-number">5.</span> <span class="nav-text">静态合批</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%90%88%E6%89%B9"><span class="nav-number">6.</span> <span class="nav-text">动态合批</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GPU-instancing"><span class="nav-number">7.</span> <span class="nav-text">GPU instancing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SRP-Batch%EF%BC%88%E4%BB%85Unity-SRP%E7%AE%A1%E7%BA%BF%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">SRP Batch（仅Unity SRP管线）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">9.</span> <span class="nav-text">补充</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">10.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
