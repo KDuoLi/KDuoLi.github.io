@@ -433,7 +433,7 @@
 </li>
 </ul>
 <h1 id="SRP-Batch（仅Unity-SRP管线）"><a href="#SRP-Batch（仅Unity-SRP管线）" class="headerlink" title="SRP Batch（仅Unity SRP管线）"></a>SRP Batch（仅Unity SRP管线）</h1><ul>
-<li>原理：将数据<code>Buffer</code>拆分，通过降低对不需要更新的<code>Buffer</code>的更新频次来降低<code>Set Pass Call</code>的数量开销（即减少绘制调用之间的呈现状态更改），以进行加速，不会降低<code>Draw Call</code></li>
+<li>原理：将数据<code>Buffer</code>拆分，通过降低对不需要更新的<code>Buffer</code>的更新频次来<strong>降低<code>Set Pass Call</code>的数量开销</strong>（即减少绘制调用之间的呈现状态更改），以进行加速，<strong>不会降低<code>Draw Call</code></strong></li>
 <li>单次最大处理数量：无上限</li>
 <li>推荐使用场景：所有着色器尽可能支持</li>
 <li>不便性：</li>
