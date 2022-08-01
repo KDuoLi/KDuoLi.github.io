@@ -35,6 +35,11 @@
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E5%B8%B8%E8%A7%84%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E5%9B%BE.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E9%9D%99%E6%80%81%E5%90%88%E6%89%B9%E6%B5%81%E7%A8%8B%E5%9B%BE.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E5%8A%A8%E6%80%81%E5%90%88%E6%89%B9%E6%B5%81%E7%A8%8B%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/GPU%E5%AE%9E%E4%BE%8B%E5%8C%96%E6%B5%81%E7%A8%8B%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/SRPBatch%E6%B5%81%E7%A8%8B%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E6%A0%87%E5%87%86%E6%89%B9%E5%A4%84%E7%90%86%E5%92%8CSRP%20Batch%E6%B5%81%E7%A8%8B%E5%AF%B9%E6%AF%94.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/SRP%20Batch%E5%85%A8%E5%9B%BE.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E5%90%84%E7%A7%8D%E6%89%B9%E5%A4%84%E7%90%86%E7%89%B9%E6%80%A7%E5%AF%B9%E6%AF%94.png?raw=true">
 <meta property="article:published_time" content="2022-07-28T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-07-31T16:00:00.000Z">
 <meta property="article:author" content="KDuoLi">
@@ -237,11 +242,11 @@
 <li>显存带宽（也称内存带宽，<code>Memory Bandwidth</code>）：指<code>GPU</code>对其专用的内存的读写速率。如果游戏出现带宽受限，通常是因为使用了太大的纹理（<code>Texture</code>），优化手段：1）纹理压缩；2）<code>Mipmap</code></li>
 </ol>
 <ul>
-<li>区分<code>Batch</code> 、 <code>Drawcall</code> 、 <code>SetPass Call</code></li>
+<li>区分<code>Batch</code> 、 <code>Drawcall</code> 、 <code>Set Pass Call</code></li>
 </ul>
 <ol>
-<li><code>SetPass Call</code>指一次渲染状态切换，材质不一致的时候出现一次</li>
-<li>两个相邻执行的<code>Batch</code>之间，如果使用不同材质球或者使用同材质球不同<code>pass</code>则会执行一次<code>SetPass Call</code></li>
+<li><code>Set Pass Call</code>指一次渲染状态切换，材质不一致的时候出现一次</li>
+<li>两个相邻执行的<code>Batch</code>之间，如果使用不同材质球或者使用同材质球不同<code>pass</code>则会执行一次<code>Set Pass Call</code></li>
 <li><code>CPU</code>调用一次<code>GPU</code>绘制函数称为一次<code>Draw call</code>，多个<code>Draw call</code>在<code>unity</code>中可以合并为一个<code>Batch</code>提交</li>
 <li>不同<code>mesh</code>不同材质会分别进行渲染设置并调用<code>Draw call</code></li>
 <li>不同<code>mesh</code>同材质在满足条件的情况下被顶点数据合并一次性提交给<code>GPU</code>，减少<code>batch</code>不降低<code>Draw call</code></li>
@@ -258,16 +263,16 @@
 </li>
 </ul>
 <ol>
-<li><code>CPU</code>可能会向GPU发送 <code>SetPass Call</code> 指令来修改一些被统称为 <code>Render State</code> 的变量。每个<code>SetPass Call</code>都会告知<code>GPU</code>在下次渲染<code>Mesh</code>时要使用哪个配置。只有在下次需要渲染的<code>Mesh</code>的<code>Render State</code>与当前的<code>Render State</code>不同时，才会有<code>SetPass Call</code></li>
-<li><code>CPU</code>向<code>GPU</code>发送<code>Draw Call</code>指令。<code>Draw Call</code>指令告知<code>GPU</code>使用最近一次的<code>SetPass Call</code>的配置对指定的<code>Mesh</code>进行渲染</li>
-<li>在某些情况下，一个<code>Batch</code>可能需要不止一个 <code>Pass</code>。<code>Pass</code>是一段<code>Shader</code>代码，新的<code>Pass</code>会改变<code>Render State</code>。<code>CPU</code>必须为<code>Batch</code>中的每个<code>Pass</code>发送新的<code>SetPass Call</code>并再次发送<code>Draw Call</code></li>
+<li><code>CPU</code>可能会向GPU发送 <code>Set Pass Call</code> 指令来修改一些被统称为 <code>Render State</code> 的变量。每个<code>Set Pass Call</code>都会告知<code>GPU</code>在下次渲染<code>Mesh</code>时要使用哪个配置。只有在下次需要渲染的<code>Mesh</code>的<code>Render State</code>与当前的<code>Render State</code>不同时，才会有<code>Set Pass Call</code></li>
+<li><code>CPU</code>向<code>GPU</code>发送<code>Draw Call</code>指令。<code>Draw Call</code>指令告知<code>GPU</code>使用最近一次的<code>Set Pass Call</code>的配置对指定的<code>Mesh</code>进行渲染</li>
+<li>在某些情况下，一个<code>Batch</code>可能需要不止一个 <code>Pass</code>。<code>Pass</code>是一段<code>Shader</code>代码，新的<code>Pass</code>会改变<code>Render State</code>。<code>CPU</code>必须为<code>Batch</code>中的每个<code>Pass</code>发送新的<code>Set Pass Call</code>并再次发送<code>Draw Call</code></li>
 </ol>
 <ul>
 <li>与此同时，<code>GPU</code>进行着如下的工作：</li>
 </ul>
 <ol>
 <li><code>GPU</code>根据<code>CPU</code>的指令执行任务，执行顺序与指令发送顺序相同</li>
-<li>如果当前的任务是一个<code>SetPass Call</code>，则<code>GPU</code>更新<code>Render State</code></li>
+<li>如果当前的任务是一个<code>Set Pass Call</code>，则<code>GPU</code>更新<code>Render State</code></li>
 <li>如果当前的任务是一个<code>Draw Call</code>，则<code>GPU</code>渲染<code>Mesh</code></li>
 <li>重复上述过程直到<code>GPU</code>将来自<code>CPU</code>的指令全部处理完</li>
 </ol>
@@ -324,6 +329,10 @@
 <li>在后续的绘制过程中，一次性提交整个合并模型的顶点数据。根据引擎的场景管理系统判断各个子模型的可见性。然后设置一次渲染状态，调用多次<code>Draw call</code>分别绘制每一个子模型<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E9%9D%99%E6%80%81%E5%90%88%E6%89%B9%E5%8E%9F%E7%90%861.png?raw=true"></li>
 </ol>
 <ul>
+<li><p>推荐使用场景：场景中不会修改的静态建筑与植被</p>
+</li>
+<li><p>不适合的使用场景：大量重复出现的物体，如树</p>
+</li>
 <li><p>静态合批并不减少<code>Draw call</code>的数量，但是由于预先把所有的子模型的顶点变换到了世界空间下，并且这些子模型共享材质，所以在多次<code>Draw call</code>调用之间并没有渲染状态的切换，渲染<code>API</code>会缓存绘制命令，起到了渲染优化的目的</p>
 </li>
 <li><p>静态合批采用了以空间换时间的策略来提升渲染效率</p>
@@ -375,6 +384,8 @@
 <ul>
 <li><p>如果我们开启了<code>Dynamic batching</code>，<code>Unity</code>会<strong>自动</strong>地将所有共享同一材质的动态<code>GameObject</code>在一个<code>Draw call</code>内绘制，动态合批会减少<code>Draw call</code>数量</p>
 </li>
+<li><p>推荐使用场景：细碎的面数较少的多个动态对象</p>
+</li>
 <li><p><code>Unity</code>始终对动态几何体（如粒子系统）使用动态批处理</p>
 </li>
 <li><p>模型顶点变换的操作是由<code>CPU</code>完成的，每帧都会在<code>CPU</code>中将模型的顶点转换到世界坐标系，所以这会带来一些<code>CPU</code>的性能消耗</p>
@@ -392,6 +403,46 @@
 <li>对合批对象拥有较多的要求</li>
 </ol>
 <p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E5%8A%A8%E6%80%81%E5%90%88%E6%89%B9%E6%B5%81%E7%A8%8B%E5%9B%BE.png?raw=true"></p>
+<h1 id="GPU-instancing"><a href="#GPU-instancing" class="headerlink" title="GPU instancing"></a>GPU instancing</h1><ul>
+<li>要求</li>
+</ul>
+<ol>
+<li>用于共享相同网格和材质的游戏对象</li>
+<li>材料的着色必须支持 <code>GPU</code> 实例化</li>
+<li>网格必须来自以下源之一，并按行为分组：1）<code>MeshRenderer</code> 组件或 <code>Graphics.RenderMesh</code> 调用；2）<code>Graphics.RenderMeshInstanced</code> 或 <code>Graphics.RenderMeshIndirect</code> 调用</li>
+</ol>
+<ul>
+<li><p>原理：只提交一个<code>mesh</code>和材质，但是提交多个实例的差异化信息，对同一个<code>mesh</code>在<code>GPU</code>进行变换绘制</p>
+</li>
+<li><p>推荐使用场景：草地</p>
+</li>
+<li><p>使用<code>GPU Instancing</code>可以一次渲染相同网格的多个副本。每次<code>draw call</code>，<code>GPU Instancing</code>只渲染相同的网格，但是每个实例可以有不同的参数(例如，<code>color</code>或<code>scale</code>)，以增加变化，减少重复的出现</p>
+</li>
+<li><p>单次最大处理数量：<code>1023</code>个对象</p>
+</li>
+<li><p>流程如下图<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/GPU%E5%AE%9E%E4%BE%8B%E5%8C%96%E6%B5%81%E7%A8%8B%E5%9B%BE.png?raw=true"></p>
+</li>
+</ul>
+<h1 id="SRP-Batch（仅Unity-SRP管线）"><a href="#SRP-Batch（仅Unity-SRP管线）" class="headerlink" title="SRP Batch（仅Unity SRP管线）"></a>SRP Batch（仅Unity SRP管线）</h1><ul>
+<li>原理：将数据<code>Buffer</code>拆分，通过降低对不需要更新的<code>Buffer</code>的更新频次来降低<code>Set Pass Call</code>的数量开销（即减少绘制调用之间的呈现状态更改），以进行加速，不会降低<code>Draw Call</code></li>
+<li>单次最大处理数量：无上限</li>
+<li>推荐使用场景：所有着色器尽可能支持</li>
+<li>不便性：</li>
+</ul>
+<ol>
+<li>会影响&#96;&#96;的查看</li>
+<li>实际优化效果因使用环境差异导致效果并不一定明显</li>
+<li><code>Buffer</code>不允许存在变体，参数数量上的灵活性降低</li>
+</ol>
+<ul>
+<li><p><code>SRP Batch</code>流程图如下<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/SRPBatch%E6%B5%81%E7%A8%8B%E5%9B%BE.png?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E6%A0%87%E5%87%86%E6%89%B9%E5%A4%84%E7%90%86%E5%92%8CSRP%20Batch%E6%B5%81%E7%A8%8B%E5%AF%B9%E6%AF%94.jpg?raw=true"></p>
+</li>
+<li><p><code>SRP</code>批处理器是一个低级渲染循环，它使材质数据保留在 <code>GPU</code> 内存中。如果材质内容未更改，则 <code>SRP</code> 批处理程序不会进行任何呈现状态更改。相反，<code>SRP</code> 批处理程序使用专用代码路径来更新大型 <code>GPU</code> 缓冲区中的 <code>Unity</code> 引擎属性，如下图所示<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/SRP%20Batch%E5%85%A8%E5%9B%BE.jpg?raw=true"></p>
+</li>
+</ul>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><ul>
+<li>各种批处理对比<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E5%90%84%E7%A7%8D%E6%89%B9%E5%A4%84%E7%90%86%E7%89%B9%E6%80%A7%E5%AF%B9%E6%AF%94.png?raw=true"></li>
+</ul>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a target="_blank" rel="noopener" href="https://gameinstitute.qq.com/community/detail/114323">图形渲染及优化—Unity合批技术实践</a></li>
 <li><a target="_blank" rel="noopener" href="https://gameinstitute.qq.com/community/detail/113040">图形渲染及优化—Batch</a></li>
@@ -405,6 +456,9 @@
 <li><a target="_blank" rel="noopener" href="https://docs.unity3d.com/2021.3/Documentation/Manual/DrawCallBatching.html">Unity手册 - Draw call batching</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/350207301">【Unity】批次合并理解和对比</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1ae4y1X76V?p=2&spm_id_from=pageDriver&vd_source=d2d44d4ce8893453aa70df7d2d5f6651">【百人计划】图形 5.8 合批原理讲解</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.unity.cn/2021.3/Documentation/Manual/GPUInstancing.html">Unity手册 - GPU instancing</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/70123645">GPU instancing</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.unity.cn/2021.3/Documentation/Manual/SRPBatcher.html">Unity手册 - SRPBatcher</a></li>
 </ul>
 
     </div>
@@ -421,12 +475,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/07/29/%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9B%B8%E5%85%B3/" rel="prev" title="坐标系、向量">
-      <i class="fa fa-chevron-left"></i> 坐标系、向量
+    <a href="/2022/07/29/Unity%20-%20GC/" rel="prev" title="Unity GC">
+      <i class="fa fa-chevron-left"></i> Unity GC
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/07/29/Unity%20-%20GC/" rel="next" title="Unity GC">
-      Unity GC <i class="fa fa-chevron-right"></i>
+    <a href="/2022/07/30/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/" rel="next" title="Unity 资源路径">
+      Unity 资源路径 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
@@ -486,7 +540,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DrawCall"><span class="nav-number">2.</span> <span class="nav-text">DrawCall</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Batch%EF%BC%88%E6%89%B9%E6%AC%A1%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Batch（批次）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%B9%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">批处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%90%88%E6%89%B9"><span class="nav-number">4.1.</span> <span class="nav-text">静态合批</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%90%88%E6%89%B9"><span class="nav-number">4.2.</span> <span class="nav-text">动态合批</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">5.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DrawCall"><span class="nav-number">2.</span> <span class="nav-text">DrawCall</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Batch%EF%BC%88%E6%89%B9%E6%AC%A1%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Batch（批次）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%89%B9%E5%A4%84%E7%90%86"><span class="nav-number">4.</span> <span class="nav-text">批处理</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%99%E6%80%81%E5%90%88%E6%89%B9"><span class="nav-number">4.1.</span> <span class="nav-text">静态合批</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E5%90%88%E6%89%B9"><span class="nav-number">4.2.</span> <span class="nav-text">动态合批</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GPU-instancing"><span class="nav-number">5.</span> <span class="nav-text">GPU instancing</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#SRP-Batch%EF%BC%88%E4%BB%85Unity-SRP%E7%AE%A1%E7%BA%BF%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">SRP Batch（仅Unity SRP管线）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">7.</span> <span class="nav-text">补充</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 

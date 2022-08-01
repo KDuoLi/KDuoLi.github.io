@@ -45,6 +45,8 @@
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E7%AC%AC%E4%B8%89%E8%BD%AE%E5%BE%AA%E7%8E%AF.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E6%9C%80%E7%BB%88%E5%BE%AA%E7%8E%AF.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E5%92%8C%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E5%AF%B9%E6%AF%94.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E8%B7%9D%E7%A6%BB%E4%BA%8C%E7%BB%B4%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%90%84%E7%A7%8D%E8%B7%9D%E7%A6%BB%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true">
 <meta property="article:published_time" content="2022-06-21T16:00:00.000Z">
 <meta property="article:modified_time" content="2022-06-24T16:00:00.000Z">
 <meta property="article:author" content="KDuoLi">
@@ -358,14 +360,17 @@
 <ol>
 <li>如果令<code>H</code>等于<code>0</code>，那么<code>A*</code>就会退化为<code>Dijkstra</code>。如果令<code>G</code>等于<code>0</code>，那么<code>A*</code>就会退化为<code>GBFS</code></li>
 <li>如果图形中只允许朝上下左右四个方向移动，则可以使用曼哈顿距离；如果图形中允许朝八个方向移动，则可以使用对角距离；如果图形中允许朝任何方向移动，则可以使用欧几里得距离</li>
+<li>下图中红线代表曼哈顿距离；绿色代表欧氏距离，也就是直线距离。而蓝色和黄色代表等价的曼哈顿距离。曼哈顿距离用以标明两个点上在标准坐标系上的绝对轴距之总和。在二维平面上，<code>d(x,y) = |x1-x2| + |y1-y2|</code>。欧氏距离是两点之间线段的长度，在二维平面上，<img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E8%B7%9D%E7%A6%BB%E4%BA%8C%E7%BB%B4%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F.png?raw=true"><br>​</li>
 </ol>
-<h1 id="B-（待补充）"><a href="#B-（待补充）" class="headerlink" title="B*（待补充）"></a>B*（待补充）</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%90%84%E7%A7%8D%E8%B7%9D%E7%A6%BB%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a target="_blank" rel="noopener" href="https://www.runoob.com/data-structures/graph-theory.html">图论基础和表示 | 菜鸟教程</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">Introduction to the A* Algorithm</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/74ca39e670ba">寻路算法小结</a></li>
 <li><a target="_blank" rel="noopener" href="https://paul.pub/a-star-algorithm/#id-%E5%90%AF%E5%8F%91%E5%87%BD%E6%95%B0">路径规划之 A* 算法</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/346666812">路径规划 | 图搜索算法：DFS、BFS、GBFS、Dijkstra、A*</a></li>
 <li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JiVx-tyXBt5ef53hjFZyHA">如何快速找到最优路线？深入理解游戏中寻路算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/hy592070616/article/details/121569933?spm=1001.2014.3001.5501">机器学习中的数学——距离定义（二）：曼哈顿距离（Manhattan Distance）</a></li>
 </ul>
 
     </div>
@@ -447,7 +452,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%EF%BC%88BFS%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">广度优先搜索（BFS）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dijkstra%EF%BC%88%E7%BB%9F%E4%B8%80%E6%88%90%E6%9C%AC%E6%90%9C%E7%B4%A2%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Dijkstra（统一成本搜索）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%EF%BC%88GBFS%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">最佳优先搜索（GBFS）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A"><span class="nav-number">5.</span> <span class="nav-text">A*</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#B-%EF%BC%88%E5%BE%85%E8%A1%A5%E5%85%85%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">B*（待补充）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%EF%BC%88BFS%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">广度优先搜索（BFS）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dijkstra%EF%BC%88%E7%BB%9F%E4%B8%80%E6%88%90%E6%9C%AC%E6%90%9C%E7%B4%A2%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Dijkstra（统一成本搜索）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%EF%BC%88GBFS%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">最佳优先搜索（GBFS）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A"><span class="nav-number">5.</span> <span class="nav-text">A*</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
