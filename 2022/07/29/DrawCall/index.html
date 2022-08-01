@@ -333,7 +333,7 @@
 </li>
 <li><p>不适合的使用场景：大量重复出现的物体，如树</p>
 </li>
-<li><p>静态合批并不减少<code>Draw call</code>的数量，但是由于预先把所有的子模型的顶点变换到了世界空间下，并且这些子模型共享材质，所以在多次<code>Draw call</code>调用之间并没有渲染状态的切换，渲染<code>API</code>会缓存绘制命令，起到了渲染优化的目的</p>
+<li><p><strong>静态合批并不减少<code>Draw call</code>的数量</strong>，但是由于预先把所有的子模型的顶点变换到了世界空间下，并且这些子模型共享材质，所以在<strong>多次<code>Draw call</code>调用之间并没有渲染状态的切换</strong>，渲染<code>API</code>会缓存绘制命令，起到了渲染优化的目的</p>
 </li>
 <li><p>静态合批采用了以空间换时间的策略来提升渲染效率</p>
 </li>
@@ -379,7 +379,7 @@
 </ul>
 <ol>
 <li>在进行场景绘制之前将所有的共享同一材质的模型的顶点信息变换到世界空间中</li>
-<li>然后通过一次<code>Draw call</code>绘制多个模型，达到合批的目的</li>
+<li>然后通过<strong>一次<code>Draw call</code>绘制多个模型</strong>，达到合批的目的</li>
 </ol>
 <ul>
 <li><p>如果我们开启了<code>Dynamic batching</code>，<code>Unity</code>会<strong>自动</strong>地将所有共享同一材质的动态<code>GameObject</code>在一个<code>Draw call</code>内绘制，动态合批会减少<code>Draw call</code>数量</p>
@@ -401,6 +401,15 @@
 </ul>
 <ol>
 <li>对合批对象拥有较多的要求</li>
+</ol>
+<ul>
+<li>动态合批与静态合批的区别：</li>
+</ul>
+<ol>
+<li>动态合批不会创建常驻内存的“合并后网格”，也就是说它不会在运行时造成内存的显著增长，也不会影响打包时的包体大小</li>
+<li>动态合批在绘制前会先将顶点转换到世界坐标系下，然后再填充进顶点、索引缓冲区；静态合批后子网格不接受任何变换操作，仅手动合批后的<code>Root</code>节点可被操作，因此静态合批的顶点、索引缓冲区中的信息不会被修改（<code>Root</code>的变换信息则会通过<code>Constant Buffer</code>传入）；</li>
+<li>因为<code>2</code>的原因，动态合批的主要开销在于遍历顶点进行空间变换时的对<code>CPU</code>性能的开销；静态合批没有这个操作，所以也没有这个开销；</li>
+<li>动态合批使用根据渲染器类型分配的公共缓冲区，而静态合批使用自己专用的缓冲区。</li>
 </ol>
 <p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E5%8A%A8%E6%80%81%E5%90%88%E6%89%B9%E6%B5%81%E7%A8%8B%E5%9B%BE.png?raw=true"></p>
 <h1 id="GPU-instancing"><a href="#GPU-instancing" class="headerlink" title="GPU instancing"></a>GPU instancing</h1><ul>
@@ -459,6 +468,7 @@
 <li><a target="_blank" rel="noopener" href="https://docs.unity.cn/2021.3/Documentation/Manual/GPUInstancing.html">Unity手册 - GPU instancing</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/70123645">GPU instancing</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.unity.cn/2021.3/Documentation/Manual/SRPBatcher.html">Unity手册 - SRPBatcher</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cancantrbl/p/16048341.html">合批是什么？为什么可以减少Drawcall？有什么合批方法？</a></li>
 </ul>
 
     </div>
