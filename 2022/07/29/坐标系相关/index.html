@@ -20,12 +20,12 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="简单介绍坐标系、向量及其相关内容">
+  <meta name="description" content="简单介绍坐标系、向量、坐标空间">
 <meta property="og:type" content="article">
-<meta property="og:title" content="坐标系、向量">
+<meta property="og:title" content="坐标系、向量、坐标空间">
 <meta property="og:url" content="http://example.com/2022/07/29/%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9B%B8%E5%85%B3/index.html">
 <meta property="og:site_name" content="KDuoLiのBlog">
-<meta property="og:description" content="简单介绍坐标系、向量及其相关内容">
+<meta property="og:description" content="简单介绍坐标系、向量、坐标空间">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E5%B7%A6%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E5%8F%B3%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB.png?raw=true">
@@ -35,8 +35,11 @@
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E5%8F%89%E4%B9%98%E5%88%A4%E6%96%AD%E5%86%85%E5%92%8C%E5%A4%96.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E4%B8%87%E5%90%91%E8%8A%82%E6%AD%BB%E9%94%811.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E4%B8%87%E5%90%91%E8%8A%82%E6%AD%BB%E9%94%812.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E9%A1%B6%E7%82%B9%E5%8F%98%E6%8D%A2%E5%85%A8%E6%B5%81%E7%A8%8B1.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E6%B8%B2%E6%9F%93%E6%B5%81%E6%B0%B4%E7%BA%BF%E4%B8%AD%E9%A1%B6%E7%82%B9%E7%9A%84%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2%E8%BF%87%E7%A8%8B.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/Unity%20%E4%B8%AD%E5%90%84%E4%B8%AA%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E7%9A%84%E6%97%8B%E5%90%91%E6%80%A7.png?raw=true">
 <meta property="article:published_time" content="2022-07-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-08-07T18:47:39.339Z">
+<meta property="article:modified_time" content="2022-08-08T16:00:00.000Z">
 <meta property="article:author" content="KDuoLi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E5%B7%A6%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB.png?raw=true">
@@ -54,7 +57,7 @@
   };
 </script>
 
-  <title>坐标系、向量 | KDuoLiのBlog</title>
+  <title>坐标系、向量、坐标空间 | KDuoLiのBlog</title>
   
 
 
@@ -187,7 +190,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          坐标系、向量
+          坐标系、向量、坐标空间
         </h1>
 
         <div class="post-meta">
@@ -204,7 +207,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-08 02:47:39" itemprop="dateModified" datetime="2022-08-08T02:47:39+08:00">2022-08-08</time>
+                <time title="修改时间：2022-08-09 00:00:00" itemprop="dateModified" datetime="2022-08-09T00:00:00+08:00">2022-08-09</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -217,7 +220,7 @@
             </span>
 
           
-            <div class="post-description">简单介绍坐标系、向量及其相关内容</div>
+            <div class="post-description">简单介绍坐标系、向量、坐标空间</div>
 
         </div>
       </header>
@@ -349,10 +352,51 @@
 <li>单个四元数不能表示任何方向超过 <code>180</code> 度的旋转</li>
 <li>四元数的数字表示在直观上难以理解</li>
 </ol>
-<h1 id="局部空间"><a href="#局部空间" class="headerlink" title="局部空间"></a>局部空间</h1><h1 id="世界空间"><a href="#世界空间" class="headerlink" title="世界空间"></a>世界空间</h1><h1 id="观察空间"><a href="#观察空间" class="headerlink" title="观察空间"></a>观察空间</h1><h1 id="裁剪空间"><a href="#裁剪空间" class="headerlink" title="裁剪空间"></a>裁剪空间</h1><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<h1 id="坐标空间"><a href="#坐标空间" class="headerlink" title="坐标空间"></a>坐标空间</h1><ul>
+<li>下图是顶点如何从模型空间变换到屏幕坐标的过程<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E9%A1%B6%E7%82%B9%E5%8F%98%E6%8D%A2%E5%85%A8%E6%B5%81%E7%A8%8B1.png?raw=true"></li>
+</ul>
+<ol>
+<li>局部坐标是对象相对于局部原点的坐标，也是物体起始的坐标。</li>
+<li>下一步是将局部坐标变换为世界空间坐标，世界空间坐标是处于一个更大的空间范围的。这些坐标相对于世界的全局原点，它们会和其它物体一起相对于世界的原点进行摆放。</li>
+<li>接下来我们将世界坐标变换为观察空间坐标，使得每个坐标都是从摄像机或者说观察者的角度进行观察的。</li>
+<li>坐标到达观察空间之后，我们需要将其投影到裁剪坐标。裁剪坐标会被处理至-1.0到1.0的范围内，并判断哪些顶点将会出现在屏幕上。</li>
+<li>最后，我们将裁剪坐标变换为屏幕坐标，我们将使用一个叫做视口变换(V<code>iewport Transform</code>)的过程。视口变换将位于<code>-1.0</code>到<code>1.0</code>范围的坐标变换到由<code>glViewport</code>函数所定义的坐标范围内。最后变换出来的坐标将会送到光栅器，将其转化为片段</li>
+</ol>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E6%B8%B2%E6%9F%93%E6%B5%81%E6%B0%B4%E7%BA%BF%E4%B8%AD%E9%A1%B6%E7%82%B9%E7%9A%84%E7%A9%BA%E9%97%B4%E5%8F%98%E6%8D%A2%E8%BF%87%E7%A8%8B.png?raw=true"></p>
+<ul>
+<li><code>Unity</code> 中各个坐标空间的旋向性</li>
+</ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/Unity%20%E4%B8%AD%E5%90%84%E4%B8%AA%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E7%9A%84%E6%97%8B%E5%90%91%E6%80%A7.png?raw=true"></p>
+<h1 id="模型空间（Model-Space）"><a href="#模型空间（Model-Space）" class="headerlink" title="模型空间（Model Space）"></a>模型空间（<code>Model Space</code>）</h1><ul>
+<li>模型空间也称对象空间（<code>Object Space</code>）或局部空间（<code>Local Space</code>）</li>
+<li>模型空间是指物体所在的坐标空间，即对象最开始所在的地方。每个模型都有自己独<br>立的坐标空间，当它移动或旋转的时候，模型空间也会跟着它移动和旋转</li>
+</ul>
+<h1 id="世界空间（World-Space-）"><a href="#世界空间（World-Space-）" class="headerlink" title="世界空间（World Space)）"></a>世界空间（<code>World Space)</code>）</h1><ul>
+<li>世界空间可以被用于描述绝对位置（绝对位置指的就是在世界坐标系中的位置）。通常，我们会把世界空间的原点放置在游戏空间的中心</li>
+<li>将顶点坐标从模型空间变换到世界空间中，这个变换通常叫做模型变换 (<code>model transform</code>)</li>
+</ul>
+<h1 id="观察空间（View-Space）"><a href="#观察空间（View-Space）" class="headerlink" title="观察空间（View Space）"></a>观察空间（<code>View Space</code>）</h1><ul>
+<li>观察空间也称视觉空间（<code>Eye Space</code>）或称摄像机空间（<code>Camera Space</code>）</li>
+<li>在观察空间中，摄像机位于原点，同样，其坐标轴的选择可以是任意的，以 <code>Unity</code> 为例， <code>Unity</code> 中观察空间的坐标轴选择<code>+x</code> 轴指向右方， <code>+y</code> 轴指向上方，而<code>+z</code> 轴指向的是摄像机的后方</li>
+<li>观察空间是一个三维空间</li>
+<li>将顶点坐标从世界空间变换到观察空间中。这个变换通常叫做观察变换 （<code>view transform</code>）</li>
+</ul>
+<h1 id="裁剪空间（Clip-Space）"><a href="#裁剪空间（Clip-Space）" class="headerlink" title="裁剪空间（Clip Space）"></a>裁剪空间（<code>Clip Space</code>）</h1><ul>
+<li>裁剪空间也称齐次裁剪空间</li>
+<li>将顶点从观察空间转换到裁剪空间，这个用于变换的矩阵叫做裁剪矩阵 (<code>clip matrix</code>), 也被称为投影矩阵 (<code>projection matrix</code>)</li>
+<li>裁剪空间的目标是能够方便地对渲染图元进行裁剪 完全位千这块空间内部的图元将会被保<br>留，完全位于这块空间外部的图元将会被剔除，而与这块空间边界相交的图元就会被裁剪</li>
+<li>裁剪空间由视锥体决定</li>
+</ul>
+<h1 id="屏幕空间（Screen-Space）"><a href="#屏幕空间（Screen-Space）" class="headerlink" title="屏幕空间（Screen Space）"></a>屏幕空间（<code>Screen Space</code>）</h1><ul>
+<li>顶点从裁剪空间投影到屏幕空间中，来生成对应的<code>2D</code>坐标。</li>
+<li>屏幕空间是一个二维空间</li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/89046275">Unity游戏开发——向量运算（点乘和叉乘）</a></li>
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/359975221">向量点乘与叉乘的概念及几何意义</a></li>
 <li><a target="_blank" rel="noopener" href="https://learnopengl-cn.github.io/01%20Getting%20started/08%20Coordinate%20Systems/#_2">LearnOpenGL - 坐标系统</a></li>
+<li><a target="_blank" rel="noopener" href="https://morisa66.github.io/2021/01/14/MVP/#:~:text=MVP,%E7%9F%A9%E9%98%B5%E5%8D%B3%20Model%EF%BC%88%E6%A8%A1%E5%9E%8B%EF%BC%89%E3%80%81View%EF%BC%88%E8%A7%82%E5%AF%9F%EF%BC%89%E3%80%81Projection%EF%BC%88%E6%8A%95%E5%BD%B1%EF%BC%89%E7%9F%A9%E9%98%B5%E3%80%82">MVP 矩阵公式推导</a></li>
+<li>《Unity Shader入门精要》</li>
 </ul>
 
     </div>
@@ -434,7 +478,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">坐标系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87"><span class="nav-number">2.</span> <span class="nav-text">齐次坐标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%91%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">向量归一化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%91%E9%87%8F%E7%9A%84%E7%82%B9%E4%B9%98"><span class="nav-number">4.</span> <span class="nav-text">向量的点乘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%91%E9%87%8F%E7%9A%84%E5%8F%89%E4%B9%98"><span class="nav-number">5.</span> <span class="nav-text">向量的叉乘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC"><span class="nav-number">6.</span> <span class="nav-text">旋转</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E8%A7%92"><span class="nav-number">6.1.</span> <span class="nav-text">欧拉角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E5%85%83%E6%95%B0"><span class="nav-number">6.2.</span> <span class="nav-text">四元数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%80%E9%83%A8%E7%A9%BA%E9%97%B4"><span class="nav-number">7.</span> <span class="nav-text">局部空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%96%E7%95%8C%E7%A9%BA%E9%97%B4"><span class="nav-number">8.</span> <span class="nav-text">世界空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E7%A9%BA%E9%97%B4"><span class="nav-number">9.</span> <span class="nav-text">观察空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A3%81%E5%89%AA%E7%A9%BA%E9%97%B4"><span class="nav-number">10.</span> <span class="nav-text">裁剪空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">11.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9D%90%E6%A0%87%E7%B3%BB"><span class="nav-number">1.</span> <span class="nav-text">坐标系</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%BD%90%E6%AC%A1%E5%9D%90%E6%A0%87"><span class="nav-number">2.</span> <span class="nav-text">齐次坐标</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%91%E9%87%8F%E5%BD%92%E4%B8%80%E5%8C%96"><span class="nav-number">3.</span> <span class="nav-text">向量归一化</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%91%E9%87%8F%E7%9A%84%E7%82%B9%E4%B9%98"><span class="nav-number">4.</span> <span class="nav-text">向量的点乘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%90%91%E9%87%8F%E7%9A%84%E5%8F%89%E4%B9%98"><span class="nav-number">5.</span> <span class="nav-text">向量的叉乘</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%97%8B%E8%BD%AC"><span class="nav-number">6.</span> <span class="nav-text">旋转</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%AC%A7%E6%8B%89%E8%A7%92"><span class="nav-number">6.1.</span> <span class="nav-text">欧拉角</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9B%9B%E5%85%83%E6%95%B0"><span class="nav-number">6.2.</span> <span class="nav-text">四元数</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4"><span class="nav-number">7.</span> <span class="nav-text">坐标空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E7%A9%BA%E9%97%B4%EF%BC%88Model-Space%EF%BC%89"><span class="nav-number">8.</span> <span class="nav-text">模型空间（Model Space）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%96%E7%95%8C%E7%A9%BA%E9%97%B4%EF%BC%88World-Space-%EF%BC%89"><span class="nav-number">9.</span> <span class="nav-text">世界空间（World Space)）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%82%E5%AF%9F%E7%A9%BA%E9%97%B4%EF%BC%88View-Space%EF%BC%89"><span class="nav-number">10.</span> <span class="nav-text">观察空间（View Space）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A3%81%E5%89%AA%E7%A9%BA%E9%97%B4%EF%BC%88Clip-Space%EF%BC%89"><span class="nav-number">11.</span> <span class="nav-text">裁剪空间（Clip Space）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B1%8F%E5%B9%95%E7%A9%BA%E9%97%B4%EF%BC%88Screen-Space%EF%BC%89"><span class="nav-number">12.</span> <span class="nav-text">屏幕空间（Screen Space）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">13.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
