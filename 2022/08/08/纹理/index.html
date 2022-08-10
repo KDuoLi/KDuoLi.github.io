@@ -42,7 +42,9 @@
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/Mipmap.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E6%A0%BC%E5%BC%8F%E4%B8%8E%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BA%B9%E7%90%86%E6%A0%BC%E5%BC%8F.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/ETC%E5%8E%9F%E7%90%86.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/ETC%E5%8E%8B%E7%BC%A9.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/PVRTC%E5%8E%9F%E7%90%86.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9%E6%80%BB%E7%BB%931.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9%E6%80%BB%E7%BB%932.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/Clipmap1.png?raw=true">
@@ -347,12 +349,16 @@
 </ul>
 <h2 id="DXTC"><a href="#DXTC" class="headerlink" title="DXTC"></a>DXTC</h2><ul>
 <li>基本思想：把<code>4*4</code>的像素块压缩成一个<code>64</code>或<code>128</code>位的数据块</li>
+<li>优点</li>
 </ul>
+<ol>
+<li>创建了一个固定大小且独立编码片段，没有共享查找表或其他依赖关系，简化了解码过程</li>
+</ol>
 <h2 id="ATI1-x2F-2"><a href="#ATI1-x2F-2" class="headerlink" title="ATI1&#x2F;2"></a>ATI1&#x2F;2</h2><ul>
-<li>ATI1被称为BC4，ATI2被称为BC5</li>
+<li><code>ATI1</code>被称为<code>BC4</code>，<code>ATI2</code>被称为<code>BC5</code></li>
 </ul>
 <h2 id="ETC"><a href="#ETC" class="headerlink" title="ETC"></a>ETC</h2><ul>
-<li>核心思想：将图像中的颜色和亮度分开存储</li>
+<li>核心思想：将图像中的颜色和亮度分开存储<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/ETC%E5%8E%9F%E7%90%86.png?raw=true"></li>
 <li>特点：把<code>4*4</code>的像素块压缩成一个<code>64</code>位数据块，并将像素单元水平或竖直朝向分为两个区块，每个像素颜色等于基础颜色加上索引指向的亮度范围<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/ETC%E5%8E%8B%E7%BC%A9.png?raw=true"></li>
 </ul>
 <h3 id="ETC1"><a href="#ETC1" class="headerlink" title="ETC1"></a>ETC1</h3><ul>
@@ -382,7 +388,7 @@
 </ol>
 <h2 id="PVRTC"><a href="#PVRTC" class="headerlink" title="PVRTC"></a>PVRTC</h2><ul>
 <li>仅支持<code>Iphone</code>、<code>IAD</code>和部分安卓机</li>
-<li>不同于基于块的算法，<code>PVRTC</code>将图像分为了低频信号和高频信号，低频信号由两张底分辨率图像<code>AB</code>组成，高频信号则是低精度的调制信号，记录了每个像素混合的权重，解码时<code>AB</code>图像经过双线性插值放大，然后根据调制图像的权重进行混合</li>
+<li>不同于基于块的算法，**<code>PVRTC</code>将纹理分为了低频信号和高频信号**。低频信号由两张低分辨率的图像<code>A</code>和<code>B</code>表示，这两张图在两个维度上都缩小了<code>4</code>倍，高频信号则是全分辨率但低精度的调制图像<code>M</code>，<code>M</code>记录了每个像素混合的权重。要解码时，<code>A</code>和<code>B</code>图像经过双线性插值（<code>bilinearly</code>）宽高放大4倍，然后与M图上的权重进行混合。<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/PVRTC%E5%8E%9F%E7%90%86.png?raw=true"></li>
 </ul>
 <h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9%E6%80%BB%E7%BB%931.png?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9%E6%80%BB%E7%BB%932.png?raw=true"></p>
 <h1 id="Clipmap"><a href="#Clipmap" class="headerlink" title="Clipmap"></a>Clipmap</h1><ul>
