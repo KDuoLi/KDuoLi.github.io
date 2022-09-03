@@ -20,23 +20,23 @@
     var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
   </script>
 
-  <meta name="description" content="简单介绍Unity资源路径">
+  <meta name="description" content="简单介绍渲染流程中的剔除与裁剪">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Unity 资源路径">
-<meta property="og:url" content="http://example.com/2022/07/30/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/index.html">
+<meta property="og:title" content="渲染流程中的各种剔除与裁剪">
+<meta property="og:url" content="http://example.com/2022/09/03/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/index.html">
 <meta property="og:site_name" content="KDuoLiのBlog">
-<meta property="og:description" content="简单介绍Unity资源路径">
+<meta property="og:description" content="简单介绍渲染流程中的剔除与裁剪">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/windows.png?raw=true">
-<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/Android.png?raw=true">
-<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/IOS.png?raw=true">
-<meta property="article:published_time" content="2022-07-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-02T16:00:00.000Z">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E8%83%8C%E9%9D%A2%E8%A3%81%E5%89%AA1.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA1.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA2.png?raw=true">
+<meta property="article:published_time" content="2022-09-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-03T16:01:56.325Z">
 <meta property="article:author" content="KDuoLi">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/windows.png?raw=true">
+<meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E8%83%8C%E9%9D%A2%E8%A3%81%E5%89%AA1.png?raw=true">
 
-<link rel="canonical" href="http://example.com/2022/07/30/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/">
+<link rel="canonical" href="http://example.com/2022/09/03/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/">
 
 
 <script id="page-configurations">
@@ -49,7 +49,7 @@
   };
 </script>
 
-  <title>Unity 资源路径 | KDuoLiのBlog</title>
+  <title>渲染流程中的各种剔除与裁剪 | KDuoLiのBlog</title>
   
 
 
@@ -169,7 +169,7 @@
   
   
   <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/30/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/03/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/mmyBlog.png">
@@ -182,7 +182,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          Unity 资源路径
+          渲染流程中的各种剔除与裁剪
         </h1>
 
         <div class="post-meta">
@@ -192,14 +192,14 @@
               </span>
               <span class="post-meta-item-text">发表于</span>
 
-              <time title="创建时间：2022-07-30 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-30T00:00:00+08:00">2022-07-30</time>
+              <time title="创建时间：2022-09-03 00:00:00" itemprop="dateCreated datePublished" datetime="2022-09-03T00:00:00+08:00">2022-09-03</time>
             </span>
               <span class="post-meta-item">
                 <span class="post-meta-item-icon">
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-03 00:00:00" itemprop="dateModified" datetime="2022-09-03T00:00:00+08:00">2022-09-03</time>
+                <time title="修改时间：2022-09-04 00:01:56" itemprop="dateModified" datetime="2022-09-04T00:01:56+08:00">2022-09-04</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -207,12 +207,12 @@
               </span>
               <span class="post-meta-item-text">分类于</span>
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                  <a href="/categories/%E6%B8%B2%E6%9F%93/" itemprop="url" rel="index"><span itemprop="name">渲染</span></a>
                 </span>
             </span>
 
           
-            <div class="post-description">简单介绍Unity资源路径</div>
+            <div class="post-description">简单介绍渲染流程中的剔除与裁剪</div>
 
         </div>
       </header>
@@ -223,65 +223,37 @@
     <div class="post-body" itemprop="articleBody">
 
       
-        <h1 id="Resources"><a href="#Resources" class="headerlink" title="Resources"></a>Resources</h1><ul>
-<li><strong>只读</strong></li>
-<li>打包时会将里面所有的资源压缩处理</li>
-<li>加载方法是<code>Resources.Load&lt;T&gt;(文件名)</code>，文件名不包含拓展名</li>
-<li>补充：</li>
+        <h1 id="视椎体剔除"><a href="#视椎体剔除" class="headerlink" title="视椎体剔除"></a>视椎体剔除</h1><ul>
+<li>发生在应用程序阶段，一般由游戏引擎内部实现或者自己编写对应的算法来实现，运行在CPU上</li>
+<li>裁剪的依据主要是根据摄像机的视野(<code>field of view</code>)以及近裁减面和远裁剪面的距离，将可视范围外的物体排除出渲染，被剔除的物体将不会进入渲染的几何阶段(<code>Geometry Stage</code>)。视椎体剔除是减少渲染消耗的最有效手段之一，可以在不影响渲染效果的情况下大幅减少渲染涉及到的顶点数和面数</li>
 </ul>
-<ol>
-<li><code>Resources</code>文件夹中的资源数量越多，对游戏启动时间影响越大（从点击应用到首次出现应用画面的加载时间）。在游戏启动时，<code>Unity</code>引擎会为<code>Resources</code>文件夹下的资源建立一个红黑树来存放与其对应的索引，便于后续资源的加载。一般来说，<code>Resouces</code>文件夹下资源数量越多，其构建时间越长，应用的启动也就越慢</li>
-<li>游戏启动时间不仅和<code>Resources</code>文件夹中的资源数量有关，还和首场景有关。首场景的资源加载和相关代码的初始化工作。如果首场景的资源量较多，其脚本初始化的任务较重，则应用的启动时间也会越慢。</li>
-</ol>
-<h1 id="Application-dataPath（数据路径）"><a href="#Application-dataPath（数据路径）" class="headerlink" title="Application.dataPath（数据路径）"></a>Application.dataPath（数据路径）</h1><ul>
-<li>包含目标设备上的游戏数据文件夹路径（<strong>只读</strong>），例如在<code>Editor</code>中就是<code>Assets</code></li>
-<li>在游戏运行时不可用</li>
-<li>相对路径，该值取决于运行时所基于的平台</li>
+<h1 id="遮挡剔除"><a href="#遮挡剔除" class="headerlink" title="遮挡剔除"></a>遮挡剔除</h1><ul>
+<li>遮挡裁剪，也常被称作遮挡剔除</li>
+<li>发生在应用程序阶段(<code>Application Stage</code>)，由游戏引擎实现，运行在<code>CPU</code>上</li>
+<li>以<code>Unity</code>为例，需要根据场景中<code>Static</code>物体的位置预先生成场景<code>Occlusion Culling</code>数据，运行时就可以剔除对应静态物体之后的其他物体。遮挡剔除是减少渲染消耗的有效手段之一，可以和视椎体剔除同时生效，进一步减少渲染的消耗</li>
 </ul>
-<ol>
-<li><p><code>Unity Editor：&lt;path to project folder&gt;/Assets</code></p>
+<h1 id="视口裁剪"><a href="#视口裁剪" class="headerlink" title="视口裁剪"></a>视口裁剪</h1><ul>
+<li><p>发生在几何阶段后期，投影变换之后屏幕映射之前，是渲染管线的必要一环。只有当图元完全或部分存在于规范立方体内部的时候，才将其返送到光栅化阶段。其中，对于完全位于规范立方体内部的图元，则直接进行下一阶段；完全处于规范立方外部的图元则完全被舍弃；部分处于规范立方体内部图元，则会根据视口进行对应的裁剪，在这一过程中可能会产生新的顶点</p>
 </li>
-<li><p><code>Android</code>：通常直接指向<code>APK</code>。如果在运行拆分的二进制编译版本，则改为指向<code>OBB</code></p>
-</li>
-<li><p><code>Windows</code> 应用商店应用程序：播放器数据文件夹的绝对路径（这是一个只读文件夹，使用 <code>Application.persistentDataPath</code> 来保存数据）</p>
-</li>
-</ol>
-<h1 id="Application-streamingAssetsPath"><a href="#Application-streamingAssetsPath" class="headerlink" title="Application.streamingAssetsPath"></a>Application.streamingAssetsPath</h1><ul>
-<li>通过<code>Application.streamingAssetsPath</code>获取路径，该目录中的文件将会原封不动的被拷贝到不同的平台上，每个平台对应的目录不一致，即不会进行压缩，但是都可以通过上述方法获得。它会根据平台返回正确的路径，如下：</li>
-</ul>
-<ol>
-<li><p><code>Mac OS or Windows：path = Application.dataPath + &quot;/StreamingAssets&quot;;</code></p>
-</li>
-<li><p><code>IOS：path = Application.dataPath + &quot;/Raw&quot;;</code></p>
-</li>
-<li><p><code>Android：path = &quot;jar:file://&quot; + Application.dataPath + &quot;!/assets/&quot;; </code></p>
-</li>
-<li><p>一般用来存放视频等资源文件。<strong>游戏运行时只能读不能写</strong>。一般会把初始的<code>AssetBundle</code>资源放在该文件夹下，并且通过<code>UnityWebRequest</code>或<code>AssetBundle.LoadFromFile</code>加载使用</p>
-</li>
-<li><p>无法访问 <code>WebGL</code> 和 <code>Android</code> 平台上的 S<code>treamingAssets</code> 文件夹。在 <code>WebGL</code> 上没有文件访问权。<code>Android</code> 使用压缩的 <code>.apk</code> 文件。这些平台返回 <code>URL</code>。请使用 <code>UnityWebRequest</code> 类来访问资源，<code>UnityWebRequest</code>带有解压功能</p>
-</li>
-<li><p>位于 <code>StreamingAssets</code> 文件夹中的 <code>.dll</code> 和脚本文件不参与脚本编译</p>
-</li>
-</ol>
-<h1 id="Application-persistentDataPath（沙盒目录）"><a href="#Application-persistentDataPath（沙盒目录）" class="headerlink" title="Application.persistentDataPath（沙盒目录）"></a>Application.persistentDataPath（沙盒目录）</h1><ul>
-<li>此目录中可以存储每次运行要保留的数据。在 <code>iOS</code> 和 <code>Android</code> 上发布时，<code>persistentDataPath</code> 指向设备上的公共目录。应用程序更新不会擦除此位置中的文件。用户仍然可以直接擦除这些文件。<strong>可读可写</strong>。应用程序安装运行后才会出现</li>
-</ul>
-<h1 id="Application-temporaryCachePath"><a href="#Application-temporaryCachePath" class="headerlink" title="Application.temporaryCachePath"></a>Application.temporaryCachePath</h1><ul>
-<li>返回一个临时数据缓存目录（<strong>只读</strong>）</li>
-<li>在<code>IOS</code>上不能被<code>iCloud</code>自动备份</li>
-</ul>
-<h1 id="资源路径在不同平台的位置"><a href="#资源路径在不同平台的位置" class="headerlink" title="资源路径在不同平台的位置"></a>资源路径在不同平台的位置</h1><ul>
-<li><p><code>Windows</code><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/windows.png?raw=true"></p>
-</li>
-<li><p><code>Android</code><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/Android.png?raw=true"></p>
-</li>
-<li><p><code>IOS</code><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/IOS.png?raw=true"></p>
+<li><p>通过视口剔除可以将视口外的图元舍弃掉，减小光栅化阶段的消耗</p>
 </li>
 </ul>
+<h1 id="背面裁剪"><a href="#背面裁剪" class="headerlink" title="背面裁剪"></a>背面裁剪</h1><ul>
+<li>背面剔除即是将背向视点的图元剔除，因为它们对最终渲染的图像没有贡献。这是一种简单直观的操作，一次对一个多边形进行操作</li>
+<li>基本原理：先判定多边形的朝向，并和当前的观察方向进行比较</li>
+<li><code>Unity</code>中的背面剔除在光栅化阶段进行，执行在<code>Vertex Shader</code> 之后，在<code>Fragment Shader</code>片元着色器之前，通过<code>Shader</code>中的<code>Cull</code>指令来控制背面剔除的开启和关闭<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E8%83%8C%E9%9D%A2%E8%A3%81%E5%89%AA1.png?raw=true"></li>
+<li>右图为视点空间中背面测试情形，多边形 <code>A</code> 是背向的，而 <code>B</code> 和 <code>C</code> 是正向的。多背向的多边形<code>A</code>，无需进行光栅化<h1 id="深度剔除"><a href="#深度剔除" class="headerlink" title="深度剔除"></a>深度剔除</h1></li>
+<li>在<code>Fragment Shader</code>之后，光栅化阶段末期的融合阶段执行，又叫深度检测(或<code>Z</code>缓存检测)。每次将一个图元回执为相应的像素时，都会计算像素位置处图元的深度值，和深度缓存中对应像素的值进行比较，如果新计算出的深度小于缓存中的深度，则更新深度缓存中的值；如果深度值大于深度缓冲中的值，则计算结果被舍弃，深度缓冲的值也无需更新</li>
+</ul>
+<h1 id="入口裁剪"><a href="#入口裁剪" class="headerlink" title="入口裁剪"></a>入口裁剪</h1><ul>
+<li>入口裁剪算法的基本思想：在室内场景中，建筑物墙面通常充当大的遮挡物，通过每个入口（如门或者窗户）进行视锥裁剪。当遍历入口的时候，就减小视锥</li>
+</ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA1.png?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA2.png?raw=true"></p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
-<li><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2021.3/ScriptReference/Application.html">Unity-手册 Application</a></li>
-<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/Fflyqaq/p/12915776.html#applicationdatapath">Unity—4个资源路径简单介绍</a></li>
-<li><a target="_blank" rel="noopener" href="https://blog.uwa4d.com/archives/910.html">UWA - 技术分享连载（二十七）</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/game_fengxiaorui/article/details/79958722">不同几种剔除(Culling)在渲染流程中的使用总结</a></li>
+<li><a target="_blank" rel="noopener" href="https://gameinstitute.qq.com/community/detail/119431#:~:text=%E8%A7%86%E9%94%A5%E8%A3%81%E5%89%AA%E4%B8%80%E8%88%AC%E5%9C%A8%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E9%98%B6%E6%AE%B5%E8%BF%9B%E8%A1%8C%2C,%E8%BF%99%E4%B8%AA%E6%B2%A1%E6%9C%89%E9%97%AE%E9%A2%98%E3%80%82">三维渲染中的裁剪总汇</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/poem_qianmo/article/details/78884513">【《Real-Time Rendering 3rd》 提炼总结】(十一) 第十四章 : 游戏开发中的渲染加速算法总结</a></li>
+<li><a href>《Real-Time Rendering 3rd》</a></li>
 </ul>
 
     </div>
@@ -298,13 +270,10 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/07/29/DrawCall/" rel="prev" title="DrawCall">
-      <i class="fa fa-chevron-left"></i> DrawCall
+    <a href="/2022/08/08/%E7%BA%B9%E7%90%86/" rel="prev" title="纹理">
+      <i class="fa fa-chevron-left"></i> 纹理
     </a></div>
-      <div class="post-nav-item">
-    <a href="/2022/08/07/%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="next" title="空间数据结构">
-      空间数据结构 <i class="fa fa-chevron-right"></i>
-    </a></div>
+      <div class="post-nav-item"></div>
     </div>
       </footer>
     
@@ -363,7 +332,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Resources"><span class="nav-number">1.</span> <span class="nav-text">Resources</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Application-dataPath%EF%BC%88%E6%95%B0%E6%8D%AE%E8%B7%AF%E5%BE%84%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">Application.dataPath（数据路径）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Application-streamingAssetsPath"><span class="nav-number">3.</span> <span class="nav-text">Application.streamingAssetsPath</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Application-persistentDataPath%EF%BC%88%E6%B2%99%E7%9B%92%E7%9B%AE%E5%BD%95%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">Application.persistentDataPath（沙盒目录）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Application-temporaryCachePath"><span class="nav-number">5.</span> <span class="nav-text">Application.temporaryCachePath</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B5%84%E6%BA%90%E8%B7%AF%E5%BE%84%E5%9C%A8%E4%B8%8D%E5%90%8C%E5%B9%B3%E5%8F%B0%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="nav-number">6.</span> <span class="nav-text">资源路径在不同平台的位置</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E6%A4%8E%E4%BD%93%E5%89%94%E9%99%A4"><span class="nav-number">1.</span> <span class="nav-text">视椎体剔除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A4"><span class="nav-number">2.</span> <span class="nav-text">遮挡剔除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E5%8F%A3%E8%A3%81%E5%89%AA"><span class="nav-number">3.</span> <span class="nav-text">视口裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E9%9D%A2%E8%A3%81%E5%89%AA"><span class="nav-number">4.</span> <span class="nav-text">背面裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%89%94%E9%99%A4"><span class="nav-number">5.</span> <span class="nav-text">深度剔除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA"><span class="nav-number">6.</span> <span class="nav-text">入口裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
