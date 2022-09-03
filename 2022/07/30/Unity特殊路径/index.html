@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/Android.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/IOS.png?raw=true">
 <meta property="article:published_time" content="2022-07-29T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-07-31T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-02T16:00:00.000Z">
 <meta property="article:author" content="KDuoLi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/windows.png?raw=true">
@@ -199,7 +199,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-01 00:00:00" itemprop="dateModified" datetime="2022-08-01T00:00:00+08:00">2022-08-01</time>
+                <time title="修改时间：2022-09-03 00:00:00" itemprop="dateModified" datetime="2022-09-03T00:00:00+08:00">2022-09-03</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -230,21 +230,38 @@
 <li>补充：</li>
 </ul>
 <ol>
-<li><code>Resources</code>文件夹中的资源数量越多，对游戏启动时间影响越大（从点击应用到首次出现应用画面的加载时间）。在游戏启动时，<code>Unity</code>引擎会为<code>Resources</code>文件夹下的资源建立一个查找树来存放与其对应的索引，便于后续资源的加载。一般来说，<code>Resouces</code>文件夹下资源数量越多，其构建时间越长，应用的启动也就越慢</li>
+<li><code>Resources</code>文件夹中的资源数量越多，对游戏启动时间影响越大（从点击应用到首次出现应用画面的加载时间）。在游戏启动时，<code>Unity</code>引擎会为<code>Resources</code>文件夹下的资源建立一个红黑树来存放与其对应的索引，便于后续资源的加载。一般来说，<code>Resouces</code>文件夹下资源数量越多，其构建时间越长，应用的启动也就越慢</li>
 <li>游戏启动时间不仅和<code>Resources</code>文件夹中的资源数量有关，还和首场景有关。首场景的资源加载和相关代码的初始化工作。如果首场景的资源量较多，其脚本初始化的任务较重，则应用的启动时间也会越慢。</li>
 </ol>
 <h1 id="Application-dataPath（数据路径）"><a href="#Application-dataPath（数据路径）" class="headerlink" title="Application.dataPath（数据路径）"></a>Application.dataPath（数据路径）</h1><ul>
-<li>包含目标设备上的游戏数据文件夹路径（<strong>只读</strong>），例如在<code>Editor</code>中就是&#96;Assets</li>
+<li>包含目标设备上的游戏数据文件夹路径（<strong>只读</strong>），例如在<code>Editor</code>中就是<code>Assets</code></li>
 <li>在游戏运行时不可用</li>
-<li>相对路径，该值取决于运行时所基于的平台<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Unity Editor：&lt;path to project folder&gt;/Assets</span><br><span class="line"></span><br><span class="line">Android：通常直接指向APK。如果在运行拆分的二进制编译版本，则改为指向OBB</span><br><span class="line"></span><br><span class="line">Windows 应用商店应用程序：播放器数据文件夹的绝对路径（这是一个只读文件夹，使用 Application.persistentDataPath 来保存数据）</span><br></pre></td></tr></table></figure></li>
-</ul>
-<h1 id="Application-streamingAssetsPath"><a href="#Application-streamingAssetsPath" class="headerlink" title="Application.streamingAssetsPath"></a>Application.streamingAssetsPath</h1><ul>
-<li>通过<code>Application.streamingAssetsPath</code>获取路径，该目录中的文件将会原封不动的被拷贝到不同的平台上，每个平台对应的目录不一致，即不会进行压缩，但是都可以通过上述方法获得。它会根据平台返回正确的路径，如下：<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Mac OS <span class="keyword">or</span> Windows：path = Application.dataPath + <span class="string">&quot;/StreamingAssets&quot;</span>;</span><br><span class="line"></span><br><span class="line">IOS：path = Application.dataPath + <span class="string">&quot;/Raw&quot;</span>;</span><br><span class="line"></span><br><span class="line">Android：path = <span class="string">&quot;jar:file://&quot;</span> + Application.dataPath + <span class="string">&quot;!/assets/&quot;</span>;</span><br></pre></td></tr></table></figure></li>
+<li>相对路径，该值取决于运行时所基于的平台</li>
 </ul>
 <ol>
-<li>一般用来存放视频等资源文件。<strong>游戏运行时只能读不能写</strong>。一般会把初始的<code>AssetBundle</code>资源放在该文件夹下，并且通过<code>UnityWebRequest</code>或<code>AssetBundle.LoadFromFile</code>加载使用</li>
-<li>无法访问 <code>WebGL</code> 和 <code>Android</code> 平台上的 S<code>treamingAssets</code> 文件夹。在 <code>WebGL</code> 上没有文件访问权。<code>Android</code> 使用压缩的 <code>.apk</code> 文件。这些平台返回 <code>URL</code>。请使用 <code>UnityWebRequest</code> 类来访问资源，<code>UnityWebRequest</code>带有解压功能</li>
-<li>位于 <code>StreamingAssets</code> 文件夹中的 <code>.dll</code> 和脚本文件不参与脚本编译</li>
+<li><p><code>Unity Editor：&lt;path to project folder&gt;/Assets</code></p>
+</li>
+<li><p><code>Android</code>：通常直接指向<code>APK</code>。如果在运行拆分的二进制编译版本，则改为指向<code>OBB</code></p>
+</li>
+<li><p><code>Windows</code> 应用商店应用程序：播放器数据文件夹的绝对路径（这是一个只读文件夹，使用 <code>Application.persistentDataPath</code> 来保存数据）</p>
+</li>
+</ol>
+<h1 id="Application-streamingAssetsPath"><a href="#Application-streamingAssetsPath" class="headerlink" title="Application.streamingAssetsPath"></a>Application.streamingAssetsPath</h1><ul>
+<li>通过<code>Application.streamingAssetsPath</code>获取路径，该目录中的文件将会原封不动的被拷贝到不同的平台上，每个平台对应的目录不一致，即不会进行压缩，但是都可以通过上述方法获得。它会根据平台返回正确的路径，如下：</li>
+</ul>
+<ol>
+<li><p><code>Mac OS or Windows：path = Application.dataPath + &quot;/StreamingAssets&quot;;</code></p>
+</li>
+<li><p><code>IOS：path = Application.dataPath + &quot;/Raw&quot;;</code></p>
+</li>
+<li><p><code>Android：path = &quot;jar:file://&quot; + Application.dataPath + &quot;!/assets/&quot;; </code></p>
+</li>
+<li><p>一般用来存放视频等资源文件。<strong>游戏运行时只能读不能写</strong>。一般会把初始的<code>AssetBundle</code>资源放在该文件夹下，并且通过<code>UnityWebRequest</code>或<code>AssetBundle.LoadFromFile</code>加载使用</p>
+</li>
+<li><p>无法访问 <code>WebGL</code> 和 <code>Android</code> 平台上的 S<code>treamingAssets</code> 文件夹。在 <code>WebGL</code> 上没有文件访问权。<code>Android</code> 使用压缩的 <code>.apk</code> 文件。这些平台返回 <code>URL</code>。请使用 <code>UnityWebRequest</code> 类来访问资源，<code>UnityWebRequest</code>带有解压功能</p>
+</li>
+<li><p>位于 <code>StreamingAssets</code> 文件夹中的 <code>.dll</code> 和脚本文件不参与脚本编译</p>
+</li>
 </ol>
 <h1 id="Application-persistentDataPath（沙盒目录）"><a href="#Application-persistentDataPath（沙盒目录）" class="headerlink" title="Application.persistentDataPath（沙盒目录）"></a>Application.persistentDataPath（沙盒目录）</h1><ul>
 <li>此目录中可以存储每次运行要保留的数据。在 <code>iOS</code> 和 <code>Android</code> 上发布时，<code>persistentDataPath</code> 指向设备上的公共目录。应用程序更新不会擦除此位置中的文件。用户仍然可以直接擦除这些文件。<strong>可读可写</strong>。应用程序安装运行后才会出现</li>
@@ -281,8 +298,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/07/29/Unity%20-%20GC/" rel="prev" title="Unity GC">
-      <i class="fa fa-chevron-left"></i> Unity GC
+    <a href="/2022/07/29/Unity%20-%20GC/" rel="prev" title="Unity 内存管理及GC">
+      <i class="fa fa-chevron-left"></i> Unity 内存管理及GC
     </a></div>
       <div class="post-nav-item">
     <a href="/2022/08/07/%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="next" title="空间数据结构">
