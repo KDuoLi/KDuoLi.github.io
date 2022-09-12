@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA1.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA2.png?raw=true">
 <meta property="article:published_time" content="2022-09-02T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-03T16:01:56.325Z">
+<meta property="article:modified_time" content="2022-09-11T16:00:00.000Z">
 <meta property="article:author" content="KDuoLi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E8%83%8C%E9%9D%A2%E8%A3%81%E5%89%AA1.png?raw=true">
@@ -199,7 +199,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-04 00:01:56" itemprop="dateModified" datetime="2022-09-04T00:01:56+08:00">2022-09-04</time>
+                <time title="修改时间：2022-09-12 00:00:00" itemprop="dateModified" datetime="2022-09-12T00:00:00+08:00">2022-09-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -226,8 +226,17 @@
         <h1 id="视椎体剔除"><a href="#视椎体剔除" class="headerlink" title="视椎体剔除"></a>视椎体剔除</h1><ul>
 <li>发生在应用程序阶段，一般由游戏引擎内部实现或者自己编写对应的算法来实现，运行在CPU上</li>
 <li>裁剪的依据主要是根据摄像机的视野(<code>field of view</code>)以及近裁减面和远裁剪面的距离，将可视范围外的物体排除出渲染，被剔除的物体将不会进入渲染的几何阶段(<code>Geometry Stage</code>)。视椎体剔除是减少渲染消耗的最有效手段之一，可以在不影响渲染效果的情况下大幅减少渲染涉及到的顶点数和面数</li>
+<li>工作原理：</li>
 </ul>
-<h1 id="遮挡剔除"><a href="#遮挡剔除" class="headerlink" title="遮挡剔除"></a>遮挡剔除</h1><ul>
+<ol>
+<li><p>遮挡剔除会在 <code>Unity Editor</code> 中生成有关场景的数据，然后在运行时使用该数据来确定摄像机可以看到的内容。这种生成数据的过程称为烘焙</p>
+</li>
+<li><p>在对遮挡剔除数据进行烘焙时，<code>Unity</code> 将场景划分为多个单元，并生成描述单元内几何体以及相邻单元之间可见性的数据。然后，<code>Unity</code> 尽可能合并单元，以减小生成的数据的大小。要配置烘焙过程，可以在 <code>Occlusion Culling</code> 窗口中更改参数，并在场景中使用遮挡区域</p>
+</li>
+<li><p>在运行时，<code>Unity</code> 会将这些烘焙的数据加载到内存中，并且对于每个启用了<code>Occlusion Culling</code> 属性的摄像机，将会对数据执行查询以确定该摄像机可以看到的内容。请注意，启用遮挡剔除后，摄像机将执行视锥体剔除和遮挡剔除</p>
+</li>
+</ol>
+<h1 id="遮挡剔除（Occlusion-Culling）"><a href="#遮挡剔除（Occlusion-Culling）" class="headerlink" title="遮挡剔除（Occlusion Culling）"></a>遮挡剔除（<code>Occlusion Culling</code>）</h1><ul>
 <li>遮挡裁剪，也常被称作遮挡剔除</li>
 <li>发生在应用程序阶段(<code>Application Stage</code>)，由游戏引擎实现，运行在<code>CPU</code>上</li>
 <li>以<code>Unity</code>为例，需要根据场景中<code>Static</code>物体的位置预先生成场景<code>Occlusion Culling</code>数据，运行时就可以剔除对应静态物体之后的其他物体。遮挡剔除是减少渲染消耗的有效手段之一，可以和视椎体剔除同时生效，进一步减少渲染的消耗</li>
@@ -335,7 +344,7 @@
 
       <!--noindex-->
       <div class="post-toc-wrap sidebar-panel">
-          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E6%A4%8E%E4%BD%93%E5%89%94%E9%99%A4"><span class="nav-number">1.</span> <span class="nav-text">视椎体剔除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A4"><span class="nav-number">2.</span> <span class="nav-text">遮挡剔除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E5%8F%A3%E8%A3%81%E5%89%AA"><span class="nav-number">3.</span> <span class="nav-text">视口裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E9%9D%A2%E8%A3%81%E5%89%AA"><span class="nav-number">4.</span> <span class="nav-text">背面裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%89%94%E9%99%A4"><span class="nav-number">5.</span> <span class="nav-text">深度剔除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA"><span class="nav-number">6.</span> <span class="nav-text">入口裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E6%A4%8E%E4%BD%93%E5%89%94%E9%99%A4"><span class="nav-number">1.</span> <span class="nav-text">视椎体剔除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A4%EF%BC%88Occlusion-Culling%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">遮挡剔除（Occlusion Culling）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E5%8F%A3%E8%A3%81%E5%89%AA"><span class="nav-number">3.</span> <span class="nav-text">视口裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E9%9D%A2%E8%A3%81%E5%89%AA"><span class="nav-number">4.</span> <span class="nav-text">背面裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%89%94%E9%99%A4"><span class="nav-number">5.</span> <span class="nav-text">深度剔除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA"><span class="nav-number">6.</span> <span class="nav-text">入口裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
       </div>
       <!--/noindex-->
 
