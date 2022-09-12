@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/k-d%E6%A0%91(k=2).1.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E7%A9%BA%E9%97%B4%E7%BB%93%E6%A0%91%E7%9A%84%E5%AF%B9%E6%AF%94%E8%A1%A8.png?raw=true">
 <meta property="article:published_time" content="2022-08-06T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-08-14T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-11T16:00:00.000Z">
 <meta property="article:author" content="KDuoLi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/%E5%BA%94%E7%94%A8%E9%98%B6%E6%AE%B5%E7%9A%84%E7%B2%97%E7%B2%92%E5%BA%A6%E5%89%94%E9%99%A4.png?raw=true">
@@ -206,7 +206,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-08-15 00:00:00" itemprop="dateModified" datetime="2022-08-15T00:00:00+08:00">2022-08-15</time>
+                <time title="修改时间：2022-09-12 00:00:00" itemprop="dateModified" datetime="2022-09-12T00:00:00+08:00">2022-09-12</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -289,6 +289,7 @@
 <li>辅助<code>BSP</code>树构建</li>
 </ol>
 <h2 id="AABB包围盒树"><a href="#AABB包围盒树" class="headerlink" title="AABB包围盒树"></a>AABB包围盒树</h2><ul>
+<li><code>AABB</code>包围盒就是采用一个长方体将物体包裹起来</li>
 <li>下图为层次<code>AABB</code>包围盒树。把不同形状粗略用<code>AABB</code>形状围起来看作一个<code>AABB</code>形状（为了统一化形状），然后才建立层次<code>AABB</code>包围盒树</li>
 <li>在物理引擎里，由于物理模拟，大部分形状都是会动态更新的，例如位移&#x2F;旋转都会改变形状。于是就又有一种支持动态更新的层次包围盒树，称之为动态层次包围盒树。它的算法核心大概：形状的位移&#x2F;旋转&#x2F;伸缩更新对应的叶节点，然后一级一级更新上面的节点，使它们的包围体包住子节点</li>
 </ul>
