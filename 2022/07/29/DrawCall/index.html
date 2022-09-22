@@ -344,9 +344,17 @@
 <li>原理：</li>
 </ul>
 <ol>
-<li>在<code>Build</code>的时候<code>Unity</code>会自动地提取这些相同材质的静态模型的<code>Vertex buffer</code>和<code>Index buffer</code></li>
+<li>在<code>Build</code>的时候<code>Unity</code>会自动地提取这些相同材质的静态模型的<code>Vertex buffer</code>（一个顶点缓存是一个包含顶点数据的连续内存空间）和<code>Index buffer</code>（索引缓存，保存了构成物体的顶点在顶点缓存的索引值，通过索引查找对应的顶点，以完成图形的绘制）</li>
 <li>根据其摆放在场景中的位置等最终状态信息，将这些模型的顶点数据变换到世界空间下<br>，重新构建并存储在大的<code>Vertex buffer</code>和<code>Index buffer</code>中，并记录每一个子模型的<code>Index buffer</code>数据在构建的大<code>Index buffer</code>中的起始及结束位置</li>
 <li>在后续的绘制过程中，一次性提交整个合并模型的顶点数据。根据引擎的场景管理系统判断各个子模型的可见性。然后设置一次渲染状态，调用多次<code>Draw call</code>分别绘制每一个子模型<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/%E9%9D%99%E6%80%81%E5%90%88%E6%89%B9%E5%8E%9F%E7%90%861.png?raw=true"></li>
+</ol>
+<ul>
+<li>索引缓存的好处</li>
+</ul>
+<ol>
+<li>减少了顶点缓存的顶点个数（不需重复顶点）</li>
+<li>灵活修改图形形状（通过修改索引序列而不是顶点序列）</li>
+<li>提高渲染效率，<code>runtime</code>将多次用到的顶点数据放置在相近的地方<code>Cache</code>中（<code>local reference</code>）</li>
 </ol>
 <ul>
 <li><p>推荐使用场景：场景中不会修改的静态建筑与植被</p>
@@ -488,6 +496,7 @@
 <li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/70123645">GPU instancing</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.unity.cn/2021.3/Documentation/Manual/SRPBatcher.html">Unity手册 - SRPBatcher</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cancantrbl/p/16048341.html">合批是什么？为什么可以减少Drawcall？有什么合批方法？</a></li>
+<li><a target="_blank" rel="noopener" href="https://cirnoo.github.io/2019/07/22/CreateVertexBuffer/">顶点缓存与索引缓存</a></li>
 </ul>
 
     </div>
