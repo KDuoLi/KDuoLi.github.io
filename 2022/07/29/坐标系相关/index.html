@@ -45,7 +45,7 @@
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/Unity%20%E4%B8%AD%E5%90%84%E4%B8%AA%E5%9D%90%E6%A0%87%E7%A9%BA%E9%97%B4%E7%9A%84%E6%97%8B%E5%90%91%E6%80%A7.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E5%B1%8F%E5%B9%95%E5%9D%90%E6%A0%87%E7%B3%BB%E5%9C%A8%20%60OpenGL%60%E5%92%8C%20%60DirectX%60%20%E4%B9%8B%E9%97%B4%E7%9A%84%E5%B7%AE%E5%BC%82%E9%97%AE%E9%A2%98.png?raw=true">
 <meta property="article:published_time" content="2022-07-28T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-09-10T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-23T16:00:00.000Z">
 <meta property="article:author" content="KDuoLi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E5%B7%A6%E6%89%8B%E5%9D%90%E6%A0%87%E7%B3%BB.png?raw=true">
@@ -213,7 +213,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-09-11 00:00:00" itemprop="dateModified" datetime="2022-09-11T00:00:00+08:00">2022-09-11</time>
+                <time title="修改时间：2022-09-24 00:00:00" itemprop="dateModified" datetime="2022-09-24T00:00:00+08:00">2022-09-24</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -339,9 +339,15 @@
 </li>
 </ol>
 <h2 id="四元数"><a href="#四元数" class="headerlink" title="四元数"></a>四元数</h2><ul>
+<li>为什么需要四元数？</li>
+</ul>
+<ol>
+<li>欧拉角有很多种表示角度的方法，例如<code>100°</code>的旋转角也可以用<code>-260°</code>表示，而且插值上也存在问题，对一个<code>-260°</code>角和一个<code>50°</code>进行插值是需要先进行转换，先将<code>260°</code>角转换成<code>100°</code>，再进行插值才可以得到正确的结果</li>
+</ol>
+<ul>
 <li><p>此表示方式在内部由四个数字组成，四元数本质上是一种高阶复数，它的虚部包含了三个虚数单位，<code>i</code>、<code>j</code>、<code>k</code>，即一个四元数可以表示为<code>x = a + bi + cj + dk</code></p>
 </li>
-<li><p>即创建一个方向对象，指定一个方向，旋转多少角度，然后生成一个向量坐标，四元数不能表示超过 <code>180</code> 度的旋转。</p>
+<li><p>即创建一个方向对象，指定一个方向，旋转多少角度，然后生成一个向量坐标，四元数不能表示超过 <code>180</code> 度的旋转</p>
 </li>
 <li><p>优点</p>
 </li>
@@ -405,6 +411,7 @@
 <li><a target="_blank" rel="noopener" href="https://morisa66.github.io/2021/01/14/MVP/#:~:text=MVP,%E7%9F%A9%E9%98%B5%E5%8D%B3%20Model%EF%BC%88%E6%A8%A1%E5%9E%8B%EF%BC%89%E3%80%81View%EF%BC%88%E8%A7%82%E5%AF%9F%EF%BC%89%E3%80%81Projection%EF%BC%88%E6%8A%95%E5%BD%B1%EF%BC%89%E7%9F%A9%E9%98%B5%E3%80%82">MVP 矩阵公式推导</a></li>
 <li><a target="_blank" rel="noopener" href="https://docs.qq.com/slide/DUGZtZlVtQVBRaFli">渲染管线简介</a></li>
 <li>《Unity Shader入门精要》</li>
+<li>《Unity3D 高级编程：主程手记》</li>
 </ul>
 
     </div>
