@@ -299,7 +299,6 @@
 </ul>
 <h2 id="纹理采样设置之Wrap-Mode"><a href="#纹理采样设置之Wrap-Mode" class="headerlink" title="纹理采样设置之Wrap Mode"></a>纹理采样设置之Wrap Mode</h2><ul>
 <li>纹理环绕的作用是为了处理<code>UV</code>超出<code>0.0~1.0</code>范围的纹理坐标</li>
-<li>在场景中的模型，大于原来贴图的尺寸时候，<code>UV</code>就会出现超出<code>0.0~1.0</code>范围的情况</li>
 <li><code>Wrap Mode</code>决定了<code>UV</code>值在被对应函数映射到<code>0~1</code>范围之外时候的一些表现</li>
 <li>在<code>OpenGL</code>中称其为包装模式（<code>Wrapping Model</code>），在<code>DirectX</code>中称其为纹理寻址模式（<code>Texture Addressing Mode</code>）<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7%E8%AE%BE%E7%BD%AE%E4%B9%8BWrap%20Mode.png?raw=true"><h2 id="纹理采样设置之Filter-Mode"><a href="#纹理采样设置之Filter-Mode" class="headerlink" title="纹理采样设置之Filter Mode"></a>纹理采样设置之Filter Mode</h2></li>
 <li>为什么需要纹理过滤：屏幕的一个像素与它在对应的纹素之间可以存在不同类型的对应关系。而同一物体与摄像机的距离不同，会占据不同数目的屏幕像素（例如，当物体非常靠近摄像机，屏幕上的一个像素有可能对应纹理贴图纹素中的一小部分，而当物体距离摄像机很远时，屏幕上的一个像素包含纹理贴图上的很多个纹素），但使用纹理贴图的大小是不变，一个像素通常不直接对应于一个纹理像素。必须应用某种形式的滤波来确定像素的最佳颜色</li>
