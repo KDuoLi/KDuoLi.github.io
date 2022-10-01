@@ -370,6 +370,16 @@
 <li>单个四元数不能表示任何方向超过 <code>180</code> 度的旋转</li>
 <li>四元数的数字表示在直观上难以理解</li>
 </ol>
+<ul>
+<li>补充</li>
+</ul>
+<ol>
+<li>在<code>Untiy</code>中用四元数旋转点。如下对<code>v1</code>绕<code>y</code>轴旋转<code>90°</code></li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Vector3 v1 = <span class="keyword">new</span> Vector3(<span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>);</span><br><span class="line"><span class="comment">//(x,y,z,w)</span></span><br><span class="line">Quaternion q1 = <span class="keyword">new</span> Quaternion(<span class="number">0</span>, Mathf.Sin(Mathf.PI/<span class="number">4</span>), <span class="number">0</span>, Mathf.Cos(Mathf.PI/<span class="number">4</span>));</span><br><span class="line"><span class="comment">//(0,0,1)</span></span><br><span class="line">Vector3 v2 = q1 * v1;</span><br></pre></td></tr></table></figure>
+<ol start="2">
+<li>绕轴旋转正负：从轴的正方向看向原点，左手坐标系下 ：顺序时针方向即是旋转正向;右手坐标系下：逆时针方向即是旋转正向</li>
+</ol>
 <h1 id="坐标空间"><a href="#坐标空间" class="headerlink" title="坐标空间"></a>坐标空间</h1><ul>
 <li>下图是顶点如何从模型空间变换到屏幕坐标的过程<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E9%A1%B6%E7%82%B9%E5%8F%98%E6%8D%A2%E5%85%A8%E6%B5%81%E7%A8%8B1.png?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%9D%90%E6%A0%87%E7%B3%BB%E3%80%81%E5%90%91%E9%87%8F/%E5%90%84%E4%B8%AA%E5%9D%90%E6%A0%87%E7%B3%BB.png?raw=true"></li>
 </ul>
@@ -436,8 +446,8 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/07/29/DrawCall/" rel="prev" title="DrawCall">
-      <i class="fa fa-chevron-left"></i> DrawCall
+    <a href="/2022/07/17/Unity%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/" rel="prev" title="Unity 资源管理">
+      <i class="fa fa-chevron-left"></i> Unity 资源管理
     </a></div>
       <div class="post-nav-item">
     <a href="/2022/07/29/Unity%20-%20GC/" rel="next" title="Unity 内存管理及GC">
