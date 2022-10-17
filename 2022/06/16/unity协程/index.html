@@ -223,6 +223,13 @@
       
         <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><ul>
 <li><code>Unity</code>的协程(<code>Coroutine</code>)是在主线程上开启的一段逻辑，运行在主线程上。协程不是线程，也不是异步执行</li>
+<li><code>Unity</code>协程分为两部分：</li>
+</ul>
+<ol>
+<li>协程函数本体</li>
+<li>协程调度器：对所有的迭代器函数进行统一管理</li>
+</ol>
+<ul>
 <li>作用：控制代码在特定的时机执行</li>
 <li>缺点：协程本质是迭代器，是基于<code>Unity</code>的生命周期的，大量开启协程会引起<code>GC</code></li>
 <li><code>Unity</code>中协程定义如下：</li>
