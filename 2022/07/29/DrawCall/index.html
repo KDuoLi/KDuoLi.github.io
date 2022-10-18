@@ -448,16 +448,12 @@
 <li>网格必须来自以下源之一，并按行为分组：1）<code>MeshRenderer</code> 组件或 <code>Graphics.RenderMesh</code> 调用；2）<code>Graphics.RenderMeshInstanced</code> 或 <code>Graphics.RenderMeshIndirect</code> 调用</li>
 </ol>
 <ul>
-<li><p>原理：只提交一个<code>mesh</code>和材质，但是提交多个实例的差异化信息，对同一个<code>mesh</code>在<code>GPU</code>进行变换绘制</p>
-</li>
-<li><p>推荐使用场景：草地</p>
-</li>
-<li><p>使用<code>GPU Instancing</code>可以一次渲染相同网格的多个副本。每次<code>draw call</code>，<code>GPU Instancing</code>只渲染相同的网格，但是每个实例可以有不同的参数(例如，<code>color</code>或<code>scale</code>)，以增加变化，减少重复的出现</p>
-</li>
-<li><p>单次最大处理数量：<code>1023</code>个对象</p>
-</li>
-<li><p>流程如下图<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/GPU%E5%AE%9E%E4%BE%8B%E5%8C%96%E6%B5%81%E7%A8%8B%E5%9B%BE.png?raw=true"></p>
-</li>
+<li>原理：只提交一个<code>mesh</code>和材质，但是提交多个实例的差异化信息，对同一个<code>mesh</code>在<code>GPU</code>进行变换绘制</li>
+<li>推荐使用场景：草地</li>
+<li>使用<code>GPU Instancing</code>可以一次渲染相同网格的多个副本。每次<code>draw call</code>，<code>GPU Instancing</code>只渲染相同的网格，但是每个实例可以有不同的参数(例如，<code>color</code>或<code>scale</code>)，以增加变化，减少重复的出现</li>
+<li>单次最大处理数量：<code>1023</code>个对象</li>
+<li><code>GPU instancing</code>渲染出来的对象在<code>Unity</code>中无法选择，因为它们并不是<code>GameObject</code>，通过<code>GPU Instancing</code> 批量渲染出来的实例在<code>Unity</code>场景中不会以<code>GameObject</code>的形式出现，它们存在在显存中，显示在屏幕上 </li>
+<li>流程如下图<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/DrawCall/GPU%E5%AE%9E%E4%BE%8B%E5%8C%96%E6%B5%81%E7%A8%8B%E5%9B%BE.png?raw=true"></li>
 </ul>
 <h1 id="SRP-Batch（仅Unity-SRP管线）"><a href="#SRP-Batch（仅Unity-SRP管线）" class="headerlink" title="SRP Batch（仅Unity SRP管线）"></a>SRP Batch（仅Unity SRP管线）</h1><ul>
 <li>原理：将数据<code>Buffer</code>拆分，通过降低对不需要更新的<code>Buffer</code>的更新频次来<strong>降低<code>Set Pass Call</code>的数量开销</strong>（即减少绘制调用之间的呈现状态更改），以进行加速，<strong>不会降低<code>Draw Call</code></strong></li>
@@ -513,12 +509,12 @@
         
     <div class="post-nav">
       <div class="post-nav-item">
-    <a href="/2022/07/17/Unity%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/" rel="prev" title="Unity 资源管理">
-      <i class="fa fa-chevron-left"></i> Unity 资源管理
+    <a href="/2022/07/29/Unity%20-%20GC/" rel="prev" title="Unity 内存管理及GC">
+      <i class="fa fa-chevron-left"></i> Unity 内存管理及GC
     </a></div>
       <div class="post-nav-item">
-    <a href="/2022/07/29/%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9B%B8%E5%85%B3/" rel="next" title="坐标系、向量、坐标空间">
-      坐标系、向量、坐标空间 <i class="fa fa-chevron-right"></i>
+    <a href="/2022/07/30/Unity%E7%89%B9%E6%AE%8A%E8%B7%AF%E5%BE%84/" rel="next" title="Unity 资源路径">
+      Unity 资源路径 <i class="fa fa-chevron-right"></i>
     </a></div>
     </div>
       </footer>
