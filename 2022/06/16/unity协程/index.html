@@ -29,7 +29,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/unity%E5%8D%8F%E7%A8%8B/%E4%BA%8B%E4%BB%B6%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.jpg?raw=true">
 <meta property="article:published_time" content="2022-06-15T16:00:00.000Z">
-<meta property="article:modified_time" content="2022-10-01T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-10-20T16:00:00.000Z">
 <meta property="article:author" content="KDuoLi">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/unity%E5%8D%8F%E7%A8%8B/%E4%BA%8B%E4%BB%B6%E5%87%BD%E6%95%B0%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F.jpg?raw=true">
@@ -197,7 +197,7 @@
                   <i class="far fa-calendar-check"></i>
                 </span>
                 <span class="post-meta-item-text">更新于</span>
-                <time title="修改时间：2022-10-02 00:00:00" itemprop="dateModified" datetime="2022-10-02T00:00:00+08:00">2022-10-02</time>
+                <time title="修改时间：2022-10-21 00:00:00" itemprop="dateModified" datetime="2022-10-21T00:00:00+08:00">2022-10-21</time>
               </span>
             <span class="post-meta-item">
               <span class="post-meta-item-icon">
@@ -231,7 +231,15 @@
 </ol>
 <ul>
 <li>作用：控制代码在特定的时机执行</li>
-<li>缺点：协程本质是迭代器，是基于<code>Unity</code>的生命周期的，大量开启协程会引起<code>GC</code></li>
+<li>缺点</li>
+</ul>
+<ol>
+<li>协程本质是迭代器，是基于<code>Unity</code>的生命周期的，大量开启协程会引起<code>GC</code></li>
+<li>协同程序无法返回数据</li>
+<li>协同程序使错误处理变得困难。不能将<code>yield</code>放在<code>try-catch</code>中，因此无法处理异常</li>
+<li>协程依赖于<code>MonoBehaviour</code>生命周期</li>
+</ol>
+<ul>
 <li><code>Unity</code>中协程定义如下：</li>
 </ul>
 <figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">interface</span> <span class="title">IEnumerator</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">object</span> Current &#123; <span class="keyword">get</span>; &#125;</span><br><span class="line">    <span class="function"><span class="built_in">bool</span> <span class="title">MoveNext</span>()</span>;</span><br><span class="line">    <span class="function"><span class="keyword">void</span> <span class="title">Reset</span>()</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
