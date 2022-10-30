@@ -361,8 +361,8 @@
 <ol>
 <li><code>OpenList</code>优先队列：待到达的格子，<code>CloseList</code>集合：已到达的格子。将起点放入<code>OpenList</code></li>
 <li>如果<code>OpenList</code>不为空，找出其中<code>F</code>最小的节点作为当前方格，如果该节点是目标节点，则结束循环，否则放入<code>CloseList</code></li>
-<li>找出当前方格所有可到达的节点，看它们是否在<code>OpenList</code>或<code>CloseList</code>中，如果不在，则将它们放入<code>OpenList</code>，计算相应的<code>F</code>、<code>G</code>、<code>H</code>值，并将当前方格作为它们的父节点</li>
-<li>重复步骤2-3</li>
+<li>找出当前方格所有可到达的节点，看它们是否在<code>OpenList</code>或<code>CloseList</code>中，如果都不在，则将它们放入<code>OpenList</code>，计算相应的<code>F</code>、<code>G</code>、<code>H</code>值，并将当前方格作为它们的父节点；如果在<code>CloseList</code>中，则跳过该节点；如果在<code>OpenList</code>中，则计算<code>F</code>值，如果<code>F</code>比<code>OpenList</code>中的小，则替换</li>
+<li>重复步骤<code>2-3</code></li>
 </ol>
 <ul>
 <li>例子：假设我们有一个<code>7×5</code>大小的迷宫，上图中绿色的格子是起点，红色的格子是终点，中间的<code>3</code>个蓝色格子是一堵墙。角色从起点开始，每一步只能向上下&#x2F;左右移动<code>1</code>格，且不能穿越墙壁。那么如何让角色用最少的步数到达终点？</li>
