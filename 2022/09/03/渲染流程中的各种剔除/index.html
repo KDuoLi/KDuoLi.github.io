@@ -236,6 +236,9 @@
 <li><p>在运行时，<code>Unity</code> 会将这些烘焙的数据加载到内存中，并且对于每个启用了<code>Occlusion Culling</code> 属性的摄像机，将会对数据执行查询以确定该摄像机可以看到的内容。请注意，启用遮挡剔除后，摄像机将执行视锥体剔除和遮挡剔除</p>
 </li>
 </ol>
+<ul>
+<li>在<code>Unity</code>中的视锥体剔除，其原理就是通过判定目标包围盒与组成相机视锥体的<code>6</code>个平面进行同侧判定</li>
+</ul>
 <h1 id="遮挡剔除（Occlusion-Culling）"><a href="#遮挡剔除（Occlusion-Culling）" class="headerlink" title="遮挡剔除（Occlusion Culling）"></a>遮挡剔除（<code>Occlusion Culling</code>）</h1><ul>
 <li>遮挡裁剪，也常被称作遮挡剔除</li>
 <li>发生在应用程序阶段(<code>Application Stage</code>)，由游戏引擎实现，运行在<code>CPU</code>上</li>
