@@ -1,0 +1,1063 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/mmyBlog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/mmyBlog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":false,"trigger":"manual","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}}};
+  </script>
+
+  <meta name="description" content="记录Unity-UGUI相关知识">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity UGUI">
+<meta property="og:url" content="http://example.com/2022/11/29/Unity-UGUI/index.html">
+<meta property="og:site_name" content="KDuoLiのBlog">
+<meta property="og:description" content="记录Unity-UGUI相关知识">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-11-28T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-11-29T14:03:08.571Z">
+<meta property="article:author" content="KDuoLi">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/11/29/Unity-UGUI/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Unity UGUI | KDuoLiのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KDuoLiのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/11/29/Unity-UGUI/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mmyBlog.png">
+      <meta itemprop="name" content="KDuoLi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KDuoLiのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity UGUI
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+              
+
+              <time title="创建时间：2022-11-29 00:00:00 / 修改时间：22:03:08" itemprop="dateCreated datePublished" datetime="2022-11-29T00:00:00+08:00">2022-11-29</time>
+            </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">记录Unity-UGUI相关知识</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="六大基础组件"><a href="#六大基础组件" class="headerlink" title="六大基础组件"></a>六大基础组件</h1><ul>
+<li><code>Canvas</code>对象上依附的</li>
+</ul>
+<ol>
+<li><code>Canvas</code>：画布组件，主要用于渲染<code>UI</code>控件</li>
+<li><code>Canvas Scaler</code>：画布分辨率自适应组件，主要用于分辨率自适应</li>
+<li><code>Graphic Raycaster</code>：射线事件交互组件，主要用于控制射线响应相关</li>
+<li><code>RectTransform</code>：<code>UI</code>对象位置锚点控制组件，主要用于控制位置和对其方式</li>
+</ol>
+<ul>
+<li><code>EventSystem</code>对象上依附的</li>
+</ul>
+<ol start="5">
+<li><code>EventSystem</code>：玩家输入事件响应系统和独立输入模块组件，主要用于监听玩家操作</li>
+<li><code>Standalone Input Modul</code>：玩家输入事件响应系统和独立输入模块组件，主要用于监听玩家操作</li>
+</ol>
+<h1 id="Canvas"><a href="#Canvas" class="headerlink" title="Canvas"></a>Canvas</h1><ul>
+<li><code>Canvas</code>主要作用：<strong>渲染和合并<code>UI</code>元素</strong></li>
+<li><code>Canvas</code>的三种渲染方式</li>
+</ul>
+<ol>
+<li><code>Screen Space - Overlay</code>：屏幕空间，覆盖模式，<code>UI</code>始终在前</li>
+<li><code>Screen Space - Camera</code>：屏幕空间，摄像机模式，<code>3D</code>物体可以显示在<code>UI</code>之前</li>
+<li><code>World Space</code>：世界空间，<code>3D</code>模式</li>
+</ol>
+<hr>
+<ul>
+<li><code>Screen Space - Overlay</code>：覆盖模式，<code>UI</code>始终显示在场景内容前方</li>
+</ul>
+<ol>
+<li>**<code>Pixel Perfect</code>**：是否开启无锯齿精确渲染（性能换效果）</li>
+<li>**<code>SortOrder</code>**：排序层编号（用于控制多个<code>Canvas</code>时的渲染先后顺序）</li>
+<li><code>TargetDisplay</code>：目标设备（在哪个显示设备上显示）</li>
+<li><code>Additional Shader Channels</code>：其他着色器通道，决定着色器可以读取哪些数据</li>
+</ol>
+<hr>
+<ul>
+<li><code>Screen Space - Camera</code>：摄像机模式，<code>3D</code>物体可以显示在<code>UI</code>之前</li>
+</ul>
+<ol>
+<li>**<code>RenderCamera</code>**：用于渲染UI的摄像机（如果不设置将类似于覆盖模式）</li>
+<li>**<code>Plane Distance</code>**：<code>UI</code>平面在摄像机前方的距离，类似整体<code>Z</code>轴的感觉</li>
+<li>**<code>Sorting Layer</code>**：所在排序层</li>
+<li>**<code>Order in Layer</code>**：排序层的序</li>
+</ol>
+<hr>
+<ul>
+<li><code>World Space</code>：世界空间，<code>3D</code>模式，可以把<code>UI</code>对象像<code>3D</code>物体一样处理，常用<code>VR</code>或者<code>AR</code></li>
+</ul>
+<ol>
+<li><code>Event Camera</code>：用于处理UI事件的摄像机（如果不设置，不能正常注册<code>UI</code>事件）</li>
+<li><code>Dynamic Pixels Per Unit</code>：<code>UI</code>中动态创建的位图（例如文本）中，单位像素数（类似密度）</li>
+<li><code>Reference Pixels Per Unit</code>：单位参考像素，多少像素对应<code>Unity</code>中的一个单位（默认一个单位为<code>100</code>像素</li>
+</ol>
+<h1 id="Canvas-Scaler"><a href="#Canvas-Scaler" class="headerlink" title="Canvas Scaler"></a>Canvas Scaler</h1><ul>
+<li><code>Canvas Scaler</code>意思是画布缩放控制器，它主要<strong>负责在不同分辨率下<code>UI</code>控件大小自适应，即可指定画布中元素的比例大小</strong>，提供了三种用于分辨率自适应的模式</li>
+</ul>
+<ol>
+<li><code>Constant Pixel Size</code>（恒定像素模式）</li>
+<li><code>Scale With Screen Size</code>（缩放模式）</li>
+<li><code>Constant Physical Size</code>（恒定物理模式）</li>
+</ol>
+<ul>
+<li>屏幕分辨率：当前设备的分辨率。会参与分辨率自适应的计算</li>
+<li>画布大小和缩放系数：宽高*缩放系数 &#x3D; 屏幕分辨率</li>
+<li><code>Reference Resolution</code>：参考分辨率。在缩放模式的宽高模式中出现的参数，参与分辨率自适应的计算</li>
+<li>分辨率大小自适应——通过一定的算法以屏幕分辨率和参考分辨率参与计算得出缩放系数，<br>该结果会影响所有<code>UI</code>控件的缩放大小</li>
+</ul>
+<hr>
+<ul>
+<li><code>Constant Pixel Size</code>（恒定像素模式）：<strong>无论屏幕大小如何，<code>UI</code>始终保持相同像素大小</strong></li>
+</ul>
+<ol>
+<li><code>Scale Factor</code>：缩放系数，按此系数缩放画布中的所有<code>UI</code>元素</li>
+<li><code>Reference Pixels Per Unit</code>：单位参考像素，多少像素对应<code>Unity</code>中的一个单位（默认一个单位为<code>100</code>像素）。图片设置中的<code>Pixels Per Unit</code>设置，会和该参数一起参与计算</li>
+<li>恒定像素模式计算公式：<code>UI</code>原始尺寸 &#x3D;<br>图片大小（像素）&#x2F; (<code>Pixels Per Unit</code> &#x2F; <code>Reference Pixels Per Unit</code>)</li>
+</ol>
+<hr>
+<ul>
+<li><code>Scale With Screen Size</code>（缩放模式）：根据屏幕尺寸进行缩放，随着屏幕尺寸变化来放大缩小</li>
+</ul>
+<ol>
+<li><code>Reference Resolution</code>：参考分辨率（出图的标准分辨率）<br>缩放模式下的所有匹配模式都会基于参考分辨率进行自适应计算</li>
+<li><code>Screen Match Mode</code>：屏幕匹配模式，当前屏幕分辨率宽高比不适应参考分辨率时，用于分辨率大小自适应的匹配模式</li>
+</ol>
+<ul>
+<li>缩放模式中的三种匹配方式：</li>
+</ul>
+<ol>
+<li><code>Expand</code>：水平或垂直<strong>拓展画布</strong>区域，会根据宽高比的变化来放大缩小画布，可能有黑边。即<strong>会将<code>Canvas</code>的画布大小设置得比参考分辨率<code>Reference Resolution</code>大。目的是完整地显示UI</strong></li>
+</ol>
+<p>将<code>Canvas Size</code>进行宽或高扩大，让它高于参考分辨率</p>
+<p>计算公式：<br>缩放系数 &#x3D; <code>Mathf.Min(</code>屏幕宽&#x2F;参考分辨率宽，屏幕高&#x2F;参考分辨率高)</p>
+<p>画布尺寸 &#x3D; 屏幕尺寸 &#x2F; 缩放系数</p>
+<p>表现效果：最大程度的缩小<code>UI</code>元素，**完全显示<code>UI</code>**，保留<code>UI</code>控件所有细节，可能会留黑边</p>
+<ol start="2">
+<li><code>Shrink</code>：水平或垂直<strong>裁剪画布</strong>区域，会根据宽高比的变化来放大缩小画布，可能会裁剪。即<strong>会将<code>Canvas</code>的画布大小设置得比参考分辨率<code>Reference Resolution</code>小。目的是让UI填满画面</strong></li>
+</ol>
+<p>将<code>Canvas Size</code>进行宽或高收缩，让它低于参考分辨率</p>
+<p>计算公式：<br>缩放系数 &#x3D; <code>Mathf.Max</code>(屏幕宽&#x2F;参考分辨率宽，屏幕高&#x2F;参考分辨率高)</p>
+<p>画布尺寸 &#x3D; 屏幕尺寸 &#x2F; 缩放系数</p>
+<p>表现效果：最大程度的放大<code>UI</code>元素，让<code>UI</code>元素能够填满画面，可能会出现裁剪</p>
+<ol start="3">
+<li><code>Match Width Or Height</code>：<strong>以宽高或者二者的平均值作为参考</strong>来缩放画布区域。<strong>画布大小发生变化时，<code>UI</code>尺寸不变</strong></li>
+</ol>
+<ul>
+<li><p><code>Match</code>：确定用于计算的宽高匹配值</p>
+</li>
+<li><p>要用于只有横屏模式或者竖屏模式的游戏</p>
+</li>
+<li><p>竖屏游戏：<code>Match = 0</code><br>将画布宽度设置为参考分辨率的宽度，<strong>即画布宽度不变</strong><br>并保持比例不变，屏幕越高可能会有黑边</p>
+</li>
+<li><p>横屏游戏：<code>Match = 1</code><br>将画布高度设置为参考分辨率的高度，<strong>即画布高度不变</strong><br>并保持比例不变，屏幕越长可能会有黑边</p>
+</li>
+<li><p>总结</p>
+</li>
+</ul>
+<p>游戏开发一般使用<br><code>Scale With Screen Size</code>缩放模式</p>
+<p>使用建议<br>存在横竖屏切换选择：<br><code>Expand</code>（拓展匹配，有黑边）和 <code>Shrink</code>（收缩匹配，有裁剪）<br>不存在横竖屏切换（定死的横屏或者竖屏游戏）：<br><code>Match Width or Height</code>（宽高匹配）<br>横屏游戏 <code>Match = 1</code><br>竖屏游戏 <code>Match = 1</code></p>
+<hr>
+<ul>
+<li><code>Constant Physical Size</code>（恒定物理模式）：<strong>无论屏幕大小和分辨率如何，UI元素始终保持相同物理大小</strong></li>
+<li>目的：相同像素大小在不同<code>DPI</code>设备上保持相同大小</li>
+</ul>
+<ol>
+<li><code>DPI</code>：（<code>Dots Per Inch</code>，每英寸点数）图像每英寸长度内的像素点数</li>
+<li><code>Physical Unit</code>：物理单位，使用的物理单位种类</li>
+<li><code>Fallback Screen DPI</code>：备用<code>DPI</code>，当找不到设备<code>DPI</code>时，使用此值</li>
+<li><code>Default Sprite DPI</code>：默认图片<code>DPI</code></li>
+</ol>
+<ul>
+<li><p>恒定像素模式和恒定物理模式区别</p>
+</li>
+<li><p>相同点：他们都不会进行缩放，图片有多大显示多大，使用他们不会进行分辨率大小自适应</p>
+</li>
+<li><p>不同点：相同尺寸不同<code>DPI</code>设备像素点区别，像素点越多细节越多<br>同样为<code>5</code>像素，<code>DPI</code>较低的设备上看起来的尺寸可能会大于<code>DPI</code>较高的设备</p>
+</li>
+</ul>
+<h1 id="Graphic-Raycaster"><a href="#Graphic-Raycaster" class="headerlink" title="Graphic Raycaster"></a>Graphic Raycaster</h1><ul>
+<li><code>Graphic Raycaster</code>：图形射线投射器。它是用于检测<code>UI</code>输入事件的射线发射器。它主要<strong>负责通过射线检测玩家和<code>UI</code>元素的交互</strong>，判断是否点击到了<code>UI</code>元素。它并不会检测<code>Canvas</code>以外的内容，只会检测<code>Canvas</code>下的元素</li>
+</ul>
+<ol>
+<li><code>Ignore Reversed Graphics</code>：是否忽略反转图形</li>
+<li><code>Blocking Objects</code>：射线被哪些类型的碰撞器阻挡（在覆盖渲染模式下无效）</li>
+<li><code>Blocking Mask</code>：射线被哪些层级的碰撞器阻挡（在覆盖渲染模式下无效）</li>
+</ol>
+<h1 id="EventSystem"><a href="#EventSystem" class="headerlink" title="EventSystem"></a>EventSystem</h1><ul>
+<li><code>Event System</code>意思是<strong>事件系统</strong>，它是<strong>用于管理玩家的输入事件并分发给各<code>UI</code>控件</strong></li>
+</ul>
+<ol>
+<li><code>First Selected</code>：首先选择的游戏对象，可以设置游戏一开始的默认选择</li>
+<li><code>Send Navigation Events</code>：是否允许导航事件（移动&#x2F;按下&#x2F;取消）</li>
+<li><code>Drag Threshold</code>：拖拽操作的阈值（移动多少像素算拖拽）</li>
+</ol>
+<h1 id="Standalone-Input-Module"><a href="#Standalone-Input-Module" class="headerlink" title="Standalone Input Module"></a>Standalone Input Module</h1><ul>
+<li><code>Standalone Input Module</code>意思是<strong>独立输入模块</strong>。它<strong>主要针对处理鼠标&#x2F;键盘&#x2F;控制器&#x2F;触屏（新版<code>Unity</code>）的输入</strong>。输入的事件通过<code>EventSystem</code>进行分发。它依赖于<code>EventSystem</code>组件，它们两缺一不可</li>
+</ul>
+<ol>
+<li><code>Horizontal Axis</code>：水平轴按钮对应的热键名（该名字对应<code>Input</code>管理器）</li>
+<li><code>Vertical Axis</code>：垂直轴按钮对应的热键名（该名字对应<code>Input</code>管理器）</li>
+<li><code>Submit Button</code>：提交（确定）按钮对应的热建名（该名字对应<code>Input</code>管理器）</li>
+<li><code>Cancel Button</code>：取消按钮对应的热建名（该名字对应<code>Input</code>管理器）</li>
+<li><code>Input Actions Per Second</code>：每秒允许键盘&#x2F;控制器输入的数量</li>
+<li><code>Repeat Delay</code>：每秒输入操作重复率生效前的延迟时间</li>
+<li><code>ForceModule Active</code>：是否强制模块处于激活状态</li>
+</ol>
+<h1 id="RectTransform"><a href="#RectTransform" class="headerlink" title="RectTransform"></a><code>RectTransform</code></h1><ul>
+<li>中心点<code>Pivot</code>的作业</li>
+</ul>
+<ol>
+<li>与锚点进行偏移计算</li>
+<li>缩放的参考点</li>
+<li>旋转的参考点</li>
+</ol>
+<ul>
+<li>锚点时的作用：位置自适应</li>
+<li>锚框时的作用：大小自适应</li>
+</ul>
+<h1 id="三大基础控件"><a href="#三大基础控件" class="headerlink" title="三大基础控件"></a>三大基础控件</h1><ol>
+<li><code>Image</code></li>
+<li><code>Text</code></li>
+<li><code>RawImage</code></li>
+</ol>
+<h1 id="Image"><a href="#Image" class="headerlink" title="Image"></a>Image</h1><ol>
+<li><code>Source Image</code>：图片来源（必须是精灵<code>Sprite</code>类型）</li>
+<li><code>Color</code>：图像的颜色</li>
+<li><code>Material</code>：图像的材质（一般不修改，会使用<code>UI</code>的默认材质）</li>
+<li><code>Raycast Target</code>：是否作为射线检测的目标（不勾选则不会响应射线检测）</li>
+<li><code>Maskable</code>：是否能被遮罩遮挡</li>
+<li><code>Image Type</code>：图片类型。1）<code>Simple</code>-普通模式：均匀缩放整个图片；2）<code>Sliced</code>-切片模式：<code>9</code>宫格拉伸，只拉伸中央十字区域，<code>Pixels Per UnitMultiplier</code>：每单位像素乘数，<code>Fill Center</code>：中心填充；3）<code>Tiled</code>-平铺模式：重复平铺中央部分；4）<code>Filled</code>-填充模式。<code>Fill Method</code>：填充模式，<code>Fill Origin</code>：填充原点，<code>Fill Amount</code>：填充量，<code>Colckwise</code>：顺时针方向</li>
+<li><code>Use Sprite Mesh</code>：使用精灵网格，勾选的话，<code>Unity</code>会生成图片网格</li>
+<li><code>Preserve Aspect</code>：确保图像保持其现有尺寸</li>
+<li><code>Set Native Size</code>：设置为图片资源的原始大小</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Image img = <span class="keyword">this</span>.GetComponent&lt;Image&gt;();</span><br><span class="line"><span class="comment">//加载图片</span></span><br><span class="line">img.sprite = Resources.Load&lt;Sprite&gt;(<span class="string">&quot;&quot;</span>);</span><br><span class="line"><span class="comment">//修改尺寸</span></span><br><span class="line">(transform <span class="keyword">as</span> RectTransform).sizeDelta = <span class="keyword">new</span> Vector2(<span class="number">100</span>, <span class="number">100</span>);</span><br></pre></td></tr></table></figure>
+<h1 id="RawImage"><a href="#RawImage" class="headerlink" title="RawImage"></a>RawImage</h1><ul>
+<li><code>RawImage</code>是原始图像组件，一般<code>RawImage</code>用于显示大图（背影图，不需要打入图集的图片，网络下载的图等）</li>
+</ul>
+<ol>
+<li><code>Texture</code>：图像纹理（对图片类型不限制）</li>
+<li><code>UV Rect</code>：图像在<code>UI</code>矩形内的偏移和大小。位置偏移<code>X</code>和<code>Y</code>（取值<code>0~1</code>），大小偏移<code>W</code>和<code>H</code>（取值<code>0~1</code>），改变它们图像边缘将进行拉伸来填充<code>UV</code>矩形周围的空间</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">RawImage raw = <span class="keyword">this</span>.GetComponent&lt;RawImage&gt;();</span><br><span class="line"><span class="comment">//加载图片</span></span><br><span class="line">raw.texture = Resources.Load&lt;Texture&gt;(<span class="string">&quot;&quot;</span>);</span><br><span class="line"><span class="comment">//修改UV</span></span><br><span class="line">raw.uvRect = <span class="keyword">new</span> Rect(<span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>Image</code>与<code>RawImage</code>的区别</li>
+</ul>
+<ol>
+<li><code>Imgae</code>比<code>RawImage</code>更消耗性能</li>
+<li><code>Image</code>只能使用<code>Sprite</code>属性的图片，但是<code>RawImage</code>什么样的都可以使用。即<code>Image</code>控件要求其纹理为精灵，而<code>RawImage</code>控件可以接受任何纹理</li>
+<li><code>Image</code>适合放一些有操作的图片（裁剪、平铺、旋转等），针对<code>Image Type</code>属性</li>
+<li><code>RawImage</code>只放单独展示的图片就可以，性能会比<code>Image</code>好很多</li>
+<li><code>RawImage</code>支持设置我们的<code>uv</code>坐标。<code>Image</code>不支持（<code>UV Rect</code>：设置<code>UV</code>缩放，偏移（即只让图片显示一部分，可使用图集） 注意：<code>x</code>、<code>y</code>属性控制<code>UV</code>左右、上下偏移；<code>W</code>、<code>H</code>控制<code>UV</code>的重复次数。）</li>
+<li><code>Imgae</code>支持图集；<code>RawImage</code>不支持图集</li>
+</ol>
+<h1 id="TextMeshPro"><a href="#TextMeshPro" class="headerlink" title="TextMeshPro"></a>TextMeshPro</h1><ul>
+<li><code>TextMeshPro</code>与<code>Text</code>的区别</li>
+</ul>
+<ol>
+<li><strong>渲染的方式不同</strong>。<code>UGUI</code>的<code>Text</code>使用了一张字体贴图，Unity把所有需要显示的字符放到了一张图集中，字符的形状是通过像素定义的。当我们放大时，像素不够用就会出现文字变模糊的情况；<code>TextMesh Pro</code>的<code>Text</code>使用了不同的技术来渲染文字，叫做<code>Signed Distance Field（SDF）</code></li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">using</span> UnityEngine.UI;</span><br><span class="line"><span class="keyword">using</span> TMPro;</span><br><span class="line"></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title">Test</span> : <span class="title">MonoBehaviour</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">public</span> TextMeshPro tmp;</span><br><span class="line">    <span class="keyword">public</span> Text t;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Button"><a href="#Button" class="headerlink" title="Button"></a>Button</h1><ul>
+<li>默认的<code>Button</code>有两个对象，父对象为——<code>Button</code>组件依附对象 同时挂载了一个<code>Image</code>组件 作为按钮背景图，子对象——按钮文本（可选）</li>
+</ul>
+<ol>
+<li><code>Interactable</code>：是否接受输入</li>
+<li><code>Transition</code>：相应用户输入的过渡效果。</li>
+</ol>
+<p>1）<code>None</code>：没有状态变化效果</p>
+<p>2）<code>ColorTint</code>：用颜色表示不同状态的变化。<code>TargetGraphic</code>：控制的目标图形；<code>Normal Color</code>：正常状态颜色；<code>Highlighted Color</code>：鼠标进入时显示高亮颜色；<code>Pressed Color</code>：按下颜色；<code>Selected Color</code>：选中的颜色；<code>Disabled Color</code>：<code>Interactable</code>被禁用时的颜色；<code>Color Multiplier</code>：颜色倍增器，过渡颜色乘以该值；<code>FadeDuration</code>：衰减持续时间，从一个状态到另一个状态需要的时间</p>
+<p>3）<code>Sprite Swap</code>：用图片表示不同状态的变化</p>
+<p>4）<code>Animation</code>：用动画表示不同状态的变化</p>
+<ol start="3">
+<li><code>Navigation</code>：导航模式，可以设置<code>UI</code>元素如何在播放模式中导航。1）<code>None</code>：无键盘导航；2）<code>Horizontal</code>：水平导航；3）<code>Verticval</code>：垂直导航；4）<code>Automatic</code>：自动导航；5）<code>Explicit</code>：指定周边控件导航。<code>Visualize</code>：可视化导航连线</li>
+<li><code>Onclick</code>：单击执行的函数列表</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Button btn = <span class="keyword">this</span>.GetComponent&lt;Button&gt;();</span><br><span class="line">btn.onClick.AddListener();</span><br><span class="line">btn.onClick.AddListener(() =&gt; &#123;</span><br><span class="line">    print(<span class="string">&quot;1&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//指定移除函数</span></span><br><span class="line">btn.onClick.RemoveListener();</span><br><span class="line"><span class="comment">//移除所有函数</span></span><br><span class="line">btn.onClick.RemoveAllListeners();</span><br></pre></td></tr></table></figure>
+
+<h1 id="组合控件"><a href="#组合控件" class="headerlink" title="组合控件"></a>组合控件</h1><h1 id="Toggle"><a href="#Toggle" class="headerlink" title="Toggle"></a>Toggle</h1><ul>
+<li><code>Toggle</code>是开关组件，是<code>UGUI</code>中用于处理玩家单选框多选框相关交互的关键组件</li>
+<li>开关组件默认是多选框，可以通过配合<code>ToggleGroup</code>组件制作为单选框</li>
+<li>默认创建的<code>Toggle</code>由<code>4</code>个对象组成。父对象——<code>Toggle</code>组件依附，子对象——背景图（必备）、选中图（必备）、说明文字（可选）</li>
+</ul>
+<ol>
+<li><code>isOn</code>：当前是否处于打开状态</li>
+<li><code>Toggle Transition</code>：在开关值变化时的过渡方式。1）<code>None</code>：无任何过渡，直接显示隐藏；2）<code>Fade</code>：淡入淡出</li>
+<li><code>Graphic</code>：用于表示选中状态的图片</li>
+<li><code>Groud</code>：单选框分组</li>
+<li><code>Toggle Groud - Allow Switch Off</code>：是否允许不选中任何一个单选框。注意单选框分组组件可以挂载在任何对象上，只需将其和一组的单选框关联即可</li>
+<li><code>OnValueChanged</code>：开关状态变化时执行的函数列表</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line">Toggle tog = <span class="keyword">this</span>.GetComponent&lt;Toggle&gt;();</span><br><span class="line">tog.isOn = <span class="literal">true</span>;</span><br><span class="line">print(tog.isOn);</span><br><span class="line"></span><br><span class="line">ToggleGroup togGroup = <span class="keyword">this</span>.GetComponent&lt;ToggleGroup&gt;();</span><br><span class="line">togGroup.allowSwitchOff = <span class="literal">false</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">//可以遍历提供的迭代器 得到当前处于选中状态的 Toggle</span></span><br><span class="line"><span class="keyword">foreach</span> (Toggle item <span class="keyword">in</span> togGroup.ActiveToggles())</span><br><span class="line">&#123;</span><br><span class="line">    print(item.name + <span class="string">&quot; &quot;</span> + item.isOn);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">//监听事件的两种方式</span></span><br><span class="line"><span class="comment">//1.拖脚本</span></span><br><span class="line"><span class="comment">//2.代码添加</span></span><br><span class="line">tog.onValueChanged.AddListener(ChangeValue2);</span><br><span class="line">tog.onValueChanged.AddListener((b) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    print(<span class="string">&quot;代码监听 状态改变&quot;</span> + b);</span><br><span class="line">&#125;);</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">ChangValue</span>(<span class="params"><span class="built_in">bool</span> isOn</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    print(<span class="string">&quot;状态改变&quot;</span> + isOn);</span><br><span class="line">&#125;    </span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">ChangeValue2</span>(<span class="params"><span class="built_in">bool</span> v</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    print(<span class="string">&quot;代码监听 状态改变&quot;</span> + v);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h1 id="InputField"><a href="#InputField" class="headerlink" title="InputField"></a>InputField</h1><ul>
+<li><p><code>InputField</code>是输入字段组件，是<code>UGUI</code>中用于处理玩家文本输入相关交互的关键组件</p>
+</li>
+<li><p>默认创建的<code>InputField</code>由<code>3</code>个对象组成，父对象——<code>InputField</code>组件依附对象以及同时在其上挂载了一个<code>Image</code>作为背景图，子对象——文本显示组件（必备）、默认显示文本组件（必备）</p>
+</li>
+</ul>
+<ol>
+<li><code>On Value Changed(string)</code>：每次改变时调用的函数列表</li>
+<li><code>On End Edit(string)</code>：结束改变时调用的函数列表</li>
+<li><code>On Select(string)</code>：选中时调用的函数列表，重复选中不会多次调用</li>
+<li><code>On Deselect(string)</code>：结束选中时调用的函数列表</li>
+</ol>
+<h1 id="Slider"><a href="#Slider" class="headerlink" title="Slider"></a>Slider</h1><ul>
+<li><p><code>Slider</code>是滑动条组件，是<code>UGUI</code>中用于处理滑动条相关交互的关键组件</p>
+</li>
+<li><p>默认创建的<code>Slider</code>由<code>4</code>组对象组成。父对象——<code>Slider</code>组件依附的对象,子对象——背景图、进度图、滑动块三组对象</p>
+</li>
+</ul>
+<ol>
+<li><code>FillRect</code>：用于填充的进度条图形</li>
+<li><code>Handle Rect</code>：用于滑动的滑动块图形</li>
+<li><code>Direction</code>：滑动条增加的方向</li>
+<li><code>Min Value</code>：最小值</li>
+<li><code>Max Value</code>：最大值</li>
+<li><code>Whole Numbers</code>：是否约束为整数值变化</li>
+<li><code>Value</code>：当前滑动条代表的数值</li>
+<li><code>On Value Changed(Single)</code>：滑动条改变时执行的函数列表。<code>Single</code>是<code>float</code>类型</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">Slider s = <span class="keyword">this</span>.GetComponent&lt;Slider&gt;();</span><br><span class="line">print(s.<span class="keyword">value</span>);</span><br><span class="line"><span class="comment">//监听事件的两种方式</span></span><br><span class="line"><span class="comment">//1.拖脚本</span></span><br><span class="line"><span class="comment">//2.代码添加</span></span><br><span class="line">s.onValueChanged.AddListener((v) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    print(<span class="string">&quot;代码添加的监听&quot;</span> + v);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="Scrollbar"><a href="#Scrollbar" class="headerlink" title="Scrollbar"></a>Scrollbar</h1><ul>
+<li><p><code>Scrollbar</code>是滚动条组件，是<code>UGUI</code>中用于处理滚动条相关交互的关键组件</p>
+</li>
+<li><p>默认创建的<code>Scrollbar</code>由<code>2</code>组对象组成。父对象——<code>Scrollbar</code>组件依附的对象，子对象——滚动块对象</p>
+</li>
+<li><p>一般情况下我们不会单独使用滚动条，都是配合<code>ScrollView</code>滚动视图来使用</p>
+</li>
+</ul>
+<ol>
+<li><code>Handle Rect</code>：关联滑动块图形对象</li>
+<li><code>Direction</code>：滑动条值增加的方向</li>
+<li><code>Value</code>：滚动条初始位置值（<code>0~1</code>）</li>
+<li><code>Size</code>：滚动条在条中的比例大小（<code>0~1</code>）</li>
+<li><code>Number of Steps</code>：允许可以滚动多次（不同滚动位置的数量）</li>
+<li><code>On Value Changed(Single)</code>：滚动条值改变时执行的函数列表</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Scrollbar sb = <span class="keyword">this</span>.GetComponent&lt;Scrollbar&gt;();</span><br><span class="line">print(sb.<span class="keyword">value</span>);</span><br><span class="line">print(sb.size);</span><br><span class="line"></span><br><span class="line"><span class="comment">//监听事件的两种方式</span></span><br><span class="line"><span class="comment">//1.拖脚本</span></span><br><span class="line"><span class="comment">//2.代码添加</span></span><br><span class="line">sb.onValueChanged.AddListener((v) =&gt; </span><br><span class="line">&#123;</span><br><span class="line">    print(<span class="string">&quot;代码监听的函数&quot;</span> + v);</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="ScrollView"><a href="#ScrollView" class="headerlink" title="ScrollView"></a>ScrollView</h1><ul>
+<li><p><code>ScrollRect</code>是滚动视图组件，是<code>UGUI</code>中用于处理滚动视图相关交互的关键组件</p>
+</li>
+<li><p>默认创建的<code>ScrollRect</code>由<code>4</code>组对象组成。父对象——<code>ScrollRect</code>组件依附的对象 还有一个<code>Image</code>组件 最为背景图，子对象<code>Viewport</code>控制滚动视图可视范围和内容显示，<code>Scrollbar Horizontal</code> 水平滚动条，<code>Scrollbar Vertical</code> 垂直滚动条</p>
+</li>
+</ul>
+<ol>
+<li><code>Content</code>：控制滚动视图显示内容的父对象，它的尺寸有多大，滚动视图就能拖多远</li>
+<li><code>Horizontal</code>：启用水平滚动</li>
+<li><code>Verical</code>：启用垂直滚动</li>
+<li><code>Movement Type</code>：滚动视图元素的运动类型，主要控制拖动时的反馈效果。1）<code>Unrestricted</code>（一般不使用）：不受限制，随意拖动；2）<code>Elastic</code>（常用）：有回弹效果，当滚出边缘后，会弹回边缘，<code>Elasticity</code>：回弹系数，控制回弹效果，值越大回弹越慢；3）<code>Clamped</code>：夹紧效果，始终限制在范围内，没有回弹效果</li>
+<li><code>Inertia</code>：移动惯性。如果开启，移动滚动条有一定的惯性。<code>Deceleration Rate</code>：减速率（<code>0~1</code>）。<code>0</code>没有惯性，<code>1</code>不会停止</li>
+<li><code>Scroll Secsitivity</code>：滚轮（鼠标中键）和触摸板（笔记本）的滚动事件敏感性</li>
+<li><code>ViewPort</code>：关联滚动视图内容视口对象</li>
+<li><code>Horizontal Scrollbar</code>：关联水平滚动条</li>
+<li><code>Visibility</code>：是否在不需要时自动隐藏等模式。1）<code>Permanent</code>：一直显示滚动条；2）<code>Auto Hide</code>：自动隐藏滚动条；3）<code>Auto Hide And Expand Viewport</code>：自动隐藏滚动条并且自动拓展内容视口</li>
+<li><code>Spacing</code>：滚动条和视口之间的间隔空间</li>
+<li><code>On Value Changed（Vector2）</code>：滚动视图位置改变时执行的函数列表</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">ScrollRect sr = <span class="keyword">this</span>.GetComponent&lt;ScrollRect&gt;();</span><br><span class="line"><span class="comment">//改变内容的大小 具体可以拖动多少 都是根据它的尺寸来的</span></span><br><span class="line"><span class="comment">//sr.content.sizeDelta = new Vector2(200, 200);</span></span><br><span class="line">sr.normalizedPosition = <span class="keyword">new</span> Vector2(<span class="number">0</span>, <span class="number">0.5f</span>);</span><br></pre></td></tr></table></figure>
+
+<h1 id="DropDown"><a href="#DropDown" class="headerlink" title="DropDown"></a>DropDown</h1><ul>
+<li><p><code>DropDown</code>是下拉列表（下拉选单）组件，是<code>UGUI</code>中用于处理下拉列表相关交互的关键组件</p>
+</li>
+<li><p>默认创建的<code>DropDown</code>由<code>4</code>组对象组成。父对象：<code>DropDown</code>组件依附的对象 还有一个<code>Image</code>组件作为背景图。子对象：<code>Label</code>是当前选项描述，<code>Arrow</code>右侧小箭头，<code>Template</code>下拉列表选单</p>
+</li>
+</ul>
+<ol>
+<li><code>Template</code>：关联下拉列表对象</li>
+<li><code>Caption Text</code>：关联显示当前选择内容的文本组件</li>
+<li><code>Caption Image</code>：关联显示当前选择内容的图片组件</li>
+<li><code>Item Text</code>：关联下拉列表选项用的文本控件</li>
+<li><code>Item Image</code>：关联拉列表选项用的图片控件</li>
+<li><code>Value</code>：当前所选选项的索引值</li>
+<li><code>Alpha Fada Speed</code>：下拉列表窗口淡入淡出的速度</li>
+<li><code>Options</code>：存在的选项列表</li>
+<li><code>On Value Changed（Int32）</code>：当所选选项的索引值改变时执行的函数列表</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Dropdown dd = <span class="keyword">this</span>.GetComponent&lt;Dropdown&gt;();</span><br><span class="line">print(dd.<span class="keyword">value</span>);</span><br><span class="line">print(dd.options[dd.<span class="keyword">value</span>].text);</span><br><span class="line">dd.options.Add(<span class="keyword">new</span> Dropdown.OptionData(<span class="string">&quot;123123123&quot;</span>));</span><br></pre></td></tr></table></figure>
+
+
+<h1 id="图集制作"><a href="#图集制作" class="headerlink" title="图集制作"></a>图集制作</h1><ul>
+<li>制作图集的目的就是减少<code>DrawCall</code>，提高性能</li>
+<li>在工程设置面板中打开功能：<code>Edit——&gt;Project Setting——&gt;Editor——&gt;Sprite Packer</code>(精灵包装器，可以通过<code>Unity</code>自带图集工具生成图集)</li>
+</ul>
+<ol>
+<li><code>Disabled</code>：默认设置，不会打包图集</li>
+<li><code>Enabled For Builds</code>（<code>Legacy Sprite Packer</code>）：<code>Unity</code>仅在构建时打包图集，在编辑模式下不会打包图集</li>
+<li><code>Always Enabled</code>（<code>Legacy Sprite Packer</code>）：<code>Unity</code>在构建时打包图集，在编辑模式下运行前会打包图集</li>
+</ol>
+<h1 id="UI事件监听接口"><a href="#UI事件监听接口" class="headerlink" title="UI事件监听接口"></a>UI事件监听接口</h1><ul>
+<li><p>目前所有的控件都只提供了常用的事件监听列表，如果想做一些类似长按，双击，拖拽等功能是无法制作的，或者想让<code>Image</code>和<code>Text</code>，<code>RawImage</code>三大基础控件能够响应玩家输入也是无法制作的。而事件接口就是用来处理类似问题，让所有控件都能够添加更多的事件监听来处理对应的逻辑</p>
+</li>
+<li><p>常用事件接口</p>
+</li>
+</ul>
+<ol>
+<li><code>IPointerEnterHandler</code> - <code>OnPointerEnter</code> - 当指针进入对象时调用 （鼠标进入）</li>
+<li><code>IPointerExitHandler</code> - <code>OnPointerExit</code> - 当指针退出对象时调用 （鼠标离开）</li>
+<li><code>IPointerDownHandler</code> - <code>OnPointerDown</code> - 在对象上按下指针时调用 （按下）</li>
+<li><code>IPointerUpHandler</code> - <code>OnPointerUp</code> - 松开指针时调用（在指针正在点击的游戏对象上调用）（抬起）</li>
+<li><code>IPointerClickHandler</code> - <code>OnPointerClick</code> - 在同一对象上按下再松开指针时调用 （点击）</li>
+<li><code>IBeginDragHandler</code> - <code>OnBeginDrag</code> - 即将开始拖动时在拖动对象上调用 （开始拖拽）</li>
+<li><code>IDragHandler</code> - <code>OnDrag</code> - 发生拖动时在拖动对象上调用 （拖拽中）</li>
+<li><code>IEndDragHandler</code> - <code>OnEndDrag</code> - 拖动完成时在拖动对象上调用 （结束拖拽）</li>
+</ol>
+<ul>
+<li>使用事件接口</li>
+</ul>
+<ol>
+<li>继承<code>MonoBehavior</code>的脚本继承对应的事件接口，引用命名空间</li>
+<li>实现接口中的内容</li>
+<li>将该脚本挂载到想要监听自定义事件的<code>UI</code>控件上</li>
+</ol>
+<ul>
+<li><code>PointerEventData</code>的父类：<code>BaseEventData</code></li>
+</ul>
+<ol>
+<li><code>pointerId</code>： 鼠标左右中键点击鼠标的<code>ID</code>，通过它可以判断右键点击。范围（<code>-1~-3</code>），<code>-1</code>为左键，<code>-2</code>为中键，<code>-3</code>为右键</li>
+<li><code>position</code>：当前指针位置（屏幕坐标系）</li>
+<li><code>pressPosition</code>：按下的时候指针的位置</li>
+<li><code>delta</code>：指针移动增量</li>
+<li><code>clickCount</code>：连击次数</li>
+<li><code>clickTime</code>：点击时间</li>
+<li><code>pressEventCamera</code>：最后一个<code>OnPointerPress</code>按下事件关联的摄像机</li>
+<li><code>enterEvetnCamera</code>：最后一个<code>OnPointerEnter</code>进入事件关联的摄像机</li>
+</ol>
+<ul>
+<li>好处：</li>
+</ul>
+<ol>
+<li>需要监听自定义事件的控件挂载继承实现了接口的脚本就可以监听到一些特殊事件，可以通过它实现一些长按，双击拖拽等功能</li>
+</ol>
+<ul>
+<li>坏处：</li>
+</ul>
+<ol>
+<li>不方便管理，需要自己写脚本继承接口挂载到对应控件上，比较麻烦</li>
+</ol>
+<h1 id="事件触发器"><a href="#事件触发器" class="headerlink" title="事件触发器"></a>事件触发器</h1><ul>
+<li>事件触发器是<code>EventTrigger</code>组件，它是一个集成了<code>UI</code>所有事件监听接口的脚本，它可以让我们更方便的为控件添加事件监听</li>
+</ul>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//如何使用事件触发器</span></span><br><span class="line"><span class="comment">//1.拖曳脚本进行关联</span></span><br><span class="line"><span class="comment">//2.代码添加</span></span><br><span class="line"></span><br><span class="line"><span class="comment">//申明一个希望监听的事件对象</span></span><br><span class="line">EventTrigger.Entry entry = <span class="keyword">new</span> EventTrigger.Entry();</span><br><span class="line"><span class="comment">//申明 事件的类型</span></span><br><span class="line">entry.eventID = EventTriggerType.Drag;</span><br><span class="line"><span class="comment">//监听函数关联</span></span><br><span class="line">entry.callback.AddListener((data) =&gt;</span><br><span class="line">&#123;</span><br><span class="line">    print(<span class="string">&quot;拖拽&quot;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">//把申明好的 事件对象 加入到 EventTrigger当中</span></span><br><span class="line"><span class="keyword">this</span>.GetComponent&lt;EventTrigger&gt;().triggers.Add(entry);</span><br></pre></td></tr></table></figure>
+<ul>
+<li><code>EventTrigger</code>可以让我们写更少的代码。可以在面板类中处理面板控件的事件逻辑，更加的面向对象，便于管理</li>
+</ul>
+<h1 id="RectTransformUtility"><a href="#RectTransformUtility" class="headerlink" title="RectTransformUtility"></a>RectTransformUtility</h1><ul>
+<li><code>RectTransformUtility</code>公共类是一个<code>RectTransform</code>的辅助类。主要用于进行一些坐标的转换等等操作，其中对于我们目前来说最重要的函数是 <strong>将屏幕空间上的点，转换成<code>UI</code>本地坐标下的点</strong></li>
+<li>将屏幕坐标转换为<code>UI</code>本地坐标系下的点，方法：<code>RectTransformUtility.ScreenPointToLocalPointInRectangle</code>。一般配合拖拽事件使用</li>
+</ul>
+<ol>
+<li>参数一：相对父对象</li>
+<li>参数二：屏幕点</li>
+<li>参数三：摄像机</li>
+<li>参数四：最终得到的点</li>
+</ol>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">OnDrag</span>(<span class="params">PointerEventData eventData</span>)</span></span><br><span class="line">&#123;</span><br><span class="line">    Vector2 nowPos;</span><br><span class="line">    RectTransformUtility.ScreenPointToLocalPointInRectangle(</span><br><span class="line">    parent,</span><br><span class="line">    eventData.position,</span><br><span class="line">    eventData.enterEventCamera,</span><br><span class="line">    <span class="keyword">out</span> nowPos );</span><br><span class="line">    <span class="keyword">this</span>.transform.localPosition = nowPos;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h1 id="Mask遮罩"><a href="#Mask遮罩" class="headerlink" title="Mask遮罩"></a>Mask遮罩</h1><ul>
+<li><code>Mask</code>遮罩通过在<strong>父对象上添加<code>Mask</code>组件即可遮罩其子对象</strong></li>
+</ul>
+<ol>
+<li><code>Show Mask Graphic</code>：是否显示遮罩图片</li>
+</ol>
+<ul>
+<li>注意</li>
+</ul>
+<ol>
+<li>想要被遮罩的<code>Image</code>需要勾选<code>Maskable</code></li>
+<li>只要父对象添加了<code>Mask</code>组件，那么所有的<code>UI</code>子对象都会被遮罩</li>
+<li>遮罩父对象图片的制作，不透明的地方显示，透明的地方被遮罩</li>
+</ol>
+<ul>
+<li><p>原理：<strong>利用<code>GPU</code>的模板缓冲<code>StencilBuffer</code>实现</strong>。<code>GPU</code>在渲染前会为每个像素点分配一个<code>1</code>字节(<code>8</code>位)大小的内存区域，即<code>StencilBuffer</code>，用于记录一个无符号整数。在决定是否要渲染某个像素点之前，会将它当前的<code>StencilBuffer</code>的值与某个参考值(<code>stencilID</code>)进行指定的逻辑运算(<code>Stencil Comparison</code>)，如果运算结果为<code>True</code>，则渲染这个像素点，否则就不渲染</p>
+</li>
+<li><p>关键代码如下：它的作用是为<code>Mask</code>对象生成一个特殊的材质，这个材质会将<code>StencilBuffer</code>的值置为<code>1</code></p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> maskMaterial = StencilMaterial.Add(baseMaterial, <span class="number">1</span>, StencilOp.Replace, CompareFunction.Always);</span><br></pre></td></tr></table></figure></li>
+<li><p><code>Mask</code>会额外生成 <code>2</code>个<code>DrawCall</code>。第一个 <code>Mask</code> 是一个在底层模板绘制一个区域的命令，根据 <code>Image</code> 传进来的图片 <code>Alpha</code> 值，确定裁剪区域，之后 <code>Mask</code>节点下的元素会根据这个区域计算 <code>Alpha</code> 的值，最后一个 <code>Mask</code> 是绘制区域结束的指令，用于结束计算裁剪的操作</p>
+</li>
+</ul>
+<h1 id="Rect-Mask-2D"><a href="#Rect-Mask-2D" class="headerlink" title="Rect Mask 2D"></a>Rect Mask 2D</h1><ul>
+<li><code>Rect Mask 2D</code>：一个常见用途是显示较大区域的小部分。使用 <code>Rect Mask 2D </code>可框定此区域</li>
+<li>优点</li>
+</ul>
+<ol>
+<li>不使用模板缓冲区</li>
+<li>无需额外的绘制调用</li>
+<li>无需更改材质</li>
+<li>高速性能</li>
+</ol>
+<ul>
+<li>缺点</li>
+</ul>
+<ol>
+<li>仅在 <code>2D</code> 空间中有效</li>
+<li>不能正确掩盖不共面的元素</li>
+</ol>
+<ul>
+<li><code>Rect Mask 2D</code>与<code>Mask</code>的异同</li>
+<li>相同点</li>
+</ul>
+<ol>
+<li>裁剪</li>
+<li>都只生效于子元素</li>
+</ol>
+<ul>
+<li>不同点</li>
+</ul>
+<ol>
+<li><code>Mask</code>组件需要依赖一个<code>Image</code>组件（<code>Raw Image</code>组件，不行！），裁剪区域就是<code>Image</code>的大小；而<code>Rect Mask 2D</code>不用依赖任何组件，裁剪区域就是它的<code>RectTransform</code>的<code>rect</code>大小</li>
+<li><code>Mask</code> 内的元素都不会跟外界非 <code>Mask</code> 内的元素合批；<code>RectMask2D</code>内的元素合批规则跟正常的是一样的</li>
+<li><code>Mask</code> 内的元素可以和其他<code>Mask</code> 内的元素合批；<code>RectMask2D</code>内的元素不会跟外界任何元素进行合批（即使是其他 <code>RectMask2D</code>内的元素）</li>
+<li><code>Mask</code>会额外生成 <code>2</code>个<code>DrawCall</code>；<code>RectMask2D</code> 不会产生额外的 <code>DrawCall</code></li>
+</ol>
+<h1 id="模型和粒子显示在UI之前"><a href="#模型和粒子显示在UI之前" class="headerlink" title="模型和粒子显示在UI之前"></a>模型和粒子显示在UI之前</h1><ul>
+<li>模型显示在<code>UI</code>之前</li>
+</ul>
+<ol>
+<li><strong>直接用摄像机渲染<code>3D</code>物体</strong>。<code>Canvas</code>的渲染模式只要不是覆盖模式，摄像机模式 和 世界(<code>3D</code>)模式都可以让模型显示在<code>UI</code>之前（<code>Z</code>轴在<code>UI</code>元素之前即可）</li>
+</ol>
+<p>注意：1）摄像机模式时建议用专门的摄像机渲染<code>UI</code>相关；2）面板上的<code>3D</code>物体建议也用UI摄像机进行渲染</p>
+<ol start="2">
+<li>方法二：<strong>将<code>3D</code>物体渲染在图片上，通过图片显示</strong>。专门使用一个摄像机渲染<code>3D</code>模型，将其渲染内容输出<code>Render Texture</code>上，类似小地图的制作方式，再将渲染的图显示在<code>UI</code>上</li>
+</ol>
+<p>注意：该方式不管<code>Canvas</code>的渲染模式是哪种都可以使用</p>
+<ul>
+<li>粒子特效显示在<code>UI</code>之前。粒子特效的显示和<code>3D</code>物体类似</li>
+<li>注意点：在摄像机模式下时，可以在粒子组件的<code>Renderer</code>相关参数中改变排序层，让粒子特效始终显示在其之前不受<code>Z</code>轴影响</li>
+</ul>
+<h1 id="异形按钮"><a href="#异形按钮" class="headerlink" title="异形按钮"></a>异形按钮</h1><ul>
+<li><p>异形按钮：图片形状不是传统矩形的按钮</p>
+</li>
+<li><p>如何让异形按钮能够准确点击</p>
+</li>
+</ul>
+<ol>
+<li>通过添加子对象的形式</li>
+</ol>
+<p>按钮之所以能够响应点击，<strong>主要是根据图片矩形范围进行判断的</strong>。它的范围判断是自下而上的，意思是如果有子对象图片，子对象图片的范围也会算为可点击范围，那么我们就可以<strong>用多个透明图拼凑不规则图形作为按钮子对象用于进行射线检测</strong></p>
+<ol start="2">
+<li>通过代码改变图片的透明度响应阈值</li>
+</ol>
+<p>1）第一步：修改图片参数，开启<code>Read/Write Enabled</code>开关</p>
+<p>2）第二步：通过代码修改图片的响应阈值该参数含义：指定一个像素必须具有的最小<code>alpha</code>值，以变能够认为射线命中了图片。即当像素点<code>alpha</code>值小于了 该值 就不会被射线检测了</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">img.alphaHitTestMinimumThreshold = <span class="number">0.1f</span>;</span><br></pre></td></tr></table></figure>
+<ul>
+<li>注意：通过增加内存消耗，来提高准确性</li>
+</ul>
+<h1 id="自动布局"><a href="#自动布局" class="headerlink" title="自动布局"></a>自动布局</h1><ul>
+<li>自动布局可以帮助我们自动<strong>设置<code>UI</code>控件的位置和大小等</strong></li>
+<li>要参与自动布局的布局元素必须包含布局属性，布局元素组件为<code>Layout Element</code>，布局属性主要有以下几条</li>
+</ul>
+<ol>
+<li><p><code>Ignore Layout</code>：忽略布局</p>
+</li>
+<li><p><code>Minmum width</code>：该布局元素应具有的最小宽度</p>
+</li>
+<li><p><code>Minmum height</code>：该布局元素应具有的最小高度</p>
+</li>
+<li><p><code>Preferred width</code>：在分配额外可用宽度之前，此布局元素应具有的宽度</p>
+</li>
+<li><p><code>Preferred height</code>：在分配额外可用高度之前，此布局元素应具有的高度。</p>
+</li>
+<li><p><code>Flexible width</code>：此布局元素应相对于其同级而填充的额外可用宽度的相对量</p>
+</li>
+<li><p><code>Flexible height</code>：此布局元素应相对于其同级而填充的额外可用宽度的相对量</p>
+</li>
+<li><p>在进行自动布局时 都会通过计算布局元素中的这<code>6</code>个属性得到控件的大小位置</p>
+</li>
+<li><p><code>Layout Priority</code>：此组件的布局优先级。如果一个游戏对象有一个以上包含布局属性的组件（例如，一个 <code>Image</code> 组件和一个 <code>LayoutElement</code> 组件），则布局系统将使用 <code>Layout Priority</code> 值最高的组件中的属性值。如果这些组件具有相同的 <code>Layout Priority</code> 值，则布局系统将使用每个属性的最大值，而不管该属性来自哪个组件</p>
+</li>
+</ol>
+<ul>
+<li>在布局时，布局元素大小设置的基本规则是</li>
+</ul>
+<ol>
+<li>首先分配最小大小<code>Minmum width</code>和<code>Minmum height</code></li>
+<li>如果父类容器中有足够的可用空间，则分配<code>Preferred width</code>和<code>Preferred height</code></li>
+<li>如果上面两条分配完成后还有额外空间，则分配<code>Flexible width</code>和<code>Flexible height</code></li>
+</ol>
+<ul>
+<li>一般情况下布局元素的这些属性都是<code>0</code>，但是特定的UI组件依附的对象布局属性会被改变，比如<code>Image</code>和<code>Text</code>。一般情况下我们不会去手动修改他们，但是如果有这些需求，可以手动添加一个<code>Layout Element</code>组件 可以修改这些布局属性</li>
+</ul>
+<hr>
+<ul>
+<li>水平垂直布局组件：<strong>将子对象并排或者竖直的放在一起</strong>。组件名：<code>Horizontal Layout Group</code> 和 <code>Vertical Layout Group</code></li>
+<li>参数相关：</li>
+</ul>
+<ol>
+<li><code>Padding</code>：左右上下边缘偏移位置</li>
+<li><code>Spacing</code>：子对象之间的间距</li>
+<li><code>ChildAlignment</code>：九宫格对齐方式</li>
+<li><code>Reverse Arrangement</code>：反向排列</li>
+<li><code>Control Child Size</code>：是否控制子对象的宽高</li>
+<li><code>Use Child Scale</code>：在设置子对象大小和布局时，是否考虑子对象的缩放</li>
+<li><code>Child Force Expand</code>：是否强制子对象拓展以填充额外可用空间</li>
+</ol>
+<hr>
+<ul>
+<li>网格布局组件：<strong>将子对象当成一个个的格子设置它们的大小和位置</strong>。组件名：<code>Grid Layout Group</code></li>
+<li>参数相关：</li>
+</ul>
+<ol>
+<li><code>Padding</code>：左右上下边缘偏移位置</li>
+<li><code>Cell Size</code>：每个格子的大小</li>
+<li><code>Spacing</code>：格子间隔</li>
+<li><code>Start Corner</code>:第一个元素所在位置（<code>4</code>个角）</li>
+<li><code>Start Axis</code>：沿哪个轴放置元素；<code>Horizontal</code>水平放置满换行，<code>Vertical</code>竖直放置满换列</li>
+<li><code>Child Alignment</code>：格子对其方式（<code>9</code>宫格）</li>
+<li><code>Constraint</code>：行列约束。1）<code>Flexible</code>：灵活模式，根据容器大小自动适应；2）<code>Fixed Column Count</code>：固定列数；3）<code>Fixed Row Count</code>：固定行数。<code>Constraint Count</code>：约束个数</li>
+</ol>
+<hr>
+<ul>
+<li>内容大小适配器：<strong>它可以自动地调整<code>RectTransform</code>的长宽来让组件自动设置大小</strong>。一般在<code>Text</code>上使用 或者 配合其它布局组件一起使用。组件名：<code>Content Size Fitter</code></li>
+<li>参数相关</li>
+</ul>
+<ol>
+<li><code>Horizontal Fit</code>：如何控制宽度</li>
+<li><code>Vertical Fit</code>：如何控制高度</li>
+<li><code>Unconstrained</code>：不根据布局元素伸展</li>
+<li><code>Min Size</code>：根据布局元素的最小宽高度来伸展</li>
+<li>**<code>Preferred Size</code>**：根据布局元素的偏好宽度来伸展宽度</li>
+</ol>
+<hr>
+<ul>
+<li>宽高比适配器：1）让布局元素按照一定比例来调整自己的大小；2）使布局元素在父对象内部根据父对象大小进行适配。组件名：<code>Aspect Ratio Fitter</code></li>
+<li>参数相关：</li>
+</ul>
+<ol>
+<li><code>Aspect Mode</code>：适配模式，如果调整矩形大小来实施宽高。1）<code>None</code>：不让矩形适应宽高比；2）<code>Width Controls Height</code>：根据宽度自动调整高度；3）<code>Height Controls Width</code>：根据高度自动调整宽度；4）<code>Fit In Parent</code>：自动调整宽度、高度、位置和锚点，使矩形适应父项的矩形，同时保持宽高比，会出现“黑边”；5）<code>Envelope Parent</code>：自动调整宽度、高度、位置和锚点，使矩形覆盖父项的整个区域，同时保持宽高比，会出现“裁剪”</li>
+<li><code>Aspect Ratio</code>：宽高比；宽除以高的比值</li>
+</ol>
+<h1 id="Canvas-Group组件"><a href="#Canvas-Group组件" class="headerlink" title="Canvas Group组件"></a>Canvas Group组件</h1><ul>
+<li><code>Canvas Group</code>（画布组）：可以整体控制一个面板</li>
+<li>参数相关</li>
+</ul>
+<ol>
+<li><code>Alpha</code>：整体透明度控制</li>
+<li><code>Interactable</code>:整体启用禁用设置</li>
+<li><code>Blocks Raycasts</code>：整体射线检测设置</li>
+<li><code>Ignore Parent Groups</code>：是否忽略父级<code>Canvas Group</code>的作用</li>
+</ol>
+<h1 id="Canvas-Renderer"><a href="#Canvas-Renderer" class="headerlink" title="Canvas Renderer"></a>Canvas Renderer</h1><ul>
+<li><code>Canvas Renderer</code>：负责发送渲染数据</li>
+</ul>
+<ol>
+<li><code>Cull Transparent Mesh</code>：是否剔除透明网格</li>
+</ol>
+<h1 id="Rebuild、ReBatch"><a href="#Rebuild、ReBatch" class="headerlink" title="Rebuild、ReBatch"></a>Rebuild、ReBatch</h1><ul>
+<li><p><code>Unity</code>将UI的渲染分为两个步骤，<strong>对<code>mesh</code>的操作称为<code>Rebatch</code><strong>，</strong>对<code>material</code>和<code>layout</code>的操作称为<code>Rebuild</code></strong></p>
+</li>
+<li><p><code>Rebuild</code>：<strong>重新计算 <code>Graphic</code> 组件的布局和网格的过程</strong></p>
+</li>
+<li><p><code>Batch Build</code>（<code>Rebatch</code>）：**<code>Canvas</code>把表示它<code>UI</code>元素的网格合并起来，并生成合适的渲染命令发送到<code>Unity</code>的图形管线中**。这个过程的结果会被缓存起来复用，直到这个<code>Canvas</code>被标记为<code>Dirty</code>，当<code>Canvas</code>中任何一个网格发生变化时，就会被标记成<code>Dirty</code>状态</p>
+</li>
+<li><p><code>Canvas</code>的网格是从从那些<code>Canvas</code>下的<code>CanvasRenderer</code>组件中获取的，但不包括子<code>Canvas</code></p>
+</li>
+<li><p>触发<code>Rebatch</code>的条件：当<code>Canvas</code>下有<code>Mesh</code>发生改变时，如：</p>
+</li>
+</ul>
+<ol>
+<li><p><code>SetActive</code></p>
+</li>
+<li><p><code>Transform</code>属性变化</p>
+</li>
+<li><p><code>Graphic</code>的<code>Color</code>属性变化（改<code>Mesh</code>顶点色）</p>
+</li>
+<li><p><code>Text</code>文本内容变化</p>
+</li>
+<li><p><code>Depth</code>发生变化</p>
+</li>
+</ol>
+<ul>
+<li>触发<code>Rebuild</code>的条件：</li>
+</ul>
+<ol>
+<li><p><code>Layout</code>修改<code>RectTransform</code>部分影响布局的属性</p>
+</li>
+<li><p><code>Graphic</code>的<code>Mesh</code>或<code>Material</code>发生变化</p>
+</li>
+<li><p><code>Mask</code>裁剪内容变化</p>
+</li>
+</ol>
+<h1 id="UGUI合批"><a href="#UGUI合批" class="headerlink" title="UGUI合批"></a>UGUI合批</h1><ul>
+<li><p>合批原理： <code>UGUI</code>的合批规则是进行重叠检测，然后分层合并。只有在同一个<code>Canvas</code>的<code>UI</code>才可以合批</p>
+</li>
+<li><p>第一步<strong>计算每个<code>UI</code>元素的层级号</strong>。如果有一个<code>UI</code>元素，它所占的矩形范围内，如果没有任何<code>UI</code>在它的底下，那么它的层级号就是<code>0</code>（最底下）；如果有一个<code>UI</code>在其底下且该<code>UI</code>可以和它<code>Batch</code>，那它的层级号与底下的<code>UI</code>层级一样；如果有一个<code>UI</code>在其底下但是无法与它<code>Batch</code>，那它的层级号为底下的<code>UI</code>的层级<code>+1</code>；如果有多个<code>UI</code>都在其下面，那么按前两种方式遍历计算所有的层级号，其中最大的那个作为自己的层级号</p>
+</li>
+<li><p>第二步<strong>合并相同层级中可以<code>Batch</code>的元素作为一个批次，并对批次进行排序</strong> 。有了层级号之后，<code>Unity</code>会将每一层的所有元素进行一个排序（按照材质、纹理等信息），合并掉可以<code>Batch</code>的元素成为一个批次。经过以上排序，就可以得到一个有序的批次序列了。这时<code>Unity</code>会再做一个优化，即如果相邻间的两个批次正好可以<code>Batch</code>的话就会进行<code>Batch</code>。合批的<code>Batch</code>数据，最后会分别放在<code>CanvasMesh</code>的<code>SubMesh</code>里</p>
+</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/11/07/Lua/" rel="prev" title="Lua">
+      <i class="fa fa-chevron-left"></i> Lua
+    </a></div>
+      <div class="post-nav-item"></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%AD%E5%A4%A7%E5%9F%BA%E7%A1%80%E7%BB%84%E4%BB%B6"><span class="nav-number">1.</span> <span class="nav-text">六大基础组件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Canvas"><span class="nav-number">2.</span> <span class="nav-text">Canvas</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Canvas-Scaler"><span class="nav-number">3.</span> <span class="nav-text">Canvas Scaler</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Graphic-Raycaster"><span class="nav-number">4.</span> <span class="nav-text">Graphic Raycaster</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#EventSystem"><span class="nav-number">5.</span> <span class="nav-text">EventSystem</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Standalone-Input-Module"><span class="nav-number">6.</span> <span class="nav-text">Standalone Input Module</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RectTransform"><span class="nav-number">7.</span> <span class="nav-text">RectTransform</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%89%E5%A4%A7%E5%9F%BA%E7%A1%80%E6%8E%A7%E4%BB%B6"><span class="nav-number">8.</span> <span class="nav-text">三大基础控件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Image"><span class="nav-number">9.</span> <span class="nav-text">Image</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RawImage"><span class="nav-number">10.</span> <span class="nav-text">RawImage</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#TextMeshPro"><span class="nav-number">11.</span> <span class="nav-text">TextMeshPro</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Button"><span class="nav-number">12.</span> <span class="nav-text">Button</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%84%E5%90%88%E6%8E%A7%E4%BB%B6"><span class="nav-number">13.</span> <span class="nav-text">组合控件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Toggle"><span class="nav-number">14.</span> <span class="nav-text">Toggle</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#InputField"><span class="nav-number">15.</span> <span class="nav-text">InputField</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Slider"><span class="nav-number">16.</span> <span class="nav-text">Slider</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Scrollbar"><span class="nav-number">17.</span> <span class="nav-text">Scrollbar</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ScrollView"><span class="nav-number">18.</span> <span class="nav-text">ScrollView</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#DropDown"><span class="nav-number">19.</span> <span class="nav-text">DropDown</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE%E9%9B%86%E5%88%B6%E4%BD%9C"><span class="nav-number">20.</span> <span class="nav-text">图集制作</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UI%E4%BA%8B%E4%BB%B6%E7%9B%91%E5%90%AC%E6%8E%A5%E5%8F%A3"><span class="nav-number">21.</span> <span class="nav-text">UI事件监听接口</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BA%8B%E4%BB%B6%E8%A7%A6%E5%8F%91%E5%99%A8"><span class="nav-number">22.</span> <span class="nav-text">事件触发器</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#RectTransformUtility"><span class="nav-number">23.</span> <span class="nav-text">RectTransformUtility</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mask%E9%81%AE%E7%BD%A9"><span class="nav-number">24.</span> <span class="nav-text">Mask遮罩</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Rect-Mask-2D"><span class="nav-number">25.</span> <span class="nav-text">Rect Mask 2D</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%A8%A1%E5%9E%8B%E5%92%8C%E7%B2%92%E5%AD%90%E6%98%BE%E7%A4%BA%E5%9C%A8UI%E4%B9%8B%E5%89%8D"><span class="nav-number">26.</span> <span class="nav-text">模型和粒子显示在UI之前</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%BC%82%E5%BD%A2%E6%8C%89%E9%92%AE"><span class="nav-number">27.</span> <span class="nav-text">异形按钮</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%87%AA%E5%8A%A8%E5%B8%83%E5%B1%80"><span class="nav-number">28.</span> <span class="nav-text">自动布局</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Canvas-Group%E7%BB%84%E4%BB%B6"><span class="nav-number">29.</span> <span class="nav-text">Canvas Group组件</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Canvas-Renderer"><span class="nav-number">30.</span> <span class="nav-text">Canvas Renderer</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Rebuild%E3%80%81ReBatch"><span class="nav-number">31.</span> <span class="nav-text">Rebuild、ReBatch</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#UGUI%E5%90%88%E6%89%B9"><span class="nav-number">32.</span> <span class="nav-text">UGUI合批</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KDuoLi"
+      src="/images/mmyBlog.png">
+  <p class="site-author-name" itemprop="name">KDuoLi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KDuoLi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
