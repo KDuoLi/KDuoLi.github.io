@@ -360,8 +360,8 @@
 </ul>
 <ol>
 <li><code>OpenList</code>优先队列：待到达的格子，<code>CloseList</code>集合：已到达的格子。将起点放入<code>OpenList</code></li>
-<li>如果<code>OpenList</code>不为空，找出其中<code>F</code>最小的节点作为当前方格，如果该节点是目标节点，则结束循环，否则放入<code>CloseList</code></li>
-<li>找出当前方格所有可到达的节点，看它们是否在<code>OpenList</code>或<code>CloseList</code>中，如果都不在，则将它们放入<code>OpenList</code>，计算相应的<code>F</code>、<code>G</code>、<code>H</code>值，并将当前方格作为它们的父节点；如果在<code>CloseList</code>中，则跳过该节点；如果在<code>OpenList</code>中，则计算<code>F</code>值，如果<code>F</code>比<code>OpenList</code>中的小，则替换</li>
+<li>如果<code>OpenList</code>不为空，找出其中<code>F</code>最小的节点作为当前方格，如果该节点是目标节点，则结束循环，否则放入<code>CloseList</code>。如果目标节点在<code>CloseList</code>集合中，则已经找到了最佳路径</li>
+<li>找出当前方格所有可到达的节点，看它们是否在<code>OpenList</code>或<code>CloseList</code>中。如果都不在，则将它们放入<code>OpenList</code>，计算相应的<code>F</code>、<code>G</code>、<code>H</code>值，并将当前方格作为它们的父节点；如果在<code>CloseList</code>中，则跳过该节点</li>
 <li>重复步骤<code>2-3</code></li>
 </ol>
 <ul>
@@ -416,9 +416,38 @@
 <li>需要考虑不同拆分区域的算法。比如栅格地图较三角形网格地图的拆分区域算法简单</li>
 </ol>
 <h1 id="跳点算法-JPS"><a href="#跳点算法-JPS" class="headerlink" title="跳点算法 JPS"></a>跳点算法 JPS</h1><ul>
-<li><code>JPS</code>（<code>Jump Point Search</code>）对<code>A*</code>的搜索规则进行了改造，即不再是搜索某个点附近的点，而是想要用拐点（跳点）来代替</li>
-<li><code>JPS</code>在寻路时只关心拐点，因此它以寻找拐点为主要目标，认为从起点到终点的路径可以由<code>N</code>个拐点组成，只能找到这<code>N</code>个拐点，就能将这些拐点连接起来形成一条完整的路径。于是，问题就变为如何识别拐点和如何寻找拐点</li>
-<li>拐点在<code>JPS</code>中称为跳点。<code>JPS</code>算法是专门栅格地图定制的，所以它可以从<code>8</code>个方向寻找跳点，即前、后、左、右、左上、左下、右上、右下</li>
+<li><p><code>JPS</code>（<code>Jump Point Search</code>）对<code>A*</code>的搜索规则进行了改造，即不再是搜索某个点附近的点，而是想要用拐点（跳点）来代替</p>
+</li>
+<li><p><code>JPS</code>在寻路时只关心拐点，因此它以寻找拐点为主要目标，认为从起点到终点的路径可以由<code>N</code>个拐点组成，只能找到这<code>N</code>个拐点，就能将这些拐点连接起来形成一条完整的路径。于是，问题就变为如何识别拐点和如何寻找拐点</p>
+</li>
+<li><p>拐点在<code>JPS</code>中称为跳点。<code>JPS</code>算法是专门栅格地图定制的，所以它可以从<code>8</code>个方向寻找跳点，即前、后、左、右、左上、左下、右上、右下</p>
+</li>
+<li><p>跳点算法的一般步骤：</p>
+</li>
+</ul>
+<ol>
+<li>初始化：设置起点节点为当前节点，并将其加入封闭列表中。</li>
+<li>循环：只要当前节点不是目标节点，就反复执行下列步骤：<ol>
+<li>从当前节点的所有相邻节点中找到距离目标节点最近的节点。</li>
+<li>将当前节点放入封闭列表中，并将找到的节点设置为当前节点。</li>
+</ol>
+</li>
+<li>结束：如果当前节点是目标节点，则已经找到了最佳路径，可以通过跟踪节点的父节点来构建最佳路径。</li>
+</ol>
+<ul>
+<li>优点</li>
+</ul>
+<ol>
+<li>简单易实现，可以快速找到最佳路径</li>
+</ol>
+<ul>
+<li>缺点</li>
+</ul>
+<ol>
+<li>它可能不能找到最优解，因为它只考虑了距离目标节点最近的节点，而没有考虑其他因素</li>
+<li>跳点算法对于图中的边权也不敏感，因此可能会导致结果不准确，因为它只考虑了距离目标节点最近的节点，而没有考虑其他因素。</li>
+</ol>
+<ul>
 <li>下图为<code>A*</code>与<code>JPS</code>寻路路径的比较</li>
 </ul>
 <p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E5%9B%BE%E7%A4%BA.png?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/JPS%E5%9B%BE%E7%A4%BA.png?raw=true"></p>
