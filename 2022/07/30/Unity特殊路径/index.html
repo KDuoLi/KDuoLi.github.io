@@ -235,7 +235,6 @@
 </ol>
 <h1 id="Application-dataPath（数据路径）"><a href="#Application-dataPath（数据路径）" class="headerlink" title="Application.dataPath（数据路径）"></a>Application.dataPath（数据路径）</h1><ul>
 <li>包含目标设备上的游戏数据文件夹路径（<strong>只读</strong>），例如在<code>Editor</code>中就是<code>Assets</code></li>
-<li>在游戏运行时不可用</li>
 <li>相对路径，该值取决于运行时所基于的平台</li>
 </ul>
 <ol>
@@ -256,9 +255,9 @@
 </li>
 <li><p><code>Android：path = &quot;jar:file://&quot; + Application.dataPath + &quot;!/assets/&quot;; </code></p>
 </li>
-<li><p>一般用来存放视频等资源文件。<strong>游戏运行时只能读不能写</strong>。一般会把初始的<code>AssetBundle</code>资源放在该文件夹下，并且通过<code>UnityWebRequest</code>或<code>AssetBundle.LoadFromFile</code>加载使用</p>
+<li><p>一般用来存放视频等资源文件。<strong>打包后，在Win&#x2F;Linux&#x2F;Mc平台上，可读可写，在Android&#x2F;WebGL平台上，只能读不能写</strong>。一般会把初始的<code>AssetBundle</code>资源放在该文件夹下，并且通过<code>UnityWebRequest</code>或<code>AssetBundle.LoadFromFile</code>加载使用</p>
 </li>
-<li><p>无法访问 <code>WebGL</code> 和 <code>Android</code> 平台上的 S<code>treamingAssets</code> 文件夹。在 <code>WebGL</code> 上没有文件访问权。<code>Android</code> 使用压缩的 <code>.apk</code> 文件。这些平台返回 <code>URL</code>。请使用 <code>UnityWebRequest</code> 类来访问资源，<code>UnityWebRequest</code>带有解压功能</p>
+<li><p>无法访问 <code>WebGL</code> 和 <code>Android</code> 平台上的 <code>StreamingAssets</code> 文件夹。在 <code>WebGL</code> 上没有文件访问权。<code>Android</code> 使用压缩的 <code>.apk</code> 文件。这些平台返回 <code>URL</code>。请使用 <code>UnityWebRequest</code> 类来访问资源，<code>UnityWebRequest</code>带有解压功能</p>
 </li>
 <li><p>位于 <code>StreamingAssets</code> 文件夹中的 <code>.dll</code> 和脚本文件不参与脚本编译</p>
 </li>
