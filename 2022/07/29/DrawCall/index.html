@@ -246,7 +246,7 @@
 </ul>
 <ol>
 <li><code>Set Pass Call</code>指一次渲染状态切换，材质不一致的时候出现一次</li>
-<li>两个相邻执行的<code>Batch</code>之间，如果使用不同材质球或者使用同材质球不同<code>pass</code>则会执行一次<code>Set Pass Call</code></li>
+<li>两个相邻执行的<code>Batch</code>之间，如果使用不同材质球或者使用同材质球不同<code>pass</code>，则会执行一次<code>Set Pass Call</code></li>
 <li><code>CPU</code>调用一次<code>GPU</code>绘制函数称为一次<code>Draw call</code>，多个<code>Draw call</code>在<code>unity</code>中可以合并为一个<code>Batch</code>提交</li>
 <li>不同<code>mesh</code>不同材质会分别进行渲染设置并调用<code>Draw call</code></li>
 <li>不同<code>mesh</code>同材质在满足条件的情况下被顶点数据合并一次性提交给<code>GPU</code>，减少<code>batch</code>不降低<code>Draw call</code></li>
@@ -367,6 +367,13 @@
 </li>
 <li><p>静态合批采用了以空间换时间的策略来提升渲染效率</p>
 </li>
+<li><p>补充：</p>
+</li>
+</ul>
+<ol>
+<li>上述静态合批是按材质。在内置渲染管线中不支持静态合批（按着色器），在通用渲染管线中支持静态合批（按着色器）</li>
+</ol>
+<ul>
 <li><p>静态合批需要<strong>手动</strong>设置哪些物体合批</p>
 </li>
 <li><p>与常规渲染的区别</p>
@@ -496,6 +503,7 @@
 <li><a target="_blank" rel="noopener" href="https://docs.unity.cn/2021.3/Documentation/Manual/SRPBatcher.html">Unity手册 - SRPBatcher</a></li>
 <li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/cancantrbl/p/16048341.html">合批是什么？为什么可以减少Drawcall？有什么合批方法？</a></li>
 <li><a target="_blank" rel="noopener" href="https://cirnoo.github.io/2019/07/22/CreateVertexBuffer/">顶点缓存与索引缓存</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.unity3d.com/cn/Packages/com.unity.render-pipelines.universal@12.1/manual/universalrp-builtin-feature-comparison.html">Unity 手册 - URP与内置渲染管线的功能比较</a></li>
 </ul>
 
     </div>
