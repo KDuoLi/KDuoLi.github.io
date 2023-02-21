@@ -235,7 +235,7 @@
 <li>缺点</li>
 </ul>
 <ol>
-<li>协程本质是迭代器，是基于<code>Unity</code>的生命周期的，大量开启协程会引起<code>GC</code></li>
+<li>协程本质是迭代器（遍历容器的对象），是基于<code>Unity</code>的生命周期的，大量开启协程会引起<code>GC</code></li>
 <li>协同程序无法返回数据</li>
 <li>协同程序使错误处理变得困难。不能将<code>yield</code>放在<code>try-catch</code>中，因此无法处理异常</li>
 <li>协程依赖于<code>MonoBehaviour</code>生命周期</li>
