@@ -27,6 +27,8 @@
 <meta property="og:site_name" content="KDuoLiのBlog">
 <meta property="og:description" content="简单介绍渲染流程中的剔除与裁剪">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A41.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A42.jpg?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E8%83%8C%E9%9D%A2%E8%A3%81%E5%89%AA1.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA1.png?raw=true">
 <meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA2.png?raw=true">
@@ -34,7 +36,7 @@
 <meta property="article:modified_time" content="2022-09-11T16:00:00.000Z">
 <meta property="article:author" content="KDuoLi">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E8%83%8C%E9%9D%A2%E8%A3%81%E5%89%AA1.png?raw=true">
+<meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A41.jpg?raw=true">
 
 <link rel="canonical" href="http://example.com/2022/09/03/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/">
 
@@ -243,7 +245,10 @@
 <li>遮挡裁剪，也常被称作遮挡剔除</li>
 <li>发生在应用程序阶段(<code>Application Stage</code>)，由游戏引擎实现，运行在<code>CPU</code>上</li>
 <li>以<code>Unity</code>为例，需要根据场景中<code>Static</code>物体的位置预先生成场景<code>Occlusion Culling</code>数据，运行时就可以剔除对应静态物体之后的其他物体。遮挡剔除是减少渲染消耗的有效手段之一，可以和视椎体剔除同时生效，进一步减少渲染的消耗</li>
+<li>如下分别为没有遮挡剔除和遮挡剔除</li>
 </ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A41.jpg?raw=true"></p>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A42.jpg?raw=true"></p>
 <h1 id="视口裁剪"><a href="#视口裁剪" class="headerlink" title="视口裁剪"></a>视口裁剪</h1><ul>
 <li><p>发生在几何阶段后期，投影变换之后屏幕映射之前，是渲染管线的必要一环。只有当图元完全或部分存在于规范立方体内部的时候，才将其返送到光栅化阶段。其中，对于完全位于规范立方体内部的图元，则直接进行下一阶段；完全处于规范立方外部的图元则完全被舍弃；部分处于规范立方体内部图元，则会根据视口进行对应的裁剪，在这一过程中可能会产生新的顶点</p>
 </li>
