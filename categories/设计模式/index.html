@@ -213,8 +213,8 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2023/04/03/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/" itemprop="url">
-            <span itemprop="name">享元模式</span>
+          <a class="post-title-link" href="/2023/04/03/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" itemprop="url">
+            <span itemprop="name">原型模式</span>
           </a>
       </div>
 
@@ -233,8 +233,8 @@
       </div>
 
       <div class="post-title">
-          <a class="post-title-link" href="/2023/04/03/%E5%8E%9F%E5%9E%8B%E6%A8%A1%E5%BC%8F/" itemprop="url">
-            <span itemprop="name">原型模式</span>
+          <a class="post-title-link" href="/2023/04/03/%E4%BA%AB%E5%85%83%E6%A8%A1%E5%BC%8F/" itemprop="url">
+            <span itemprop="name">享元模式</span>
           </a>
       </div>
 
@@ -652,13 +652,22 @@ var options = {
   backgroundColor: 'transparent',
   buttonColorDark: '#100f2c',
   buttonColorLight: '#fff',
-  saveInCookies: true,
+  saveInCookies: false,
   label: '🌓',
-  autoMatchOsTheme: true
+  autoMatchOsTheme: false
 }
 const darkmode = new Darkmode(options);
 window.darkmode = darkmode;
 darkmode.showWidget();
+if (window.darkmode && !window.darkmode.isActivated()) {
+  window.darkmode.toggle();
+  var toggleButtons = document.getElementsByClassName("darkmode-toggle");
+  if (toggleButtons && toggleButtons.length > 0) {
+    for (i = 0; i < toggleButtons.length; i++) {
+      toggleButtons[i].classList.add("darkmode-toggle--white");
+    }
+  }
+}
 </script>
 
     </div>
