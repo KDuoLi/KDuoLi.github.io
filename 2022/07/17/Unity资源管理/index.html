@@ -1,0 +1,475 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/mmyBlog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/mmyBlog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="简述GUID、Local ID及资源管理">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Unity 资源管理">
+<meta property="og:url" content="http://example.com/2022/07/17/Unity%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/index.html">
+<meta property="og:site_name" content="KDuoLiのBlog">
+<meta property="og:description" content="简述GUID、Local ID及资源管理">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2022-07-16T16:00:00.000Z">
+<meta property="article:modified_time" content="2023-01-09T14:00:36.500Z">
+<meta property="article:author" content="KDuoLi">
+<meta name="twitter:card" content="summary">
+
+<link rel="canonical" href="http://example.com/2022/07/17/Unity%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>Unity 资源管理 | KDuoLiのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KDuoLiのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/07/17/Unity%E8%B5%84%E6%BA%90%E7%AE%A1%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mmyBlog.png">
+      <meta itemprop="name" content="KDuoLi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KDuoLiのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Unity 资源管理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-07-17 00:00:00" itemprop="dateCreated datePublished" datetime="2022-07-17T00:00:00+08:00">2022-07-17</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2023-01-09 22:00:36" itemprop="dateModified" datetime="2023-01-09T22:00:36+08:00">2023-01-09</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/unity/" itemprop="url" rel="index"><span itemprop="name">unity</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">简述GUID、Local ID及资源管理</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="Asset、Object"><a href="#Asset、Object" class="headerlink" title="Asset、Object"></a>Asset、Object</h1><ul>
+<li>资源（<code>Asset</code>）：是硬盘中的文件，存储在<code>Unity</code>工程的<code>Assets</code>文件夹内。例如，纹理（<code>Texture</code>），材质（<code>Material</code>）和FBX文件等，它们都是资源。一些资源的数据格式是<code>Unity</code>原生支持的，例如材质。有些资源则需要转换为原生的数据格式后才能被<code>Unity</code>使用，例如<code>FBX</code>文件</li>
+<li>对象（<code>Object</code>）：代表序列化数据的集合，表示某个资源的具体实例。它可以是<code>Unity</code>引擎使用的任何类型的资源，例如网格，<code>Sprite</code>，音频剪辑或动画剪辑。所有的对象都是<code>UnityEngine.Object</code>基类的子类</li>
+<li>资源（<code>Asset</code>）与对象（<code>Object</code>）是一种一对多的关系，即一个资源文件可能会包括多个<code>Object</code></li>
+</ul>
+<h1 id="GUID"><a href="#GUID" class="headerlink" title="GUID"></a>GUID</h1><ul>
+<li><code>GUID</code>（<code>Globally Unique Identifier</code>）：也称<code>File ID</code>是资源的唯一标识符，用于记录资源之间的引用关系</li>
+<li><code>GUID</code>存储于<code>.meta</code>文件中。<code>Unity</code>会为每一个加入到<code>Assets</code>文件夹中的文件，创建一个<strong>同级同名</strong>的<code>.meta</code>文件，虽然文件类型的不同会影响这个<code>.meta</code>的具体内容，但它们都包含一个<strong>用来标记文件身份的<code>GUID</code></strong></li>
+<li>一个名为<code>Cube</code>预制体的<code>.meta</code>文件（<code>Cube.prefab.meta</code>）的文本如下<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">fileFormatVersion: <span class="number">2</span></span><br><span class="line">guid: <span class="number">8</span>ce36e014f775544781668b6c3c3985f  <span class="comment">//存储了该文件的guid</span></span><br><span class="line">PrefabImporter:</span><br><span class="line">  externalObjects: &#123;&#125;</span><br><span class="line">  userData: </span><br><span class="line">  assetBundleName: </span><br><span class="line">  assetBundleVariant: </span><br></pre></td></tr></table></figure></li>
+<li>一个名为<code>CubeMaterial</code>材质的<code>.meta</code>文件（<code>CubeMaterial.mat.meta</code>）的文本如下<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">fileFormatVersion: <span class="number">2</span></span><br><span class="line">guid: <span class="number">85b</span>fbb63af5ee124ab56fba18dea4918  <span class="comment">//存储了该文件的guid</span></span><br><span class="line">NativeFormatImporter:</span><br><span class="line">  externalObjects: &#123;&#125;</span><br><span class="line">  mainObjectFileID: <span class="number">2100000</span> <span class="comment">//由于Material为非序列化文件，所以.meta文件中也存储了Local ID</span></span><br><span class="line">  userData: </span><br><span class="line">  assetBundleName: </span><br><span class="line">  assetBundleVariant: </span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="Local-ID"><a href="#Local-ID" class="headerlink" title="Local ID"></a>Local ID</h1><ul>
+<li><code>Local ID</code>（本地<code>ID</code>）：每个文件自已存储所需要的<code>Local GUID</code>。文件内部各对象之间的关系，<strong>用于标识资源内部之间引用的资源</strong></li>
+<li>前面有<code>&amp;</code>符号的数字就是<code>Local GUID</code></li>
+<li>每一个<code>Local ID</code>也表示这它将来也会被实例化成一个对象</li>
+<li>一个名为<code>CubeMaterial</code>材质的文件（<code>CubeMaterial.mat</code>）的文本如下<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><span class="line">%YAML <span class="number">1.1</span></span><br><span class="line">%TAG !u! tag:unity3d.com,<span class="number">2011</span>:</span><br><span class="line">--- !u!<span class="number">21</span> &amp;<span class="number">2100000</span>  <span class="comment">//Local GUID</span></span><br><span class="line">Material:</span><br><span class="line">  serializedVersion: <span class="number">6</span></span><br><span class="line">  m_ObjectHideFlags: <span class="number">0</span></span><br><span class="line">  m_CorrespondingSourceObject: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_PrefabInstance: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_PrefabAsset: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_Name: CubeMaterial</span><br><span class="line">  m_Shader: &#123;fileID: <span class="number">46</span>, guid: <span class="number">0000000000000000f</span>000000000000000, type: <span class="number">0</span>&#125;</span><br><span class="line">  m_ShaderKeywords: </span><br><span class="line">  m_LightmapFlags: <span class="number">4</span></span><br><span class="line">  m_EnableInstancingVariants: <span class="number">0</span></span><br><span class="line">  m_DoubleSidedGI: <span class="number">0</span></span><br><span class="line">  m_CustomRenderQueue: <span class="number">-1</span></span><br><span class="line">  stringTagMap: &#123;&#125;</span><br><span class="line">  disabledShaderPasses: []</span><br><span class="line">  m_SavedProperties:</span><br><span class="line">    serializedVersion: <span class="number">3</span></span><br><span class="line">    m_TexEnvs:</span><br><span class="line">    - _BumpMap:</span><br><span class="line">        m_Texture: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">        m_Scale: &#123;x: <span class="number">1</span>, y: <span class="number">1</span>&#125;</span><br><span class="line">        m_Offset: &#123;x: <span class="number">0</span>, y: <span class="number">0</span>&#125;</span><br><span class="line">    - _DetailAlbedoMap:</span><br><span class="line">        m_Texture: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">        m_Scale: &#123;x: <span class="number">1</span>, y: <span class="number">1</span>&#125;</span><br><span class="line">        m_Offset: &#123;x: <span class="number">0</span>, y: <span class="number">0</span>&#125;</span><br><span class="line">    - _DetailMask:</span><br><span class="line">        m_Texture: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">        m_Scale: &#123;x: <span class="number">1</span>, y: <span class="number">1</span>&#125;</span><br><span class="line">        m_Offset: &#123;x: <span class="number">0</span>, y: <span class="number">0</span>&#125;</span><br><span class="line">    - _DetailNormalMap:</span><br><span class="line">        m_Texture: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">        m_Scale: &#123;x: <span class="number">1</span>, y: <span class="number">1</span>&#125;</span><br><span class="line">        m_Offset: &#123;x: <span class="number">0</span>, y: <span class="number">0</span>&#125;</span><br><span class="line">    - _EmissionMap:</span><br><span class="line">        m_Texture: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">        m_Scale: &#123;x: <span class="number">1</span>, y: <span class="number">1</span>&#125;</span><br><span class="line">        m_Offset: &#123;x: <span class="number">0</span>, y: <span class="number">0</span>&#125;</span><br><span class="line">    - _MainTex:</span><br><span class="line">        m_Texture: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">        m_Scale: &#123;x: <span class="number">1</span>, y: <span class="number">1</span>&#125;</span><br><span class="line">        m_Offset: &#123;x: <span class="number">0</span>, y: <span class="number">0</span>&#125;</span><br><span class="line">    - _MetallicGlossMap:</span><br><span class="line">        m_Texture: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">        m_Scale: &#123;x: <span class="number">1</span>, y: <span class="number">1</span>&#125;</span><br><span class="line">        m_Offset: &#123;x: <span class="number">0</span>, y: <span class="number">0</span>&#125;</span><br><span class="line">    - _OcclusionMap:</span><br><span class="line">        m_Texture: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">        m_Scale: &#123;x: <span class="number">1</span>, y: <span class="number">1</span>&#125;</span><br><span class="line">        m_Offset: &#123;x: <span class="number">0</span>, y: <span class="number">0</span>&#125;</span><br><span class="line">    - _ParallaxMap:</span><br><span class="line">        m_Texture: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">        m_Scale: &#123;x: <span class="number">1</span>, y: <span class="number">1</span>&#125;</span><br><span class="line">        m_Offset: &#123;x: <span class="number">0</span>, y: <span class="number">0</span>&#125;</span><br><span class="line">    m_Ints: []</span><br><span class="line">    m_Floats:</span><br><span class="line">    - _BumpScale: <span class="number">1</span></span><br><span class="line">    - _Cutoff: <span class="number">0.5</span></span><br><span class="line">    - _DetailNormalMapScale: <span class="number">1</span></span><br><span class="line">    - _DstBlend: <span class="number">0</span></span><br><span class="line">    - _GlossMapScale: <span class="number">1</span></span><br><span class="line">    - _Glossiness: <span class="number">0.5</span></span><br><span class="line">    - _GlossyReflections: <span class="number">1</span></span><br><span class="line">    - _Metallic: <span class="number">0</span></span><br><span class="line">    - _Mode: <span class="number">0</span></span><br><span class="line">    - _OcclusionStrength: <span class="number">1</span></span><br><span class="line">    - _Parallax: <span class="number">0.02</span></span><br><span class="line">    - _SmoothnessTextureChannel: <span class="number">0</span></span><br><span class="line">    - _SpecularHighlights: <span class="number">1</span></span><br><span class="line">    - _SrcBlend: <span class="number">1</span></span><br><span class="line">    - _UVSec: <span class="number">0</span></span><br><span class="line">    - _ZWrite: <span class="number">1</span></span><br><span class="line">    m_Colors:</span><br><span class="line">    - _Color: &#123;r: <span class="number">1</span>, g: <span class="number">1</span>, b: <span class="number">1</span>, a: <span class="number">1</span>&#125;</span><br><span class="line">    - _EmissionColor: &#123;r: <span class="number">0</span>, g: <span class="number">0</span>, b: <span class="number">0</span>, a: <span class="number">1</span>&#125;</span><br><span class="line">  m_BuildTextureStacks: []</span><br></pre></td></tr></table></figure></li>
+<li>一个名为<code>Cube</code>预制体添加一个<code>CubeMaterial</code>材质的文件（<code>Cube.prefab</code>）的文本如下<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//说明：当一个prefab文件要实例化成一个GameObject时，它会自动尝试获取其内部Local ID所指的那个对象。如果这个所指的对象当前还没有被实例化出来，那么Unity会自动实例化这个对象，如此递归，直到所有涉及的对象都被实例化</span></span><br><span class="line">%YAML <span class="number">1.1</span></span><br><span class="line">%TAG !u! tag:unity3d.com,<span class="number">2011</span>:</span><br><span class="line">--- !u!<span class="number">1</span> &amp;<span class="number">925580494856103128</span>    <span class="comment">//Local GUID</span></span><br><span class="line">GameObject:</span><br><span class="line">  m_ObjectHideFlags: <span class="number">0</span></span><br><span class="line">  m_CorrespondingSourceObject: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_PrefabInstance: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_PrefabAsset: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  serializedVersion: <span class="number">6</span></span><br><span class="line">  m_Component:</span><br><span class="line">  - component: &#123;fileID: <span class="number">2748689351619311468</span>&#125;    <span class="comment">//Transform组件的fileID</span></span><br><span class="line">  - component: &#123;fileID: <span class="number">4587065638300692396</span>&#125;    <span class="comment">//MeshFilter的fileID</span></span><br><span class="line">  - component: &#123;fileID: <span class="number">38850410793734356</span>&#125;      <span class="comment">//MeshRenderer的fileID</span></span><br><span class="line">  - component: &#123;fileID: <span class="number">6724204414190568704</span>&#125;    <span class="comment">//BoxCollider的fileID</span></span><br><span class="line">  m_Layer: <span class="number">0</span></span><br><span class="line">  m_Name: Cube</span><br><span class="line">  m_TagString: Untagged</span><br><span class="line">  m_Icon: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_NavMeshLayer: <span class="number">0</span></span><br><span class="line">  m_StaticEditorFlags: <span class="number">0</span></span><br><span class="line">  m_IsActive: <span class="number">1</span></span><br><span class="line">--- !u!<span class="number">4</span> &amp;<span class="number">2748689351619311468</span>   <span class="comment">//Local GUID</span></span><br><span class="line">Transform:</span><br><span class="line">  m_ObjectHideFlags: <span class="number">0</span></span><br><span class="line">  m_CorrespondingSourceObject: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_PrefabInstance: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_PrefabAsset: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_GameObject: &#123;fileID: <span class="number">925580494856103128</span>&#125;</span><br><span class="line">  m_LocalRotation: &#123;x: <span class="number">0</span>, y: <span class="number">0</span>, z: <span class="number">0</span>, w: <span class="number">1</span>&#125;</span><br><span class="line">  m_LocalPosition: &#123;x: <span class="number">41.22902</span>, y: <span class="number">54.217422</span>, z: <span class="number">313.52347</span>&#125;</span><br><span class="line">  m_LocalScale: &#123;x: <span class="number">1</span>, y: <span class="number">1</span>, z: <span class="number">1</span>&#125;</span><br><span class="line">  m_ConstrainProportionsScale: <span class="number">0</span></span><br><span class="line">  m_Children: []</span><br><span class="line">  m_Father: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_RootOrder: <span class="number">0</span></span><br><span class="line">  m_LocalEulerAnglesHint: &#123;x: <span class="number">0</span>, y: <span class="number">0</span>, z: <span class="number">0</span>&#125;</span><br><span class="line">--- !u!<span class="number">33</span> &amp;<span class="number">4587065638300692396</span>  <span class="comment">//Local GUID</span></span><br><span class="line">MeshFilter:</span><br><span class="line">  m_ObjectHideFlags: <span class="number">0</span></span><br><span class="line">  m_CorrespondingSourceObject: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_PrefabInstance: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_PrefabAsset: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_GameObject: &#123;fileID: <span class="number">925580494856103128</span>&#125;</span><br><span class="line">  m_Mesh: &#123;fileID: <span class="number">10202</span>, guid: <span class="number">0000000000000000e000000000000000</span>, type: <span class="number">0</span>&#125;</span><br><span class="line">--- !u!<span class="number">23</span> &amp;<span class="number">38850410793734356</span>    <span class="comment">//Local GUID</span></span><br><span class="line">MeshRenderer:</span><br><span class="line">  m_ObjectHideFlags: <span class="number">0</span></span><br><span class="line">  m_CorrespondingSourceObject: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_PrefabInstance: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_PrefabAsset: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_GameObject: &#123;fileID: <span class="number">925580494856103128</span>&#125;</span><br><span class="line">  m_Enabled: <span class="number">1</span></span><br><span class="line">  m_CastShadows: <span class="number">1</span></span><br><span class="line">  m_ReceiveShadows: <span class="number">1</span></span><br><span class="line">  m_DynamicOccludee: <span class="number">1</span></span><br><span class="line">  m_StaticShadowCaster: <span class="number">0</span></span><br><span class="line">  m_MotionVectors: <span class="number">1</span></span><br><span class="line">  m_LightProbeUsage: <span class="number">1</span></span><br><span class="line">  m_ReflectionProbeUsage: <span class="number">1</span></span><br><span class="line">  m_RayTracingMode: <span class="number">2</span></span><br><span class="line">  m_RayTraceProcedural: <span class="number">0</span></span><br><span class="line">  m_RenderingLayerMask: <span class="number">1</span></span><br><span class="line">  m_RendererPriority: <span class="number">0</span></span><br><span class="line">  m_Materials:  <span class="comment">//下面的guid为CubeMaterial.mat文件的guid，可在.meta文件查找到。fileID为Local ID。根据这两个可以找到CubeMaterial.mat文件下的Material。该材质的唯一标识符由guid和fileID共同决定</span></span><br><span class="line">                <span class="comment">//所以该材质的唯一标识符号是文件guid&quot;85bfbb63af5ee124ab56fba18dea4918&quot;和Local ID&quot;2100000&quot;的组合</span></span><br><span class="line">  - &#123;fileID: <span class="number">2100000</span>, guid: <span class="number">85b</span>fbb63af5ee124ab56fba18dea4918, type: <span class="number">2</span>&#125;</span><br><span class="line">  m_StaticBatchInfo:</span><br><span class="line">    firstSubMesh: <span class="number">0</span></span><br><span class="line">    subMeshCount: <span class="number">0</span></span><br><span class="line">  m_StaticBatchRoot: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_ProbeAnchor: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_LightProbeVolumeOverride: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_ScaleInLightmap: <span class="number">1</span></span><br><span class="line">  m_ReceiveGI: <span class="number">1</span></span><br><span class="line">  m_PreserveUVs: <span class="number">0</span></span><br><span class="line">  m_IgnoreNormalsForChartDetection: <span class="number">0</span></span><br><span class="line">  m_ImportantGI: <span class="number">0</span></span><br><span class="line">  m_StitchLightmapSeams: <span class="number">1</span></span><br><span class="line">  m_SelectedEditorRenderState: <span class="number">3</span></span><br><span class="line">  m_MinimumChartSize: <span class="number">4</span></span><br><span class="line">  m_AutoUVMaxDistance: <span class="number">0.5</span></span><br><span class="line">  m_AutoUVMaxAngle: <span class="number">89</span></span><br><span class="line">  m_LightmapParameters: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_SortingLayerID: <span class="number">0</span></span><br><span class="line">  m_SortingLayer: <span class="number">0</span></span><br><span class="line">  m_SortingOrder: <span class="number">0</span></span><br><span class="line">  m_AdditionalVertexStreams: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">--- !u!<span class="number">65</span> &amp;<span class="number">6724204414190568704</span>  <span class="comment">//Local GUID</span></span><br><span class="line">BoxCollider:</span><br><span class="line">  m_ObjectHideFlags: <span class="number">0</span></span><br><span class="line">  m_CorrespondingSourceObject: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_PrefabInstance: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_PrefabAsset: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_GameObject: &#123;fileID: <span class="number">925580494856103128</span>&#125;</span><br><span class="line">  m_Material: &#123;fileID: <span class="number">0</span>&#125;</span><br><span class="line">  m_IsTrigger: <span class="number">0</span></span><br><span class="line">  m_Enabled: <span class="number">1</span></span><br><span class="line">  serializedVersion: <span class="number">2</span></span><br><span class="line">  m_Size: &#123;x: <span class="number">1</span>, y: <span class="number">1</span>, z: <span class="number">1</span>&#125;</span><br><span class="line">  m_Center: &#123;x: <span class="number">0</span>, y: <span class="number">0</span>, z: <span class="number">0</span>&#125;</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h1 id="Instance-ID"><a href="#Instance-ID" class="headerlink" title="Instance ID"></a>Instance ID</h1><ul>
+<li><code>Instance ID</code>是资源的快捷访问<code>ID</code>，它只由数字组成，直接使用<code>Instance ID</code>去查找，减少查找开销。由<code>File GUID</code>和<code>Local ID</code>转换而成</li>
+<li><code>Unity</code>编辑器会在项目启动后，创建并一直维护一张“映射表”，这张映射表记录的就是<code>File GUID</code>、<code>Local ID</code>以及由它们转换而成的<code>Instance ID</code>之间的关系</li>
+</ul>
+<h1 id="补充"><a href="#补充" class="headerlink" title="补充"></a>补充</h1><ol>
+<li>对于非序列化的文件，由于不会更改源文件，所以<code>GUID</code>和子文件的<code>Local ID</code>都存储在<code>.meta</code>文件中，如<code>FBX</code>文件、图集、<code>Material</code>等；对于序列化文件，<code>.meta</code>文件中只有自身的<code>GUID</code>，如<code>AnimatorController</code>、<code>prefab</code>等</li>
+</ol>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/0XFQt8LmqoTxxst_kKDMjw">程序丨入门必看：Unity资源加载及管理</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/zhaoqingqing/p/5823927.html">玩转Unity资源，对象和序列化(上) </a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.uwa4d.com/archives/USparkle_inf_UnityEngine.html">Unity文件、文件引用、Meta详解</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/07/17/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/" rel="prev" title="设计原则">
+      <i class="fa fa-chevron-left"></i> 设计原则
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/29/%E5%9D%90%E6%A0%87%E7%B3%BB%E7%9B%B8%E5%85%B3/" rel="next" title="坐标系、向量、坐标空间">
+      坐标系、向量、坐标空间 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#Asset%E3%80%81Object"><span class="nav-number">1.</span> <span class="nav-text">Asset、Object</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#GUID"><span class="nav-number">2.</span> <span class="nav-text">GUID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Local-ID"><span class="nav-number">3.</span> <span class="nav-text">Local ID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Instance-ID"><span class="nav-number">4.</span> <span class="nav-text">Instance ID</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A1%A5%E5%85%85"><span class="nav-number">5.</span> <span class="nav-text">补充</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">6.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KDuoLi"
+      src="/images/mmyBlog.png">
+  <p class="site-author-name" itemprop="name">KDuoLi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KDuoLi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

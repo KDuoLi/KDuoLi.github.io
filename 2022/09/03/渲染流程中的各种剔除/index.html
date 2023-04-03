@@ -1,0 +1,498 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/mmyBlog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/mmyBlog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="简单介绍渲染流程中的剔除与裁剪">
+<meta property="og:type" content="article">
+<meta property="og:title" content="渲染流程中的各种剔除与裁剪">
+<meta property="og:url" content="http://example.com/2022/09/03/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/index.html">
+<meta property="og:site_name" content="KDuoLiのBlog">
+<meta property="og:description" content="简单介绍渲染流程中的剔除与裁剪">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A41.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A42.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E8%83%8C%E9%9D%A2%E8%A3%81%E5%89%AA1.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA1.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA2.png?raw=true">
+<meta property="article:published_time" content="2022-09-02T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-11T16:00:00.000Z">
+<meta property="article:author" content="KDuoLi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A41.jpg?raw=true">
+
+<link rel="canonical" href="http://example.com/2022/09/03/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>渲染流程中的各种剔除与裁剪 | KDuoLiのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KDuoLiのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/09/03/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mmyBlog.png">
+      <meta itemprop="name" content="KDuoLi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KDuoLiのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          渲染流程中的各种剔除与裁剪
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-09-03 00:00:00" itemprop="dateCreated datePublished" datetime="2022-09-03T00:00:00+08:00">2022-09-03</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-12 00:00:00" itemprop="dateModified" datetime="2022-09-12T00:00:00+08:00">2022-09-12</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%B8%B2%E6%9F%93/" itemprop="url" rel="index"><span itemprop="name">渲染</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">简单介绍渲染流程中的剔除与裁剪</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="视椎体剔除"><a href="#视椎体剔除" class="headerlink" title="视椎体剔除"></a>视椎体剔除</h1><ul>
+<li>发生在应用程序阶段，一般由游戏引擎内部实现或者自己编写对应的算法来实现，运行在<code>CPU</code>上</li>
+<li>裁剪的依据主要是根据摄像机的视野(<code>field of view</code>)以及近裁减面和远裁剪面的距离，将可视范围外的物体排除出渲染，被剔除的物体将不会进入渲染的几何阶段(<code>Geometry Stage</code>)。视椎体剔除是减少渲染消耗的最有效手段之一，可以在不影响渲染效果的情况下大幅减少渲染涉及到的顶点数和面数</li>
+<li>工作原理：</li>
+</ul>
+<ol>
+<li><p>遮挡剔除会在 <code>Unity Editor</code> 中生成有关场景的数据，然后在运行时使用该数据来确定摄像机可以看到的内容。这种生成数据的过程称为烘焙</p>
+</li>
+<li><p>在对遮挡剔除数据进行烘焙时，<code>Unity</code> 将场景划分为多个单元，并生成描述单元内几何体以及相邻单元之间可见性的数据。然后，<code>Unity</code> 尽可能合并单元，以减小生成的数据的大小。要配置烘焙过程，可以在 <code>Occlusion Culling</code> 窗口中更改参数，并在场景中使用遮挡区域</p>
+</li>
+<li><p>在运行时，<code>Unity</code> 会将这些烘焙的数据加载到内存中，并且对于每个启用了<code>Occlusion Culling</code> 属性的摄像机，将会对数据执行查询以确定该摄像机可以看到的内容。请注意，启用遮挡剔除后，摄像机将执行视锥体剔除和遮挡剔除</p>
+</li>
+</ol>
+<ul>
+<li>在<code>Unity</code>中的视锥体剔除，其原理就是通过判定目标包围盒与组成相机视锥体的<code>6</code>个平面进行同侧判定</li>
+</ul>
+<h1 id="遮挡剔除（Occlusion-Culling）"><a href="#遮挡剔除（Occlusion-Culling）" class="headerlink" title="遮挡剔除（Occlusion Culling）"></a>遮挡剔除（<code>Occlusion Culling</code>）</h1><ul>
+<li>遮挡裁剪，也常被称作遮挡剔除</li>
+<li>发生在应用程序阶段(<code>Application Stage</code>)，由游戏引擎实现，运行在<code>CPU</code>上</li>
+<li>以<code>Unity</code>为例，需要根据场景中<code>Static</code>物体的位置预先生成场景<code>Occlusion Culling</code>数据，运行时就可以剔除对应静态物体之后的其他物体。遮挡剔除是减少渲染消耗的有效手段之一，可以和视椎体剔除同时生效，进一步减少渲染的消耗</li>
+<li>如下分别为没有遮挡剔除和遮挡剔除</li>
+</ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A41.jpg?raw=true"></p>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A42.jpg?raw=true"></p>
+<h1 id="视口裁剪"><a href="#视口裁剪" class="headerlink" title="视口裁剪"></a>视口裁剪</h1><ul>
+<li><p>发生在几何阶段后期，投影变换之后屏幕映射之前，是渲染管线的必要一环。只有当图元完全或部分存在于规范立方体内部的时候，才将其返送到光栅化阶段。其中，对于完全位于规范立方体内部的图元，则直接进行下一阶段；完全处于规范立方外部的图元则完全被舍弃；部分处于规范立方体内部图元，则会根据视口进行对应的裁剪，在这一过程中可能会产生新的顶点</p>
+</li>
+<li><p>通过视口剔除可以将视口外的图元舍弃掉，减小光栅化阶段的消耗</p>
+</li>
+</ul>
+<h1 id="背面裁剪"><a href="#背面裁剪" class="headerlink" title="背面裁剪"></a>背面裁剪</h1><ul>
+<li>背面剔除即是将背向视点的图元剔除，因为它们对最终渲染的图像没有贡献。这是一种简单直观的操作，一次对一个多边形进行操作</li>
+<li>基本原理：先判定多边形的朝向，并和当前的观察方向进行比较</li>
+<li><code>Unity</code>中的背面剔除在光栅化阶段进行，执行在<code>Vertex Shader</code> 之后，在<code>Fragment Shader</code>片元着色器之前，通过<code>Shader</code>中的<code>Cull</code>指令来控制背面剔除的开启和关闭<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E8%83%8C%E9%9D%A2%E8%A3%81%E5%89%AA1.png?raw=true"></li>
+<li>右图为视点空间中背面测试情形，多边形 <code>A</code> 是背向的，而 <code>B</code> 和 <code>C</code> 是正向的。多背向的多边形<code>A</code>，无需进行光栅化<h1 id="深度剔除"><a href="#深度剔除" class="headerlink" title="深度剔除"></a>深度剔除</h1></li>
+<li>在<code>Fragment Shader</code>之后，光栅化阶段末期的融合阶段执行，又叫深度检测(或<code>Z</code>缓存检测)。每次将一个图元回执为相应的像素时，都会计算像素位置处图元的深度值，和深度缓存中对应像素的值进行比较，如果新计算出的深度小于缓存中的深度，则更新深度缓存中的值；如果深度值大于深度缓冲中的值，则计算结果被舍弃，深度缓冲的值也无需更新</li>
+</ul>
+<h1 id="入口裁剪"><a href="#入口裁剪" class="headerlink" title="入口裁剪"></a>入口裁剪</h1><ul>
+<li>入口裁剪算法的基本思想：在室内场景中，建筑物墙面通常充当大的遮挡物，通过每个入口（如门或者窗户）进行视锥裁剪。当遍历入口的时候，就减小视锥</li>
+</ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA1.png?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA2.png?raw=true"></p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/game_fengxiaorui/article/details/79958722">不同几种剔除(Culling)在渲染流程中的使用总结</a></li>
+<li><a target="_blank" rel="noopener" href="https://gameinstitute.qq.com/community/detail/119431#:~:text=%E8%A7%86%E9%94%A5%E8%A3%81%E5%89%AA%E4%B8%80%E8%88%AC%E5%9C%A8%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E9%98%B6%E6%AE%B5%E8%BF%9B%E8%A1%8C%2C,%E8%BF%99%E4%B8%AA%E6%B2%A1%E6%9C%89%E9%97%AE%E9%A2%98%E3%80%82">三维渲染中的裁剪总汇</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/poem_qianmo/article/details/78884513">【《Real-Time Rendering 3rd》 提炼总结】(十一) 第十四章 : 游戏开发中的渲染加速算法总结</a></li>
+<li><a href>《Real-Time Rendering 3rd》</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/08/%E7%BA%B9%E7%90%86/" rel="prev" title="纹理">
+      <i class="fa fa-chevron-left"></i> 纹理
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/04/%E7%A2%B0%E6%92%9E%E6%A3%80%E6%B5%8B%E7%AE%97%E6%B3%95/" rel="next" title="碰撞检测算法">
+      碰撞检测算法 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E6%A4%8E%E4%BD%93%E5%89%94%E9%99%A4"><span class="nav-number">1.</span> <span class="nav-text">视椎体剔除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%81%AE%E6%8C%A1%E5%89%94%E9%99%A4%EF%BC%88Occlusion-Culling%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">遮挡剔除（Occlusion Culling）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%86%E5%8F%A3%E8%A3%81%E5%89%AA"><span class="nav-number">3.</span> <span class="nav-text">视口裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%83%8C%E9%9D%A2%E8%A3%81%E5%89%AA"><span class="nav-number">4.</span> <span class="nav-text">背面裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%B7%B1%E5%BA%A6%E5%89%94%E9%99%A4"><span class="nav-number">5.</span> <span class="nav-text">深度剔除</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%A5%E5%8F%A3%E8%A3%81%E5%89%AA"><span class="nav-number">6.</span> <span class="nav-text">入口裁剪</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KDuoLi"
+      src="/images/mmyBlog.png">
+  <p class="site-author-name" itemprop="name">KDuoLi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KDuoLi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>

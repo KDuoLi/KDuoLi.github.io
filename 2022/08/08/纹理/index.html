@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/mmyBlog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/mmyBlog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="简单介绍纹理及其相关内容">
+<meta property="og:type" content="article">
+<meta property="og:title" content="纹理">
+<meta property="og:url" content="http://example.com/2022/08/08/%E7%BA%B9%E7%90%86/index.html">
+<meta property="og:site_name" content="KDuoLiのBlog">
+<meta property="og:description" content="简单介绍纹理及其相关内容">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%BE%8B%E5%AD%90.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%841.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84%E8%BF%87%E7%A8%8B.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E8%BF%87%E6%BB%A4.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E8%BF%87%E5%A4%A7%E3%80%81%E8%BF%87%E5%B0%8F.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/UV.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E6%A8%A1%E5%9E%8B%E4%B8%8EUV.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7%E8%AE%BE%E7%BD%AE%E4%B9%8BWrap%20Mode.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7%E8%AE%BE%E7%BD%AE%E4%B9%8BFilter%20Mode.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/Mipmap.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E6%A0%BC%E5%BC%8F%E4%B8%8E%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BA%B9%E7%90%86%E6%A0%BC%E5%BC%8F.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/ETC%E5%8E%9F%E7%90%86.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/ETC%E5%8E%8B%E7%BC%A9.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/PVRTC%E5%8E%9F%E7%90%86.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9%E6%80%BB%E7%BB%931.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9%E6%80%BB%E7%BB%932.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/Clipmap1.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/Clipmap2.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/Virtual%20Texture.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E5%9B%9B%E5%8F%89%E6%A0%91%E6%98%A0%E5%B0%84.png?raw=true">
+<meta property="article:published_time" content="2022-08-07T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-23T16:00:00.000Z">
+<meta property="article:author" content="KDuoLi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86.png?raw=true">
+
+<link rel="canonical" href="http://example.com/2022/08/08/%E7%BA%B9%E7%90%86/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>纹理 | KDuoLiのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KDuoLiのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/08/08/%E7%BA%B9%E7%90%86/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mmyBlog.png">
+      <meta itemprop="name" content="KDuoLi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KDuoLiのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          纹理
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-08-08 00:00:00" itemprop="dateCreated datePublished" datetime="2022-08-08T00:00:00+08:00">2022-08-08</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-24 00:00:00" itemprop="dateModified" datetime="2022-09-24T00:00:00+08:00">2022-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">简单介绍纹理及其相关内容</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="简介"><a href="#简介" class="headerlink" title="简介"></a>简介</h1><ul>
+<li>纹理（<code>Texture</code>）：是一个图片，一种可供着色器读写的结构化存储形式，存储各种各样的信息，例如颜色信息、高度、纹理通道、法线等，除了具体的存储信息之外，还会包含纹理采样的设置</li>
+<li>如下图，一张二维纹理，宽、高、想要存储的信息（该例子是<code>RGBA</code>，所以存储的信息是颜色）。[<code>Height</code>][<code>Width</code>]对应图像上的一个像素点。推断出一维纹理是<code>i=0</code>或者<code>j=0</code>的二维数组，三维纹理可以看作是二维子对象矩形构成的一个四维数组<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86.png?raw=true"></li>
+<li>纹理内存大小（字节） &#x3D; 纹理宽度 x 纹理高度 x 像素字节</li>
+<li>优点</li>
+</ul>
+<ol>
+<li>减少建模工作量</li>
+<li>降低存储空间</li>
+<li>加快读取速度</li>
+</ol>
+<ul>
+<li>缺点</li>
+</ul>
+<ol>
+<li>降低几何细节</li>
+</ol>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9.png?raw=true"></p>
+<ul>
+<li><p>引入纹理的目的：为了可以使用图像函数或其他数据源来修正模型的表现</p>
+</li>
+<li><p>纹理如何起作用？需要引入纹理管线，如下图<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF.png?raw=true"></p>
+</li>
+<li><p>假设模型要渲染的点在模型空间上的位置是<code>（-2.3，7.1，88.2）</code>，经投影函数变换后得到一个<code>uv</code>值<code>（0.32，0.29）</code>，而这张纹理的大小是<code>256*256</code>，将上述两值相乘，得到<code>（81.92,74.24）</code>，后续获取一个具体的纹素（纹理图像中的像素）的颜色，就由纹理采样的设置来决定<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E6%B8%B2%E6%9F%93%E7%AE%A1%E7%BA%BF%E4%BE%8B%E5%AD%90.png?raw=true"></p>
+</li>
+</ul>
+<h2 id="纹理映射"><a href="#纹理映射" class="headerlink" title="纹理映射"></a>纹理映射</h2><ul>
+<li><p>定义：使用<code>uv</code>坐标将三维物体每个点的颜色信息存储在一张<code>2D</code>的<code>Texture</code>里，即将物体空间坐标点转化为纹理坐标，进而从纹理上获取对应点的值，以增强着色细节的方法<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%841.jpg?raw=true"></p>
+</li>
+<li><p>步骤如下图<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84%E8%BF%87%E7%A8%8B.jpg?raw=true"></p>
+<h2 id="纹理采样"><a href="#纹理采样" class="headerlink" title="纹理采样"></a>纹理采样</h2></li>
+<li><p>定义：从纹理图片中使用纹理坐标采集一个像素颜色的操作</p>
+</li>
+<li><p>例如在下图中，我们采样<code>（0,1）</code>这个位置的像素，获得了浅蓝色</p>
+</li>
+</ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E8%BF%87%E6%BB%A4.png?raw=true"></p>
+<ul>
+<li>设想一种特殊情况，我们要渲染的物体正面对着我们，刚好画布尺寸与纹理尺寸一致，比如都是 <code>512*512</code>，那么在获取每个 <code>pixel</code> 对应 <code>texel</code> 值时，刚好就能得到整数的纹理坐标，只需要每个 <code>texel</code> 逐个读取即可</li>
+<li>但实际中，我们会面临纹理过大或者过小两种情况。分两种情况来讨论：</li>
+</ul>
+<ol>
+<li>纹理分辨率过小，需要放大 (<code>Magnification</code>)</li>
+<li>纹理分辨率过大，需要缩小 (<code>Minification</code>)<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E8%BF%87%E5%A4%A7%E3%80%81%E8%BF%87%E5%B0%8F.jpg?raw=true"></li>
+</ol>
+<h2 id="纹理渲染优化："><a href="#纹理渲染优化：" class="headerlink" title="纹理渲染优化："></a>纹理渲染优化：</h2><ol>
+<li><code>CPU</code>方面：1）纹理图集；2）纹理数组</li>
+<li><code>GPU</code>方面：1）纹理压缩<h2 id="UV（纹理坐标）"><a href="#UV（纹理坐标）" class="headerlink" title="UV（纹理坐标）"></a>UV（纹理坐标）</h2></li>
+</ol>
+<ul>
+<li>纹理坐标位于纹理空间中。是三维模型<code>XYZ</code>坐标系映射到<code>UV</code>坐标系上的二维图像。<code>U</code>代表水平方向，<code>V</code>代表垂直方向</li>
+<li>纹理坐标起始于<code>(0, 0)</code>，也就是纹理图片的左下角，终始于<code>(1, 1)</code>，即纹理图片的右上角<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/UV.png?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E6%A8%A1%E5%9E%8B%E4%B8%8EUV.png?raw=true"></li>
+</ul>
+<h2 id="纹理采样设置之Wrap-Mode"><a href="#纹理采样设置之Wrap-Mode" class="headerlink" title="纹理采样设置之Wrap Mode"></a>纹理采样设置之Wrap Mode</h2><ul>
+<li>纹理环绕的作用是为了处理<code>UV</code>超出<code>0.0~1.0</code>范围的纹理坐标</li>
+<li><code>Wrap Mode</code>决定了<code>UV</code>值在被对应函数映射到<code>0~1</code>范围之外时候的一些表现</li>
+<li>在<code>OpenGL</code>中称其为包装模式（<code>Wrapping Model</code>），在<code>DirectX</code>中称其为纹理寻址模式（<code>Texture Addressing Mode</code>）<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7%E8%AE%BE%E7%BD%AE%E4%B9%8BWrap%20Mode.png?raw=true"><h2 id="纹理采样设置之Filter-Mode"><a href="#纹理采样设置之Filter-Mode" class="headerlink" title="纹理采样设置之Filter Mode"></a>纹理采样设置之Filter Mode</h2></li>
+<li>为什么需要纹理过滤：屏幕的一个像素与它在对应的纹素之间可以存在不同类型的对应关系。而同一物体与摄像机的距离不同，会占据不同数目的屏幕像素（例如，当物体非常靠近摄像机，屏幕上的一个像素有可能对应纹理贴图纹素中的一小部分，而当物体距离摄像机很远时，屏幕上的一个像素包含纹理贴图上的很多个纹素），但使用纹理贴图的大小是不变，一个像素通常不直接对应于一个纹理像素。必须应用某种形式的滤波来确定像素的最佳颜色</li>
+<li>纹理过滤的作用是将浮点型纹理坐标转换为整数的像素坐标，并对采样结果进行处理</li>
+<li><code>Filter Mode</code>决定了当纹理由于变化而产生拉伸的时候，要采用那种滤波模式来调整它自身的表现<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7%E8%AE%BE%E7%BD%AE%E4%B9%8BFilter%20Mode.png?raw=true"></li>
+</ul>
+<h1 id="Mipmap（多级渐远纹理）"><a href="#Mipmap（多级渐远纹理）" class="headerlink" title="Mipmap（多级渐远纹理）"></a>Mipmap（多级渐远纹理）</h1><ul>
+<li><p><code>Mipmap</code>是一系列纹理，每个纹理都是同一图像的分辨率逐渐降低的表示形式。根据纹理与摄像机的距离，采用不同的<code>leavl</code></p>
+</li>
+<li><p>工作原理：从纹理的原始图像零级作为金字塔的底部，并将<code>2*2</code>的<code>4</code>个相邻的纹理的的平均值作为下一级的新的纹素值，所以新一级的子纹理是上一级的<code>1/4</code>大，如此反复，最后纹理大小就会变成<code>1*1</code><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/Mipmap.png?raw=true"></p>
+</li>
+<li><p>优点</p>
+</li>
+</ul>
+<ol>
+<li>优化显存带宽，加快渲染速度</li>
+<li>降低采样频率，避免了在远距离情况下的采样频率低和数据频率高造成的失真和摩尔纹</li>
+</ol>
+<ul>
+<li>缺点</li>
+</ul>
+<ol>
+<li>会占用更大的内存。使用<code>Mipmap</code>比不使用<code>Mipmap</code>大<code>1/3</code></li>
+</ol>
+<h1 id="纹理图集（TextureAtlas）"><a href="#纹理图集（TextureAtlas）" class="headerlink" title="纹理图集（TextureAtlas）"></a>纹理图集（TextureAtlas）</h1><ul>
+<li><p>纹理图集是一系列小纹理图像的集合</p>
+</li>
+<li><p>优点：</p>
+</li>
+</ul>
+<ol>
+<li><p>是采用共同纹理图集的多个静态网格资源可以进行静态合批处理，减少DrawCall调用次数。</p>
+</li>
+<li><p>是纹理图集可以减少碎纹理过多，因为他们打包在一个图集里，通过压缩可以更有效的利用压缩，降低纹理的内存成本和冗余数据。</p>
+</li>
+</ol>
+<ul>
+<li>缺点</li>
+</ul>
+<ol>
+<li>美术需要合理规划模型，并且要求模型有相同的材质着色器，或需要制作通道图去区分不同材质。制作和修改成本较高</li>
+</ol>
+<h1 id="纹理压缩"><a href="#纹理压缩" class="headerlink" title="纹理压缩"></a>纹理压缩</h1><ul>
+<li>纹理压缩是为了解决<strong>内存</strong>、<strong>带宽</strong>问题，专为在计算机图形渲染系统中存储<strong>纹理</strong>而使用的图像压缩技术</li>
+<li>图片格式：是图片文件的存储格式，通常在磁盘、内存中存储和传输文件时使用。例如<code>Jpg</code>（有损不透明）、<code>PNG</code>（无损透明）、<code>GIF</code>、<code>BMP</code>等</li>
+<li>纹理格式：是显卡能够直接进行采样（使用纹理坐标获取纹理颜色）的纹理数据格式，通常在向显卡中加载纹理时使用<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E6%A0%BC%E5%BC%8F%E4%B8%8E%E6%96%87%E4%BB%B6%E6%A0%BC%E5%BC%8F.png?raw=true"></li>
+<li>决定纹理资源大小的因素</li>
+</ul>
+<ol>
+<li>分辨率</li>
+<li>格式</li>
+<li><code>Mipmap</code></li>
+</ol>
+<ul>
+<li>图片格式与纹理格式的区别</li>
+</ul>
+<ol>
+<li>纹理压缩格式基于块压缩，能够更快读取像素所属字节块进行解压缩以支持随机访问</li>
+<li>图片压缩格式基于整张图片进行压缩，像素之间解码过程存在依赖关系，无法直接实现单个像素的解析，图片压缩格式无法被<code>GPU</code>识别，还需要经<code>CPU</code>解压缩成非压缩纹理格式才能被识别，解码后都是<code>RGBA</code>纹理格式</li>
+</ol>
+<ul>
+<li>常见纹理格式如下图<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E5%B8%B8%E8%A7%81%E7%9A%84%E7%BA%B9%E7%90%86%E6%A0%BC%E5%BC%8F.png?raw=true"></li>
+</ul>
+<h2 id="非压缩格式"><a href="#非压缩格式" class="headerlink" title="非压缩格式"></a>非压缩格式</h2><ul>
+<li>以<code>RGBA8888</code>为例，指的是单个像素中每个通道（<code>RGBA</code>）各占<code>8</code>位，用<code>2^8=256</code>种灰度存储颜色信息。一个字节为<code>8</code>位，所以每个像素消耗了<code>4</code>个字节</li>
+</ul>
+<h2 id="DXTC"><a href="#DXTC" class="headerlink" title="DXTC"></a>DXTC</h2><ul>
+<li>基本思想：把<code>4*4</code>的像素块压缩成一个<code>64</code>或<code>128</code>位的数据块</li>
+<li>优点</li>
+</ul>
+<ol>
+<li>创建了一个固定大小且独立编码片段，没有共享查找表或其他依赖关系，简化了解码过程</li>
+</ol>
+<h2 id="ATI1-x2F-2"><a href="#ATI1-x2F-2" class="headerlink" title="ATI1&#x2F;2"></a>ATI1&#x2F;2</h2><ul>
+<li><code>ATI1</code>被称为<code>BC4</code>，<code>ATI2</code>被称为<code>BC5</code></li>
+</ul>
+<h2 id="ETC"><a href="#ETC" class="headerlink" title="ETC"></a>ETC</h2><ul>
+<li>核心思想：将图像中的颜色和亮度分开存储<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/ETC%E5%8E%9F%E7%90%86.png?raw=true"></li>
+<li>特点：把<code>4*4</code>的像素块压缩成一个<code>64</code>位数据块，并将像素单元水平或竖直朝向分为两个区块，每个像素颜色等于基础颜色加上索引指向的亮度范围<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/ETC%E5%8E%8B%E7%BC%A9.png?raw=true"></li>
+</ul>
+<h3 id="ETC1"><a href="#ETC1" class="headerlink" title="ETC1"></a>ETC1</h3><ul>
+<li>优点：所有的<code>android</code>设备支持</li>
+<li>缺点：不支持透明通道</li>
+</ul>
+<h3 id="ETC2"><a href="#ETC2" class="headerlink" title="ETC2"></a>ETC2</h3><ul>
+<li>优点：支持透明通道</li>
+<li>缺点：部分<code>android</code>设备不支持</li>
+</ul>
+<h2 id="ASTC"><a href="#ASTC" class="headerlink" title="ASTC"></a>ASTC</h2><ul>
+<li><code>ASTC</code>是基于块的压缩算法，其数据块大小固定为<code>128</code>位，不同的是块中的像素数量可变</li>
+<li>优点：</li>
+</ul>
+<ol>
+<li>可根据不同图片选择不同压缩率的算法</li>
+<li>图片不需要为<code>2</code>的幂次</li>
+<li>同时支持<code>LDR</code>和<code>HDR</code></li>
+<li></li>
+</ol>
+<ul>
+<li>缺点</li>
+</ul>
+<ol>
+<li>解码时间长</li>
+<li>兼容性不够完善</li>
+</ol>
+<h2 id="PVRTC"><a href="#PVRTC" class="headerlink" title="PVRTC"></a>PVRTC</h2><ul>
+<li>仅支持<code>Iphone</code>、<code>IAD</code>和部分安卓机</li>
+<li>不同于基于块的算法，**<code>PVRTC</code>将纹理分为了低频信号和高频信号**。低频信号由两张低分辨率的图像<code>A</code>和<code>B</code>表示，这两张图在两个维度上都缩小了<code>4</code>倍，高频信号则是全分辨率但低精度的调制图像<code>M</code>，<code>M</code>记录了每个像素混合的权重。要解码时，<code>A</code>和<code>B</code>图像经过双线性插值（<code>bilinearly</code>）宽高放大4倍，然后与M图上的权重进行混合。<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/PVRTC%E5%8E%9F%E7%90%86.png?raw=true"></li>
+</ul>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9%E6%80%BB%E7%BB%931.png?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9%E6%80%BB%E7%BB%932.png?raw=true"></p>
+<h1 id="Clipmap"><a href="#Clipmap" class="headerlink" title="Clipmap"></a>Clipmap</h1><ul>
+<li>基本思想是：设置一个<code>Mipmap</code>大小的上限，超过这个上限的<code>Mipmap</code>会被<code>clip</code>掉，也就是不会加载到内存中<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/Clipmap1.png?raw=true"></li>
+<li>当我们的视野发生变化时，我们需要修改被<code>clip</code>的区域，让视野内<code>Mipmap</code>的部分加载<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/Clipmap2.png?raw=true"></li>
+</ul>
+<h1 id="Virtual-Texture（虚拟纹理）"><a href="#Virtual-Texture（虚拟纹理）" class="headerlink" title="Virtual Texture（虚拟纹理）"></a>Virtual Texture（虚拟纹理）</h1><ul>
+<li><code>Virtual Texture</code>，用来解决巨量<code>Texture</code>的加载问题</li>
+<li>这个概念取自于<code>Virtual Memory</code>。与虚拟内存类似的是，一个很大的<code>Texture</code>将不会全部加载到内存中，而是根据实际需求将需要的部分加载；与虚拟内存不同的是，它不会阻塞执行，可以使用更高的<code>Mipmap</code>来暂时显示，它对基于<code>block</code>的压缩贴图有很好的支持</li>
+<li>基本思路是：将纹理的<code>Mipmap chain</code>分割为相同大小的<code>Tile</code>或<code>Page</code>，这里的纹理是虚纹理，然后通过某种映射，映射到一张内存中存在的纹理，这里的纹理是物理纹理，在游戏视野发生变化的时候，一部分物理纹理会被替换出去，一部分物理纹理会被加载<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/Virtual%20Texture.png?raw=true"></li>
+<li>这样的机制不仅仅减少了带宽消耗和内存（显存）消耗，也带来了其它好处。比如有利于合批，而不用因为使用不同的<code>Texture</code>而打断合批，这样可以根据需求来组织几何使得更利于<code>Culling</code>。当然合批的好处是<code>states change</code>变少，<code>LightMap</code>也可以预计算到一张大的<code>Virtual Texture</code>上用来合批</li>
+</ul>
+<h2 id="地址映射"><a href="#地址映射" class="headerlink" title="地址映射"></a>地址映射</h2><ul>
+<li>地址映射在<code>Virtual Texture</code>中是一个很重要的环节，但是如何将一个<code>Virtual Texture</code>的<code>Texel</code>映射到<code>Physical Texture</code>的<code>Texel</code>上，需要适配到高分辨率的<code>Page</code>没有加载的情况，并得到已经加载的对应低分辨率的<code>Page</code>地址</li>
+</ul>
+<h3 id="四叉树映射"><a href="#四叉树映射" class="headerlink" title="四叉树映射"></a>四叉树映射</h3><ul>
+<li>使用四叉树主要是为了和<code>Mipmap</code>对应，也就是每个低<code>MIP</code>的<code>Map</code>会对应有四个高<code>MIP</code>的<code>Map</code>，四叉树中只存储加载的<code>Mipmap</code>信息。这里的对应关系就是每个加载的<code>Virtual Texture</code>的<code>Page</code>对应一个四叉树的节点，具体的计算如下：</li>
+<li>这里存在每个四叉树的节点中的内容就是<code>bias</code>和<code>scale</code>，这样就可以将虚拟纹理的地址转换成物理纹理的地址。如果没有找到，也可以用父节点的地址来得到低分辨率。但是这里要找到对应的节点需要搜索这个四叉树，搜索的速度取决于树的高度，也就是<code>Mipmap</code>的层级，在差的低<code>MIP</code>的地址上效率会比较低<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E7%BA%B9%E7%90%86/%E5%9B%9B%E5%8F%89%E6%A0%91%E6%98%A0%E5%B0%84.png?raw=true"><h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1></li>
+<li><a target="_blank" rel="noopener" href="https://docs.qq.com/slide/DUGxGR2FhYVB4bnFj">百人计划 - 纹理介绍</a></li>
+<li><a target="_blank" rel="noopener" href="https://learnopengl-cn.github.io/01%20Getting%20started/06%20Textures/">LearnOpenGL CN - 纹理</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.2cto.com/kf/201603/493773.html">几种主流贴图压缩算法的实现原理详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.qq.com/slide/DUUhFaVdHUUhVcGFp">百人计划 - 纹理压缩</a></li>
+<li><a target="_blank" rel="noopener" href="https://gameinstitute.qq.com/community/detail/103838">Mipmap与纹理过滤</a></li>
+<li><a target="_blank" rel="noopener" href="https://gameinstitute.qq.com/community/detail/124601">Unity Mipmap详解</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.qq.com/slide/DUW1YdVpuS1R4VWpi">百人计划 - 模型UV</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/143377682#:~:text=%E6%97%A2%E7%84%B6%E7%BA%B9%E7%90%86%E6%98%AF%E4%B8%80%E5%BC%A0%E5%9B%BE%E7%89%87%EF%BC%8C%E9%82%A3%E4%B9%88%E8%87%AA%E7%84%B6%E5%B0%B1%E6%9C%89%E5%88%86%E8%BE%A8%E7%8E%87%E7%9A%84%E5%AD%98%E5%9C%A8%EF%BC%8C%20%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7,%E4%BE%BF%E6%98%AF%E4%BB%8E%E7%BA%B9%E7%90%86%E5%9B%BE%E7%89%87%E4%B8%AD%E9%87%87%E9%9B%86%E4%B8%80%E4%B8%AA%E5%83%8F%E7%B4%A0%E9%A2%9C%E8%89%B2%E7%9A%84%E6%93%8D%E4%BD%9C%E3%80%82%20%E4%BE%8B%E5%A6%82%E5%9C%A8%E4%B8%8B%E5%9B%BE%E4%B8%AD%EF%BC%8C%E6%88%91%E4%BB%AC%E9%87%87%E6%A0%B7%EF%BC%880%2C1%EF%BC%89%E8%BF%99%E4%B8%AA%E4%BD%8D%E7%BD%AE%E7%9A%84%E5%83%8F%E7%B4%A0%EF%BC%8C%E8%8E%B7%E5%BE%97%E4%BA%86%E6%B5%85%E8%93%9D%E8%89%B2%E3%80%82">图形学底层探秘 - 纹理采样、环绕、过滤与Mipmap的那些事</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/u013746357/article/details/90723268?ops_request_misc=&request_id=&biz_id=102&utm_term=%E7%BA%B9%E7%90%86%E8%BF%87%E6%BB%A4&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-1-90723268.nonecase&spm=1018.2226.3001.4187">渲染的本质: 纹理过滤(Texture filtering)技术</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/timlly/p/10463467.html">移动游戏性能优化通用技法</a></li>
+<li><a target="_blank" rel="noopener" href="https://jinligame.github.io/2019/03/10/20190310-Unity%20Image%20Compression/">Unity 图片压缩</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/wczbd/p/15038659.html">[Unity优化]图片压缩格式</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.uwa4d.com/archives/optimzation_memory_1.html">性能优化，进无止境-内存篇（上）</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/144332091?utm_id=0">计算机图形学七：纹理映射(Texture Mapping)及Mipmap技术</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/369977849?utm_id=0">图形学基础 - 纹理 - 纹理映射流程</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.cnblogs.com/KillerAery/p/15106770.html#%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84texture-mapping">实时渲染基础（4）纹理（Texture）</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.uwa4d.com/archives/USparkle_VirtualTexture.html">浅谈Virtual Texture</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.uwa4d.com/archives/Unreal_LargeTerrain.html">基于Unreal引擎的大地形加载研究</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.uwa4d.com/archives/TechSharing_120.html">大世界场景优化和加载策略</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/372696893">Clipmap 在开放世界中的实战应用</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/read/cv15095375?spm_id_from=333.999.0.0">《Unity性能优化》系列课程笔记——第叁节</a></li>
+<li>《Unity3D 高级编程：主程手记》</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/08/07/%E7%A9%BA%E9%97%B4%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84/" rel="prev" title="空间数据结构">
+      <i class="fa fa-chevron-left"></i> 空间数据结构
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/09/03/%E6%B8%B2%E6%9F%93%E6%B5%81%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%90%84%E7%A7%8D%E5%89%94%E9%99%A4/" rel="next" title="渲染流程中的各种剔除与裁剪">
+      渲染流程中的各种剔除与裁剪 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AE%80%E4%BB%8B"><span class="nav-number">1.</span> <span class="nav-text">简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E6%98%A0%E5%B0%84"><span class="nav-number">1.1.</span> <span class="nav-text">纹理映射</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7"><span class="nav-number">1.2.</span> <span class="nav-text">纹理采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E6%B8%B2%E6%9F%93%E4%BC%98%E5%8C%96%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">纹理渲染优化：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#UV%EF%BC%88%E7%BA%B9%E7%90%86%E5%9D%90%E6%A0%87%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">UV（纹理坐标）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7%E8%AE%BE%E7%BD%AE%E4%B9%8BWrap-Mode"><span class="nav-number">1.5.</span> <span class="nav-text">纹理采样设置之Wrap Mode</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E9%87%87%E6%A0%B7%E8%AE%BE%E7%BD%AE%E4%B9%8BFilter-Mode"><span class="nav-number">1.6.</span> <span class="nav-text">纹理采样设置之Filter Mode</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Mipmap%EF%BC%88%E5%A4%9A%E7%BA%A7%E6%B8%90%E8%BF%9C%E7%BA%B9%E7%90%86%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">Mipmap（多级渐远纹理）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E5%9B%BE%E9%9B%86%EF%BC%88TextureAtlas%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">纹理图集（TextureAtlas）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BA%B9%E7%90%86%E5%8E%8B%E7%BC%A9"><span class="nav-number">4.</span> <span class="nav-text">纹理压缩</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9D%9E%E5%8E%8B%E7%BC%A9%E6%A0%BC%E5%BC%8F"><span class="nav-number">4.1.</span> <span class="nav-text">非压缩格式</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#DXTC"><span class="nav-number">4.2.</span> <span class="nav-text">DXTC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ATI1-x2F-2"><span class="nav-number">4.3.</span> <span class="nav-text">ATI1&#x2F;2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ETC"><span class="nav-number">4.4.</span> <span class="nav-text">ETC</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#ETC1"><span class="nav-number">4.4.1.</span> <span class="nav-text">ETC1</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ETC2"><span class="nav-number">4.4.2.</span> <span class="nav-text">ETC2</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ASTC"><span class="nav-number">4.5.</span> <span class="nav-text">ASTC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#PVRTC"><span class="nav-number">4.6.</span> <span class="nav-text">PVRTC</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.7.</span> <span class="nav-text">总结</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Clipmap"><span class="nav-number">5.</span> <span class="nav-text">Clipmap</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Virtual-Texture%EF%BC%88%E8%99%9A%E6%8B%9F%E7%BA%B9%E7%90%86%EF%BC%89"><span class="nav-number">6.</span> <span class="nav-text">Virtual Texture（虚拟纹理）</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9C%B0%E5%9D%80%E6%98%A0%E5%B0%84"><span class="nav-number">6.1.</span> <span class="nav-text">地址映射</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%9B%9B%E5%8F%89%E6%A0%91%E6%98%A0%E5%B0%84"><span class="nav-number">6.1.1.</span> <span class="nav-text">四叉树映射</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">7.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KDuoLi"
+      src="/images/mmyBlog.png">
+  <p class="site-author-name" itemprop="name">KDuoLi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KDuoLi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
