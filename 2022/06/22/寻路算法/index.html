@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 6.2.0">
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/mmyBlog.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/mmyBlog.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+<link rel="stylesheet" href="/lib/font-awesome/css/all.min.css">
+
+<script id="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"example.com","root":"/","scheme":"Gemini","version":"7.8.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12,"onmobile":false},"copycode":{"enable":false,"show_result":false,"style":null},"back2top":{"enable":true,"sidebar":false,"scrollpercent":true},"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"algolia":{"hits":{"per_page":10},"labels":{"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}},"localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},"path":"search.xml"};
+  </script>
+
+  <meta name="description" content="简单介绍各种寻路算法及其相关">
+<meta property="og:type" content="article">
+<meta property="og:title" content="寻路算法">
+<meta property="og:url" content="http://example.com/2022/06/22/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/index.html">
+<meta property="og:site_name" content="KDuoLiのBlog">
+<meta property="og:description" content="简单介绍各种寻路算法及其相关">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%97%A0%E5%90%91%E5%9B%BE%E5%8F%8A%E5%85%B6%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5%E5%AD%98%E5%82%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%9C%89%E5%90%91%E5%9B%BE%E5%8F%8A%E5%85%B6%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5%E5%AD%98%E5%82%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%97%A0%E5%90%91%E5%9B%BE%E7%9A%84%E9%82%BB%E6%8E%A5%E8%A1%A8%E5%AD%98%E5%82%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%9C%89%E5%90%91%E5%9B%BE%E7%9A%84%E9%82%BB%E6%8E%A5%E8%A1%A8%E5%AD%98%E5%82%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E8%BF%87%E7%A8%8B%E5%9B%BE.gif?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%8F%90%E5%89%8D%E7%BB%93%E6%9D%9FBFS.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/dij%E5%92%8C%E5%B9%BF%E5%BA%A6%E5%AF%B9%E6%AF%94.gif?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E7%A4%BA%E6%84%8F%E5%9B%BE.gif?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E7%9A%84%E7%BC%BA%E7%82%B9.gif?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E8%8A%82%E7%82%B9%E7%9A%84FGH.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E6%AD%A5%E9%AA%A41.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E6%AD%A5%E9%AA%A42.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E6%AD%A5%E9%AA%A4%E4%B8%89.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E7%AC%AC%E4%BA%8C%E8%BD%AE%E5%BE%AA%E7%8E%AF.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E7%AC%AC%E4%B8%89%E8%BD%AE%E5%BE%AA%E7%8E%AF.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E6%9C%80%E7%BB%88%E5%BE%AA%E7%8E%AF.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E5%92%8C%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E5%AF%B9%E6%AF%94.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E8%B7%9D%E7%A6%BB%E4%BA%8C%E7%BB%B4%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%90%84%E7%A7%8D%E8%B7%9D%E7%A6%BB%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E7%A6%BB%E7%BA%BF%E5%AF%BB%E8%B7%AF.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E9%80%9A%E8%BF%87%E6%9D%83%E9%87%8D%E5%BC%95%E5%AF%BC%E5%B7%A1%E8%B7%AF%E6%96%B9%E5%90%91.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%8B%86%E5%88%86%E5%AF%BB%E8%B7%AF%E5%8C%BA%E5%9F%9F1.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%8B%86%E5%88%86%E5%AF%BB%E8%B7%AF%E5%8C%BA%E5%9F%9F2.jpg?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E5%9B%BE%E7%A4%BA.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/JPS%E5%9B%BE%E7%A4%BA.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E3%80%81JPS%E3%80%81JPS+.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/Navmesh%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%9B%9B%E7%A7%8D%E5%9C%A8NavMesh%E4%B8%8A%E7%9A%84%E8%B7%AF%E5%BE%84.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/NavMesh%E5%90%AF%E5%8F%91%E5%87%BD%E6%95%B0.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/NavMesh%E5%90%AF%E5%8F%91%E5%87%BD%E6%95%B0%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/Path%20Smoothing%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/Funnel%E7%AE%97%E6%B3%95%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/Funnel%E7%AE%97%E6%B3%95%E7%A4%BA%E6%84%8F%E5%9B%BE2.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E4%BD%93%E7%B4%A0%E5%8C%96%E9%87%87%E6%A0%B7%E7%A2%B0%E6%92%9E%E5%9C%BA%E6%99%AF.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E8%AE%A1%E7%AE%97%E6%AF%8F%E4%B8%AA%E4%BD%93%E7%B4%A0%E5%88%B0%E8%BE%B9%E7%95%8C%E7%9A%84%E8%B7%9D%E7%A6%BB.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%88%86%E6%B0%B4%E5%B2%AD%E7%AE%97%E6%B3%95.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%88%86%E5%89%B2%E7%9B%B8%E9%82%BB%E7%9A%84%E4%BD%93%E7%B4%A0%E5%8C%BA%E5%9F%9F.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%8C%BA%E5%9F%9F%E7%9A%84%E4%BF%AF%E8%A7%86%E5%9B%BE.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E4%BB%8E%E5%88%86%E6%AE%B5%E5%8C%BA%E5%9F%9F%E7%94%9F%E6%88%90%E5%AF%BC%E8%88%AA%E7%BD%91%E6%A0%BC.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%A4%9A%E8%BE%B9%E5%BD%A2%E6%A0%87%E5%BF%97.png?raw=true">
+<meta property="og:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/Off-mesh%20Link%E7%BD%91%E6%A0%BC%E5%A4%96%E9%93%BE%E6%8E%A5.png?raw=true">
+<meta property="article:published_time" content="2022-06-21T16:00:00.000Z">
+<meta property="article:modified_time" content="2022-09-23T16:00:00.000Z">
+<meta property="article:author" content="KDuoLi">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%97%A0%E5%90%91%E5%9B%BE%E5%8F%8A%E5%85%B6%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5%E5%AD%98%E5%82%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true">
+
+<link rel="canonical" href="http://example.com/2022/06/22/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/">
+
+
+<script id="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>寻路算法 | KDuoLiのBlog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  .use-motion .brand,
+  .use-motion .menu-item,
+  .sidebar-inner,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line-before i { left: initial; }
+  .use-motion .logo-line-after i { right: initial; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage">
+  <div class="container use-motion">
+    <div class="headband"></div>
+
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+      <span class="toggle-line toggle-line-first"></span>
+      <span class="toggle-line toggle-line-middle"></span>
+      <span class="toggle-line toggle-line-last"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <span class="logo-line-before"><i></i></span>
+      <h1 class="site-title">KDuoLiのBlog</h1>
+      <span class="logo-line-after"><i></i></span>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+
+<nav class="site-nav">
+  <ul id="menu" class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a>
+
+  </li>
+        <li class="menu-item menu-item-links">
+
+    <a href="/links/" rel="section"><i class="fa fa-link fa-fw"></i>友链</a>
+
+  </li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+        <div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div id="search-result">
+  <div id="no-result">
+    <i class="fa fa-spinner fa-pulse fa-5x fa-fw"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</div>
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+
+    <main class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          
+
+          <div class="content post posts-expand">
+            
+
+    
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2022/06/22/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/mmyBlog.png">
+      <meta itemprop="name" content="KDuoLi">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="KDuoLiのBlog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          寻路算法
+        </h1>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2022-06-22 00:00:00" itemprop="dateCreated datePublished" datetime="2022-06-22T00:00:00+08:00">2022-06-22</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2022-09-24 00:00:00" itemprop="dateModified" datetime="2022-09-24T00:00:00+08:00">2022-09-24</time>
+              </span>
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-folder"></i>
+              </span>
+              <span class="post-meta-item-text">分类于</span>
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/%E6%9D%82%E8%B0%88/" itemprop="url" rel="index"><span itemprop="name">杂谈</span></a>
+                </span>
+            </span>
+
+          
+            <div class="post-description">简单介绍各种寻路算法及其相关</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+        <h1 id="图"><a href="#图" class="headerlink" title="图"></a>图</h1><ul>
+<li>图：由”节点”或”顶点”(<code>Vertex</code>）以及连接这些顶点的”边”（<code>Edge</code>）组成<br>。表示为<code>G=(V,E)</code></li>
+<li>图的存储结构有邻接矩阵、邻接表等</li>
+</ul>
+<ol>
+<li>邻接矩阵：用一个一维数组存储图中的顶点，存储顶点之间邻接关系的二维数组称为邻接矩阵，邻接矩阵是一个<code>n*n</code>的方阵。无向图的邻接矩阵一定是对称矩阵，而有向图的不一定。邻接矩阵适合表示稠密图</li>
+</ol>
+<ul>
+<li>无向图及其邻接矩阵存储示意图</li>
+</ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%97%A0%E5%90%91%E5%9B%BE%E5%8F%8A%E5%85%B6%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5%E5%AD%98%E5%82%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true"></p>
+<ul>
+<li>有向图及其邻接矩阵存储示意图</li>
+</ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%9C%89%E5%90%91%E5%9B%BE%E5%8F%8A%E5%85%B6%E9%82%BB%E6%8E%A5%E7%9F%A9%E9%98%B5%E5%AD%98%E5%82%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true"></p>
+<ol start="2">
+<li>邻接表：是一顺序存储与链接存储相结合的存储方法。对于图的每个顶点v，将v的所有邻接点链成一个单链表，称为顶点v的边表。邻接表适合表示稀疏图</li>
+</ol>
+<ul>
+<li>无向图的邻接表存储示意图</li>
+</ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%97%A0%E5%90%91%E5%9B%BE%E7%9A%84%E9%82%BB%E6%8E%A5%E8%A1%A8%E5%AD%98%E5%82%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true"></p>
+<ul>
+<li>有向图的邻接表存储示意图</li>
+</ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%9C%89%E5%90%91%E5%9B%BE%E7%9A%84%E9%82%BB%E6%8E%A5%E8%A1%A8%E5%AD%98%E5%82%A8%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true"></p>
+<h1 id="广度优先搜索（BFS）"><a href="#广度优先搜索（BFS）" class="headerlink" title="广度优先搜索（BFS）"></a>广度优先搜索（BFS）</h1><ul>
+<li><p><code>BFS</code>是一种盲目搜寻法（又叫非启发式搜索），它的思想是从一个顶点开始，在各个方向上均等搜索，辐射状地优先遍历其周围较广的区域，彻底地搜索整张图</p>
+</li>
+<li><p>广度优先搜索无法计算加权最短路径</p>
+</li>
+<li><p>流程</p>
+</li>
+</ul>
+<ol>
+<li>设定搜索起点<code>S</code>，放入<code>openList</code>（用于记忆访问节点）队列中。新建<code>closeList</code>队列用于存放已访问的节点，防止重复访问</li>
+<li>判断<code>openList</code>是否为空，若为空，搜索结束；若不为空，拿出<code>openList</code>中的第一个节点<code>G</code></li>
+<li>遍历<code>G</code>的上下左右四个相邻节点<code>N1-N4</code>，对每个节点<code>N</code>，如果<code>N</code>不在<code>openList</code>或<code>closeList</code>中，那么令<code>N</code>的父节点为<code>G</code>，将<code>N</code>放入<code>openList</code>中。如果<code>N</code>已经在<code>openList</code>或<code>closeList</code>中，跳过不处理，最后将<code>G</code>放入<code>closeList</code>中</li>
+<li>重复步骤2-3</li>
+</ol>
+<ul>
+<li><p>广度优先搜索示意图<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E8%BF%87%E7%A8%8B%E5%9B%BE.gif?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2.png?raw=true"></p>
+</li>
+<li><p>补充</p>
+</li>
+</ul>
+<ol>
+<li>可以在流程2-3之间判断<code>G</code>是否为目标点，如果是，则可提前结束搜索，而不必搜索全部区域：如下<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%8F%90%E5%89%8D%E7%BB%93%E6%9D%9FBFS.png?raw=true"></li>
+</ol>
+<h1 id="Dijkstra（统一成本搜索）"><a href="#Dijkstra（统一成本搜索）" class="headerlink" title="Dijkstra（统一成本搜索）"></a>Dijkstra（统一成本搜索）</h1><ul>
+<li><code>Dijkstra</code>算法用于求单源点最短路径问题。是贪心思想实现的（单源：从一个顶点出发，<code>Dijkstra</code>算法只能求一个顶点到其他点的最短距离而不能任意两点）</li>
+<li><code>Dijkstra</code>相比于广度优先算法，添加了移动成本计算。每个节点的优先级<code>F</code>，是起点走到当前格子的成本<code>G</code>。估价函数<code>F = G</code></li>
+<li>时间复杂度和空间复杂度为<code>O(n^2)</code></li>
+<li>流程</li>
+</ul>
+<ol>
+<li><code>result</code>集合：已求出最小路径的顶点。<code>notFound</code>集合：未求出最小路径的顶点，里面的值是到起点的距离。将起点放入<code>result</code>，将其余各点放入<code>notFound</code>，若该点是起点的邻接点，修改其在<code>notFound</code>中的值，否则设为无穷大</li>
+<li>判断<code>notFound</code>是否为空，若为空，搜索结束；若不为空，拿出<code>notFound</code>中值最小的顶点<code>A</code>，放入<code>result</code></li>
+<li>计算顶点<code>A</code>的邻接点<code>B</code>，若（顶点<code>A</code>的距离+顶点<code>A</code>到顶点<code>B</code>的权值） &lt; 顶点<code>B</code>的距离，则修改顶点<code>B</code>的值</li>
+<li>重复步骤2-3</li>
+</ol>
+<ul>
+<li><p>下面对比了不考虑节点移动代价差异的广度优先搜索与考虑移动代价的<code>Dijkstra</code>算法的运算结果<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/dij%E5%92%8C%E5%B9%BF%E5%BA%A6%E5%AF%B9%E6%AF%94.gif?raw=true"></p>
+</li>
+<li><p>补充</p>
+</li>
+</ul>
+<ol>
+<li>当图形为网格图，并且每个节点之间的移动代价是相等的，那么<code>Dijkstra</code>算法将和广度优先算法变得一样</li>
+<li>如果地图过大，那么开始时放入<code>notFound</code>里的节点数量就会很多，此时如果<code>notFound</code>是优先队列，那么执行过程中性能消耗会增大</li>
+</ol>
+<h1 id="最佳优先搜索（GBFS）"><a href="#最佳优先搜索（GBFS）" class="headerlink" title="最佳优先搜索（GBFS）"></a>最佳优先搜索（GBFS）</h1><ul>
+<li>贪婪最佳优先搜索：是启发式算法。可以将它看做广度优先搜索算法的一种改进；最佳优先搜索算法在广度优先搜索的基础上，用启发估价函数对将要被遍历到的点进行估价，然后选择代价小的进行遍历，直到找到目标节点或者遍历完所有点，算法结束</li>
+<li>每个节点的代价<code>F</code>由<code>H</code>决定。是当前节点到终点的距离。估价函数<code>F = H</code></li>
+<li>步骤</li>
+</ul>
+<ol>
+<li><code>OpenList</code>优先队列：待到达的格子，<code>CloseList</code>集合：已到达的格子。将起点放入<code>OpenList</code></li>
+<li>如果<code>OpenList</code>不为空，找出其中<code>F</code>最小的节点作为当前方格，如果该节点是目标节点，则结束循环，否则放入<code>CloseList</code></li>
+<li>找出当前方格所有可到达的节点<code>N</code>，分三种情况：1）<code>N</code>不在<code>OpenList</code>或<code>CloseList</code>中，计算<code>F</code>，放入<code>OpenList</code>队列中；2）<code>N</code>在<code>OpenList</code>中，且<code>F</code>值小于<code>OpenList</code>中的<code>N</code>，则将其替换成新的<code>F</code>值；3）<code>N</code>在<code>CloseList</code>中，且<code>F</code>值小于<code>CloseList</code>中的<code>N</code>，则将<code>CloseList</code>中<code>N</code>节点移除并放入<code>OpenList</code>。最后将当前方格放入<code>CloseList</code></li>
+<li>重复2-3</li>
+</ol>
+<ul>
+<li>下图为广度优先搜索与最佳优先搜索对比，左边是广度优先搜索，右边是最佳优先搜索<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E7%A4%BA%E6%84%8F%E5%9B%BE.gif?raw=true"></li>
+<li>缺点：如果起点和终点之间存在障碍物，则最佳优先算法找到的很可能不是最短路径，下图描述了这种情况<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E7%9A%84%E7%BC%BA%E7%82%B9.gif?raw=true"></li>
+</ul>
+<h1 id="A"><a href="#A" class="headerlink" title="A*"></a>A*</h1><ul>
+<li><p><code>A*</code>：是启发式算法（一种基于成本计算的最优解）。通过<code>F = G + H</code>来计算每个节点的优先级。<code>F</code>：<code>G</code>和<code>H</code>的综合评估，值越小，优先级越高，也就是从起点到达当前格子，再从当前格子到达目标格子的总步数。<code>G</code>：从起点走到当前格子的成本，也就是已经花费了多少步。<code>H</code>：在不考虑障碍的情况下，从当前格子走到目标格子的距离，也就是离目标还有多远，计算距离的方式可根据移动方向决定。估价函数<code>F = G + H</code></p>
+</li>
+<li><p><code>A*</code>是<code> Unity</code> 使用的算法</p>
+</li>
+<li><p>平均时间复杂度：<code>O(nlogn)</code></p>
+</li>
+<li><p>流程</p>
+</li>
+</ul>
+<ol>
+<li><code>OpenList</code>优先队列：待到达的格子，<code>CloseList</code>集合：已到达的格子。将起点放入<code>OpenList</code></li>
+<li>如果<code>OpenList</code>不为空，找出其中<code>F</code>最小的节点作为当前方格，如果该节点是目标节点，则结束循环，否则放入<code>CloseList</code>。如果目标节点在<code>CloseList</code>集合中，则已经找到了最佳路径</li>
+<li>找出当前方格所有可到达的节点，看它们是否在<code>OpenList</code>或<code>CloseList</code>中。如果都不在，则将它们放入<code>OpenList</code>，计算相应的<code>F</code>、<code>G</code>、<code>H</code>值，并将当前方格作为它们的父节点；如果在<code>CloseList</code>中，则跳过该节点</li>
+<li>重复步骤<code>2-3</code></li>
+</ol>
+<ul>
+<li>例子：假设我们有一个<code>7×5</code>大小的迷宫，上图中绿色的格子是起点，红色的格子是终点，中间的<code>3</code>个蓝色格子是一堵墙。角色从起点开始，每一步只能向上下&#x2F;左右移动<code>1</code>格，且不能穿越墙壁。那么如何让角色用最少的步数到达终点？</li>
+<li>每个节点的<code>F</code>、<code>G</code>、<code>H</code><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E8%8A%82%E7%82%B9%E7%9A%84FGH.png?raw=true"></li>
+</ul>
+<ol>
+<li>将起点放入<code>OpenList</code><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E6%AD%A5%E9%AA%A41.png?raw=true"></li>
+<li>找出其中<code>F</code>最小的节点作为当前方格<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E6%AD%A5%E9%AA%A42.png?raw=true"></li>
+<li>找出当前方格所有可到达的节点<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E6%AD%A5%E9%AA%A4%E4%B8%89.png?raw=true"></li>
+<li>重复步骤2-3</li>
+</ol>
+<ul>
+<li><p>第二轮循环后<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E7%AC%AC%E4%BA%8C%E8%BD%AE%E5%BE%AA%E7%8E%AF.png?raw=true"></p>
+</li>
+<li><p>第三轮循环后<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E7%AC%AC%E4%B8%89%E8%BD%AE%E5%BE%AA%E7%8E%AF.png?raw=true"></p>
+</li>
+<li><p>最终结果<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E6%9C%80%E7%BB%88%E5%BE%AA%E7%8E%AF.png?raw=true"></p>
+</li>
+<li><p><code>A*</code>与最佳优先搜索对比。左边是最佳优先搜索，右边是<code>A*</code><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E5%92%8C%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%E5%AF%B9%E6%AF%94.png?raw=true"></p>
+</li>
+<li><p>补充</p>
+</li>
+</ul>
+<ol>
+<li>如果令<code>H</code>等于<code>0</code>，那么<code>A*</code>就会退化为<code>Dijkstra</code>。如果令<code>G</code>等于<code>0</code>，那么<code>A*</code>就会退化为<code>GBFS</code></li>
+<li>如果图形中只允许朝上下左右四个方向移动，则可以使用曼哈顿距离；如果图形中允许朝八个方向移动，则可以使用对角距离；如果图形中允许朝任何方向移动，则可以使用欧几里得距离</li>
+<li>下图中红线代表曼哈顿距离；绿色代表欧氏距离，也就是直线距离。而蓝色和黄色代表等价的曼哈顿距离。曼哈顿距离用以标明两个点上在标准坐标系上的绝对轴距之总和。在二维平面上，<code>d(x,y) = |x1-x2| + |y1-y2|</code>。欧氏距离是两点之间线段的长度，在二维平面上，<img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%AC%A7%E5%87%A0%E9%87%8C%E5%BE%97%E8%B7%9D%E7%A6%BB%E4%BA%8C%E7%BB%B4%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F.png?raw=true"><br>​<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%90%84%E7%A7%8D%E8%B7%9D%E7%A6%BB%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true"></li>
+</ol>
+<h2 id="A-优化"><a href="#A-优化" class="headerlink" title="A*优化"></a>A*优化</h2><h3 id="长距离导航"><a href="#长距离导航" class="headerlink" title="长距离导航"></a>长距离导航</h3><ul>
+<li>长距离导航通常发生在场景地图很大的情况下，当我们需要寻路的两点距离很长，中间有很多障碍物时，<code>A*</code>算法就会有瓶颈。即当两点距离很长，<code>OpenList</code>队列会被塞入很多节点，进而导致排序速度变慢</li>
+<li>优化方法：可以把路径寻路中实时运算的一大部分转化到离线状态下进行。在这种大地图的寻路算法中，通常不需要非常精确的寻路路线，因为它的目标只是脱手操作达到目的地，而不是走最短路径，因此我们可以把中间很长一段距离的计算放到脱机工具中去。将一些常用的路径在离线状态下计算好并放在数据文件中，当需要时，再从已经计算好的点对点数据中寻找起点和目的地最近的数据，找到后即可直接使用而不用再次计算</li>
+<li>例子：如图中<code>A</code>点到<code>B</code>点的路径是我们已经计算好的并存放在内存里的，当要在<code>A</code>点的附近<code>C</code>点寻路到<code>B</code>点附近的<code>D</code>点时，即从起点<code>C</code>到终点<code>D</code>，这中间由<code>A</code>点到<code>B</code>点的相似路径。由于离线时<code>A</code>点和<code>B</code>点的路劲已经计算完毕，那么可以先计算<code>C</code>点到A点的路径和<code>B</code>点到<code>D</code>点的路径，再调出<code>A</code>和<code>B</code>点的路径进行拼接，即可完成<code>C</code>点到<code>D</code>点的寻路<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E7%A6%BB%E7%BA%BF%E5%AF%BB%E8%B7%AF.jpg?raw=true"><h3 id="A-排序算法优化"><a href="#A-排序算法优化" class="headerlink" title="A*排序算法优化"></a>A*排序算法优化</h3></li>
+<li><code>OpenList</code>队列在<code>A*</code>起重要作用。由于每次向<code>OpenList</code>中插入点后，<code>OpenList</code>就不再有序了，所以每次取最小值时，都要重新进行排序</li>
+<li>优化方法：<code>OpenList</code>使用最小堆（或优先队列）来执行插入操作，它的插入和删除的时间复杂度都为<code>O(logn)</code></li>
+</ul>
+<h3 id="通过权重引导巡路方向"><a href="#通过权重引导巡路方向" class="headerlink" title="通过权重引导巡路方向"></a>通过权重引导巡路方向</h3><ul>
+<li>期望值<code>F</code>所代表的通向目的地的地方越准确，寻路算法效率越高，寻找到路径的速度也就越快，所以，期望值问题就变成了如何帮助期望值更加准确地判断通向目的地的方向</li>
+<li>优化方法：在某些网格（这些网格用于引导寻路）中加入权重值<code>E</code>来改变期望值<code>F</code>。所以，<code>F = G + H + E</code></li>
+<li>例子：如下图的浅色格子时，所有可行走的格子都会给一个基础权重(假设为<code>100</code>)，而用来引导寻路的浅色格子的权值设为比基础权重更低(假设为<code>10</code>)。通过这个期望着公式，在计算期望值时，浅色引导的格子会比其他格子获得更小的值，这也意味着浅色引导类格子会在<code>OpenList</code>更靠前，更容易被算法取出而成为路径搜索方向。<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E9%80%9A%E8%BF%87%E6%9D%83%E9%87%8D%E5%BC%95%E5%AF%BC%E5%B7%A1%E8%B7%AF%E6%96%B9%E5%90%91.jpg?raw=true"></li>
+</ul>
+<h3 id="拆分寻路区域"><a href="#拆分寻路区域" class="headerlink" title="拆分寻路区域"></a>拆分寻路区域</h3><ul>
+<li>当地图很大时，寻路会很费劲，主要原因是节点数量过多，如果路径上的节点都要搜一遍，会导致<code>OpenList</code>队列越来越大，计算量也越来越大，所以问题的关键在于如何减少搜索的次数</li>
+<li>优化方法：将某个范围内的格子（节点）合并为一个区域，那么整个地图会分成几十个区域，相较于成千上万个格子作为寻路节点要好得多。但需要保证区域内的点对点不再需要寻路（区域内任意两点可以直达，区域内无任何障碍物），则需要该区域为无障碍的凸多边形。寻路时以区域块为寻路网格，每个区域都记录与之连接的区域以连接点，当算法找到起点与目的地点的区域路径时，只要拼接邻接的路径点就能得出两点的真实路径</li>
+</ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%8B%86%E5%88%86%E5%AF%BB%E8%B7%AF%E5%8C%BA%E5%9F%9F1.jpg?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E6%8B%86%E5%88%86%E5%AF%BB%E8%B7%AF%E5%8C%BA%E5%9F%9F2.jpg?raw=true"></p>
+<ul>
+<li>缺点</li>
+</ul>
+<ol>
+<li>对动态添加障碍物并不是十分友好。如果动态添加或更改障碍物则需要对此区域重新计算分区</li>
+<li>需要考虑不同拆分区域的算法。比如栅格地图较三角形网格地图的拆分区域算法简单</li>
+</ol>
+<h1 id="跳点算法-JPS"><a href="#跳点算法-JPS" class="headerlink" title="跳点算法 JPS"></a>跳点算法 JPS</h1><ul>
+<li><p><code>JPS</code>（<code>Jump Point Search</code>）对<code>A*</code>的搜索规则进行了改造，即不再是搜索某个点附近的点，而是想要用拐点（跳点）来代替</p>
+</li>
+<li><p><code>JPS</code>在寻路时只关心拐点，因此它以寻找拐点为主要目标，认为从起点到终点的路径可以由<code>N</code>个拐点组成，只能找到这<code>N</code>个拐点，就能将这些拐点连接起来形成一条完整的路径。于是，问题就变为如何识别拐点和如何寻找拐点</p>
+</li>
+<li><p>拐点在<code>JPS</code>中称为跳点。<code>JPS</code>算法是专门栅格地图定制的，所以它可以从<code>8</code>个方向寻找跳点，即前、后、左、右、左上、左下、右上、右下</p>
+</li>
+<li><p>跳点算法的一般步骤：</p>
+</li>
+</ul>
+<ol>
+<li>初始化：设置起点节点为当前节点，并将其加入封闭列表中。</li>
+<li>循环：只要当前节点不是目标节点，就反复执行下列步骤：<ol>
+<li>从当前节点的所有相邻节点中找到距离目标节点最近的节点。</li>
+<li>将当前节点放入封闭列表中，并将找到的节点设置为当前节点。</li>
+</ol>
+</li>
+<li>结束：如果当前节点是目标节点，则已经找到了最佳路径，可以通过跟踪节点的父节点来构建最佳路径。</li>
+</ol>
+<ul>
+<li>优点</li>
+</ul>
+<ol>
+<li>简单易实现，可以快速找到最佳路径</li>
+</ol>
+<ul>
+<li>缺点</li>
+</ul>
+<ol>
+<li>它可能不能找到最优解，因为它只考虑了距离目标节点最近的节点，而没有考虑其他因素</li>
+<li>跳点算法对于图中的边权也不敏感，因此可能会导致结果不准确，因为它只考虑了距离目标节点最近的节点，而没有考虑其他因素。</li>
+</ol>
+<ul>
+<li>下图为<code>A*</code>与<code>JPS</code>寻路路径的比较</li>
+</ul>
+<p><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E5%9B%BE%E7%A4%BA.png?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/JPS%E5%9B%BE%E7%A4%BA.png?raw=true"></p>
+<ul>
+<li><code>JPS</code>和<code>A*</code>相比，优缺点：</li>
+</ul>
+<ol>
+<li>使用<code>JPS</code>算法比<code>A</code>更快（绝大部分地图），内存占用更小，因为<code>Openlist</code>少了很多节点（最差的情况和<code>A*</code>一样，最差的是每个障碍都不连续，中间都有缝隙，这样所有地方都是跳点了）</li>
+<li>只适用于网格节点类型，不支持<code>Navmesh</code>或者路径点寻路方式<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/A%E6%98%9F%E3%80%81JPS%E3%80%81JPS+.png?raw=true"></li>
+</ol>
+<h1 id="Navgation"><a href="#Navgation" class="headerlink" title="Navgation"></a>Navgation</h1><h2 id="导航网格"><a href="#导航网格" class="headerlink" title="导航网格"></a>导航网格</h2><ul>
+<li>导航网格（即 <code>Navigation Mesh</code>，缩写为 <code>NavMesh</code>）是一种数据结构，用于描述游戏世界的可行走表面。**<code>NavMesh</code>为凸多边形**。原因是</li>
+</ul>
+<ol>
+<li>如果是凹多边形，那么穿过该多边形时，可能会穿过不可导航区域。而凸多边形不会发生该情况</li>
+<li>保证了相邻<code>NavMesh</code>之间只有一条公共边（<code>Portal</code>，过道）。而凹多边形则可能多条<code>Portal</code><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/Navmesh%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true"><h2 id="导航网格的路径和启发函数"><a href="#导航网格的路径和启发函数" class="headerlink" title="导航网格的路径和启发函数"></a>导航网格的路径和启发函数</h2></li>
+</ol>
+<ul>
+<li>在<code>NaveMesh</code>上的路径如下图，第一个是将沿途<code>NavMesh</code>的中心点连接，形成路径；第二个是将<code>NavMesh</code>的公共边连接，形成路径（前两种方法通常会高估成本）；第三个是将沿途<code>NavMesh</code>的公共边的中点连接，形成路径；第四个是第二个和第三个的混合，会引入了太多要检查的点<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%9B%9B%E7%A7%8D%E5%9C%A8NavMesh%E4%B8%8A%E7%9A%84%E8%B7%AF%E5%BE%84.png?raw=true"></li>
+<li>对第三个方法加入启发函数。1）在允许任何移动角度的导航网格上，使用直线距离；2）使用进入当前节点的边的中点作为节点坐标计算点；3）<code>D</code>：沿任何方向移动单位距离的成本。优先选择代价小的路径<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/NavMesh%E5%90%AF%E5%8F%91%E5%87%BD%E6%95%B0.png?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/NavMesh%E5%90%AF%E5%8F%91%E5%87%BD%E6%95%B0%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true"></li>
+</ul>
+<h2 id="Path-Smoothing与Funnel-Algorithm"><a href="#Path-Smoothing与Funnel-Algorithm" class="headerlink" title="Path Smoothing与Funnel Algorithm"></a>Path Smoothing与Funnel Algorithm</h2><ul>
+<li><code>Path Smoothing</code>（路径平滑）引入目的是使路径平滑，减少不必要的转弯。实现方法：<code>Funnel Algorithm</code>（漏斗算法）。1）漏斗的范围是可能的路径范围；2）必要时缩小漏斗以适应<code>Portal</code>。效果对比如下图<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/Path%20Smoothing%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true"></li>
+<li><code>Funnel Algorithm</code>示意图如下<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/Funnel%E7%AE%97%E6%B3%95%E7%A4%BA%E6%84%8F%E5%9B%BE.png?raw=true"><br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/Funnel%E7%AE%97%E6%B3%95%E7%A4%BA%E6%84%8F%E5%9B%BE2.png?raw=true"></li>
+</ul>
+<h2 id="生成导航网格"><a href="#生成导航网格" class="headerlink" title="生成导航网格"></a>生成导航网格</h2><ul>
+<li><code>Voxelization</code>（体素化）。首先对通过体素化采样碰撞场景<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E4%BD%93%E7%B4%A0%E5%8C%96%E9%87%87%E6%A0%B7%E7%A2%B0%E6%92%9E%E5%9C%BA%E6%99%AF.png?raw=true"></li>
+<li>计算每个体素到边界的距离,按代理半径标记边界体素以避免剪裁<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E8%AE%A1%E7%AE%97%E6%AF%8F%E4%B8%AA%E4%BD%93%E7%B4%A0%E5%88%B0%E8%BE%B9%E7%95%8C%E7%9A%84%E8%B7%9D%E7%A6%BB.png?raw=true"></li>
+<li>使用<code>Watershed Algorithm</code>（分水岭算法），淹没地形，当水池相遇时形成分水岭，从而进行网格分割<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%88%86%E6%B0%B4%E5%B2%AD%E7%AE%97%E6%B3%95.png?raw=true"></li>
+<li>分割相邻的体素区域，为多边形网格提供良好的基础<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%88%86%E5%89%B2%E7%9B%B8%E9%82%BB%E7%9A%84%E4%BD%93%E7%B4%A0%E5%8C%BA%E5%9F%9F.png?raw=true"></li>
+<li>区域在二维中没有重叠体素。下图为区域的俯视图<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%8C%BA%E5%9F%9F%E7%9A%84%E4%BF%AF%E8%A7%86%E5%9B%BE.png?raw=true"></li>
+<li>从分段区域生成导航网格<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E4%BB%8E%E5%88%86%E6%AE%B5%E5%8C%BA%E5%9F%9F%E7%94%9F%E6%88%90%E5%AF%BC%E8%88%AA%E7%BD%91%E6%A0%BC.png?raw=true"></li>
+</ul>
+<h2 id="多边形标志（Polygon-Flag）"><a href="#多边形标志（Polygon-Flag）" class="headerlink" title="多边形标志（Polygon Flag）"></a>多边形标志（Polygon Flag）</h2><ul>
+<li>可用于标记地形类型：平原、山脉、水域等。绘制颜色以添加用户定义的区域，从用户定义的区域生成的多边形具有特殊标志<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/%E5%A4%9A%E8%BE%B9%E5%BD%A2%E6%A0%87%E5%BF%97.png?raw=true"></li>
+</ul>
+<h2 id="Tile"><a href="#Tile" class="headerlink" title="Tile"></a>Tile</h2><ul>
+<li>快速响应动态对象，进行寻路的动态更新</li>
+<li>避免重建整个导航网格</li>
+<li><code>Tilesize</code>寻路和动态重建性能之间的权衡</li>
+</ul>
+<h2 id="网格外链接（Off-mesh-Link）"><a href="#网格外链接（Off-mesh-Link）" class="headerlink" title="网格外链接（Off-mesh Link）"></a>网格外链接（Off-mesh Link）</h2><ul>
+<li><code>Off Mesh Link</code> 组件允许合并无法使用可行走表面来表示的导航捷径。例如，跳过沟渠或围栏，或在通过门之前打开门，全都可以描述为网格外链接<br><img src="https://github.com/KDuoLi/myBlog-Picture/blob/main/%E5%AF%BB%E8%B7%AF%E7%AE%97%E6%B3%95/Off-mesh%20Link%E7%BD%91%E6%A0%BC%E5%A4%96%E9%93%BE%E6%8E%A5.png?raw=true"></li>
+</ul>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><ul>
+<li><a target="_blank" rel="noopener" href="https://www.runoob.com/data-structures/graph-theory.html">图论基础和表示 | 菜鸟教程</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.redblobgames.com/pathfinding/a-star/introduction.html">Introduction to the A* Algorithm</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/74ca39e670ba">寻路算法小结</a></li>
+<li><a target="_blank" rel="noopener" href="https://paul.pub/a-star-algorithm/#id-%E5%90%AF%E5%8F%91%E5%87%BD%E6%95%B0">路径规划之 A* 算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/346666812">路径规划 | 图搜索算法：DFS、BFS、GBFS、Dijkstra、A*</a></li>
+<li><a target="_blank" rel="noopener" href="https://mp.weixin.qq.com/s/JiVx-tyXBt5ef53hjFZyHA">如何快速找到最优路线？深入理解游戏中寻路算法</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/hy592070616/article/details/121569933?spm=1001.2014.3001.5501">机器学习中的数学——距离定义（二）：曼哈顿距离（Manhattan Distance）</a></li>
+<li><a target="_blank" rel="noopener" href="https://docs.unity.cn/cn/2022.1/Manual/nav-InnerWorkings.html">Unity 手册 - 导航和寻路</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV19N4y1T7eU/?spm_id_from=333.788&vd_source=d2d44d4ce8893453aa70df7d2d5f6651">GAMES104现代游戏引擎 - 第十六节（上）：游戏引擎GamePlay玩法系统：基础AI</a></li>
+<li><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/359393767">Navigation Mesh (NavMesh) 原理讲解（二） 当地块都是三角形时的路径优化</a></li>
+<li><a target="_blank" rel="noopener" href="https://blog.csdn.net/fengkeyleaf/article/details/118832924">几何寻路：漏斗算法（Funnel Algorithm）</a></li>
+<li><a target="_blank" rel="noopener" href="https://zerowidth.com/2013/a-visual-explanation-of-jump-point-search.html#try-it-out">A Visual Explanation of Jump Point Search</a></li>
+<li><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/9335dddb04b4">JPS寻路算法</a></li>
+<li>《Unity3D 高级编程：主程手记》</li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+      <footer class="post-footer">
+
+        
+
+
+        
+    <div class="post-nav">
+      <div class="post-nav-item">
+    <a href="/2022/06/20/%E7%8A%B6%E6%80%81%E6%A8%A1%E5%BC%8F/" rel="prev" title="状态模式">
+      <i class="fa fa-chevron-left"></i> 状态模式
+    </a></div>
+      <div class="post-nav-item">
+    <a href="/2022/07/17/%E8%AE%BE%E8%AE%A1%E5%8E%9F%E5%88%99/" rel="next" title="设计原则">
+      设计原则 <i class="fa fa-chevron-right"></i>
+    </a></div>
+    </div>
+      </footer>
+    
+  </article>
+  
+  
+  
+
+
+
+          </div>
+          
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      let activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      let commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+        </div>
+          
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line toggle-line-first"></span>
+    <span class="toggle-line toggle-line-middle"></span>
+    <span class="toggle-line toggle-line-last"></span>
+  </div>
+
+  <aside class="sidebar">
+    <div class="sidebar-inner">
+
+      <ul class="sidebar-nav motion-element">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <!--noindex-->
+      <div class="post-toc-wrap sidebar-panel">
+          <div class="post-toc motion-element"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%9B%BE"><span class="nav-number">1.</span> <span class="nav-text">图</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%B9%BF%E5%BA%A6%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%EF%BC%88BFS%EF%BC%89"><span class="nav-number">2.</span> <span class="nav-text">广度优先搜索（BFS）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Dijkstra%EF%BC%88%E7%BB%9F%E4%B8%80%E6%88%90%E6%9C%AC%E6%90%9C%E7%B4%A2%EF%BC%89"><span class="nav-number">3.</span> <span class="nav-text">Dijkstra（统一成本搜索）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%9C%80%E4%BD%B3%E4%BC%98%E5%85%88%E6%90%9C%E7%B4%A2%EF%BC%88GBFS%EF%BC%89"><span class="nav-number">4.</span> <span class="nav-text">最佳优先搜索（GBFS）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#A"><span class="nav-number">5.</span> <span class="nav-text">A*</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#A-%E4%BC%98%E5%8C%96"><span class="nav-number">5.1.</span> <span class="nav-text">A*优化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%95%BF%E8%B7%9D%E7%A6%BB%E5%AF%BC%E8%88%AA"><span class="nav-number">5.1.1.</span> <span class="nav-text">长距离导航</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#A-%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95%E4%BC%98%E5%8C%96"><span class="nav-number">5.1.2.</span> <span class="nav-text">A*排序算法优化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%80%9A%E8%BF%87%E6%9D%83%E9%87%8D%E5%BC%95%E5%AF%BC%E5%B7%A1%E8%B7%AF%E6%96%B9%E5%90%91"><span class="nav-number">5.1.3.</span> <span class="nav-text">通过权重引导巡路方向</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%8B%86%E5%88%86%E5%AF%BB%E8%B7%AF%E5%8C%BA%E5%9F%9F"><span class="nav-number">5.1.4.</span> <span class="nav-text">拆分寻路区域</span></a></li></ol></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%B7%B3%E7%82%B9%E7%AE%97%E6%B3%95-JPS"><span class="nav-number">6.</span> <span class="nav-text">跳点算法 JPS</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#Navgation"><span class="nav-number">7.</span> <span class="nav-text">Navgation</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E8%88%AA%E7%BD%91%E6%A0%BC"><span class="nav-number">7.1.</span> <span class="nav-text">导航网格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%BC%E8%88%AA%E7%BD%91%E6%A0%BC%E7%9A%84%E8%B7%AF%E5%BE%84%E5%92%8C%E5%90%AF%E5%8F%91%E5%87%BD%E6%95%B0"><span class="nav-number">7.2.</span> <span class="nav-text">导航网格的路径和启发函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Path-Smoothing%E4%B8%8EFunnel-Algorithm"><span class="nav-number">7.3.</span> <span class="nav-text">Path Smoothing与Funnel Algorithm</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%94%9F%E6%88%90%E5%AF%BC%E8%88%AA%E7%BD%91%E6%A0%BC"><span class="nav-number">7.4.</span> <span class="nav-text">生成导航网格</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%A4%9A%E8%BE%B9%E5%BD%A2%E6%A0%87%E5%BF%97%EF%BC%88Polygon-Flag%EF%BC%89"><span class="nav-number">7.5.</span> <span class="nav-text">多边形标志（Polygon Flag）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Tile"><span class="nav-number">7.6.</span> <span class="nav-text">Tile</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BD%91%E6%A0%BC%E5%A4%96%E9%93%BE%E6%8E%A5%EF%BC%88Off-mesh-Link%EF%BC%89"><span class="nav-number">7.7.</span> <span class="nav-text">网格外链接（Off-mesh Link）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83"><span class="nav-number">8.</span> <span class="nav-text">参考</span></a></li></ol></div>
+      </div>
+      <!--/noindex-->
+
+      <div class="site-overview-wrap sidebar-panel">
+        <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+    <img class="site-author-image" itemprop="image" alt="KDuoLi"
+      src="/images/mmyBlog.png">
+  <p class="site-author-name" itemprop="name">KDuoLi</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap motion-element">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">52</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author motion-element">
+      <span class="links-of-author-item">
+        <a href="https://github.com/KDuoLi" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;KDuoLi" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+  </div>
+
+
+
+      </div>
+
+    </div>
+  </aside>
+  <div id="sidebar-dimmer"></div>
+
+
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-inner">
+        
+
+        
+
+<div class="copyright">
+  
+  &copy; 
+  <span itemprop="copyrightYear">2023</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">KDuoLi</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.org/" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> 强力驱动
+  </div>
+
+        
+
+
+
+
+
+
+
+
+      </div>
+    </footer>
+  </div>
+
+  
+  <script src="/lib/anime.min.js"></script>
+  <script src="/lib/velocity/velocity.min.js"></script>
+  <script src="/lib/velocity/velocity.ui.min.js"></script>
+
+<script src="/js/utils.js"></script>
+
+<script src="/js/motion.js"></script>
+
+
+<script src="/js/schemes/pisces.js"></script>
+
+
+<script src="/js/next-boot.js"></script>
+
+
+
+
+  
+
+
+
+
+  
+<script src="/js/local-search.js"></script>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
