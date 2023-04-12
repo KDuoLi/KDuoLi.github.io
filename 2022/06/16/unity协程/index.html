@@ -290,7 +290,6 @@
 </li>
 </ul>
 <h1 id="注意"><a href="#注意" class="headerlink" title="注意"></a>注意</h1><ul>
-<li>同一时刻、一个脚本实例中可以有多个暂停的协程，但只有一个运行着的协程</li>
 <li><code>IEnumerator</code>类型的方法不能带 <code>ref</code> 或者 <code>out</code> 型的参数</li>
 <li>协程只能在普通方法开启，不能在静态方法开启。开启协程函数的本质是<code>Monobehaviour</code>的一个普通方法，而静态方法只能调用静态方法，不能调用普通方法</li>
 <li>如果在协程里调用<code>Sleep</code>函数，会导致主线程运行停止。因为协程运行在主线程当中<h1 id="关键词-IEnumerator"><a href="#关键词-IEnumerator" class="headerlink" title="关键词 IEnumerator"></a>关键词 IEnumerator</h1></li>
